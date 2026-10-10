@@ -35,7 +35,7 @@ Estimates are ideal hours for a Unity beginner; DEV estimates assume senior C# s
 
 ## Week 1–2 — Feel (highest risk, start immediately)
 
-### V-01 Jackal arcade controller · GV (+AI) · ~16 h · P0
+### V-01 Jackal arcade controller · GV (+AI) · ~16 h · P0 — *code in review (PR #3), needs PT-01 feel test*
 - Rigidbody + 4 raycast wheels: spring/damper suspension, throttle, brake, reverse, steering with speed falloff, handbrake drift, air control, downforce. All tunables in `VehicleConfig` ScriptableObject.
 - **AC:**
   - A first-time player finishes the sandbox track with ≤ 1 flip.
