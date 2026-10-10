@@ -26,6 +26,7 @@ Status: **Accepted** (team agreed) · **Proposed** (Lead AI recommendation, awai
 **Date:** 2026-10-10 · **Status:** Accepted
 - **Decision:** Unity **6.3 LTS** (latest LTS, supported until Dec 2027). Pin the exact patch version (e.g. `6000.3.xf1`) on install and record it in `README.md`. Everyone uses the identical version. Universal Render Pipeline (URP).
 - **Why not 6.0 LTS:** its LTS support ends October 2026 — this month.
+- **Pinned:** `6000.3.26f1` (2026-10-10). Hub recommends 6.6 (Update release, short support window) — not used.
 - **Upgrades:** only between milestones, by decision entry, never mid-sprint.
 - **Context:** team has zero Unity experience → see `docs/onboarding/UNITY_ONBOARDING.md`.
 
