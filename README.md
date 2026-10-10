@@ -5,7 +5,7 @@ Cooperative vehicular combat racing — a third-person **Race Royale** for crews
 **Current milestone:** M1 — First Playable Greybox Race (offline, local multiplayer). See [`docs/BACKLOG.md`](docs/BACKLOG.md).
 
 ## Requirements
-- **Unity 6.3 LTS** — exact version: `6000.3.____` *(fill in after F-01; everyone must use this exact version)*
+- **Unity 6.3 LTS** — exact version: **`6000.3.26f1`** (everyone must use this exact version; do not install the 6.x "Update" releases Unity Hub marks as Recommended)
 - Git + **Git LFS** (`git lfs install` once per machine)
 - Windows PC; Xbox/PlayStation gamepad recommended for local multi-seat testing
 
