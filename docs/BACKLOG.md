@@ -35,7 +35,7 @@ Estimates are ideal hours for a Unity beginner; DEV estimates assume senior C# s
 
 ## Week 1–2 — Feel (highest risk, start immediately)
 
-### V-01 Jackal arcade controller · GV (+AI) · ~16 h · P0 — *code verified in Unity (21/21 EditMode tests, drives in Sandbox, 2026-10-10); PR #3 open; PT-01 feel test pending*
+### V-01 Jackal arcade controller · GV (+AI) · ~16 h · P0 — *code verified in Unity (21/21 EditMode tests, drives in Sandbox, 2026-10-10); merged (#3); PT-01 feel test pending*
 - Rigidbody + 4 raycast wheels: spring/damper suspension, throttle, brake, reverse, steering with speed falloff, handbrake drift, air control, downforce. All tunables in `VehicleConfig` ScriptableObject.
 - **AC:**
   - A first-time player finishes the sandbox track with ≤ 1 flip.
@@ -44,7 +44,7 @@ Estimates are ideal hours for a Unity beginner; DEV estimates assume senior C# s
   - EditMode tests cover the pure math (suspension force, grip curve).
 - **Deps:** F-01. Keyboard input is fine before F-03 lands.
 
-### V-02 Recovery · GV · ~4 h · P0
+### V-02 Recovery · GV (+AI) · ~4 h · P0 — *auto-right + manual reset + cooldown done (38/38 EditMode, verified in Play mode 2026-10-11); resets to last safe pose until T-01 provides checkpoints via `IRecoveryPointProvider`*
 - Auto-right when upside down > 2 s; manual reset to last valid checkpoint, facing track direction.
 - **AC:** back racing within 3 s; reset cannot skip checkpoints; cooldown prevents spam.
 - **Deps:** V-01, T-01 (checkpoints).
