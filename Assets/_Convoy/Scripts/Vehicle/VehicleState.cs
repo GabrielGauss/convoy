@@ -30,6 +30,12 @@ namespace Convoy.Vehicle
         /// <summary>True when any tyre hit its friction limit this step.</summary>
         public bool Sliding;
 
+        /// <summary>Seconds the vehicle has been stuck upside down (V-02 auto-right triggers at the configured delay).</summary>
+        public float UpsideDownTime;
+
+        /// <summary>Seconds until another reset is allowed.</summary>
+        public float RecoveryCooldown;
+
         public bool IsAirborne => GroundedWheels == 0;
         public float SpeedKmh => Velocity.magnitude * 3.6f;
     }

@@ -67,5 +67,19 @@ namespace Convoy.Vehicle
         [Header("Air control")]
         [Tooltip("Pitch/yaw/roll acceleration while airborne, rad/s².")]
         [Min(0f)] public float airControl = 2.5f;
+
+        [Header("Recovery (V-02)")]
+        [Tooltip("Upside down = vehicle up · world up below this. 0.3 ≈ tilted more than 72°.")]
+        [Range(-1f, 1f)] public float upsideDownDot = 0.3f;
+        [Tooltip("Seconds stuck upside down before the vehicle rights itself.")]
+        [Min(0f)] public float autoRightDelay = 2f;
+        [Tooltip("Only auto-right when slower than this, m/s, so mid-air flips and barrel rolls are left alone.")]
+        [Min(0f)] public float autoRightMaxSpeed = 3f;
+        [Tooltip("Minimum seconds between recoveries (manual or automatic). Stops reset spam.")]
+        [Min(0f)] public float resetCooldown = 3f;
+        [Tooltip("Height added above the recovery point so the suspension settles, metres.")]
+        [Min(0f)] public float recoveryLift = 1f;
+        [Tooltip("How often a safe pose (all wheels down, upright) is recorded while no checkpoint system exists, seconds.")]
+        [Min(0.05f)] public float safePoseInterval = 1f;
     }
 }
