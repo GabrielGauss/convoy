@@ -39,6 +39,9 @@ namespace Convoy.Vehicle
         private float[] _wheelSpin = Array.Empty<float>();
         private readonly RaycastHit[] _hits = new RaycastHit[MaxRayHits];
         private VehicleState _state;
+        private VehicleRecovery _recovery;
+        private IRecoveryPointProvider _recoveryPointProvider;
+        private bool _resetLatched;
 
         public VehicleConfig Config => _config;
         public VehicleState State => _state;
@@ -47,6 +50,14 @@ namespace Convoy.Vehicle
         public void SetPilotCommand(PilotCommand command)
         {
             _command = command.Clamped();
+            // Input runs in Update, physics in FixedUpdate: hold a reset press until physics consumes it.
+            _resetLatched |= command.Reset;
+        }
+
+        /// <summary>Race logic (T-01) registers the checkpoint system here. Null = fall back to the last safe pose.</summary>
+        public void SetRecoveryPointProvider(IRecoveryPointProvider provider)
+        {
+            _recoveryPointProvider = provider;
         }
 
         private void Awake()
@@ -55,6 +66,7 @@ namespace Convoy.Vehicle
             _lastCompression = new float[_wheels.Length];
             _wheelSpin = new float[_wheels.Length];
             ApplyBodySettings();
+            if (_config != null) _recovery = new VehicleRecovery(_config);
 
             if (_config == null)
                 Debug.LogError($"{name}: VehicleController has no VehicleConfig assigned.", this);
@@ -104,6 +116,8 @@ namespace Convoy.Vehicle
 #endif
 
             float dt = Time.fixedDeltaTime;
+            if (TryRecover(dt)) return;
+
             Vector3 up = transform.up;
             Vector3 velocity = _body.linearVelocity;
             float forwardSpeed = Vector3.Dot(velocity, transform.forward);
@@ -193,6 +207,50 @@ namespace Convoy.Vehicle
             WriteState(grounded, sliding);
         }
 
+        /// <summary>V-02: auto-right when stuck upside down, or reset on request. Returns true if the vehicle was moved.</summary>
+        private bool TryRecover(float dt)
+        {
+            _recovery ??= new VehicleRecovery(_config);
+            var input = new RecoveryInput
+            {
+                DeltaTime = dt,
+                Position = _body.position,
+                Rotation = _body.rotation,
+                Speed = _body.linearVelocity.magnitude,
+                GroundedWheels = _state.GroundedWheels,
+                TotalWheels = _wheels.Length,
+                ResetRequested = _resetLatched,
+            };
+            _resetLatched = false;
+
+            RecoveryAction action = _recovery.Step(input);
+            if (action == RecoveryAction.None) return false;
+
+            Pose target;
+            if (action == RecoveryAction.AutoRight)
+                target = _recovery.AutoRightPose(_body.position, _body.rotation);
+            else if (_recoveryPointProvider != null && _recoveryPointProvider.TryGetRecoveryPose(out Pose checkpoint))
+                target = _recovery.LiftedPose(checkpoint);
+            else if (_recovery.HasSafePose)
+                target = _recovery.LiftedPose(_recovery.SafePose);
+            else
+                target = _recovery.AutoRightPose(_body.position, _body.rotation);
+
+            Teleport(target);
+            WriteState(0, false);
+            return true;
+        }
+
+        private void Teleport(Pose pose)
+        {
+            transform.SetPositionAndRotation(pose.position, pose.rotation);
+            _body.position = pose.position;
+            _body.rotation = pose.rotation;
+            _body.linearVelocity = Vector3.zero;
+            _body.angularVelocity = Vector3.zero;
+            Array.Clear(_lastCompression, 0, _lastCompression.Length);
+        }
+
         private bool TryGroundHit(Vector3 origin, Vector3 direction, float length, out RaycastHit closest)
         {
             int count = Physics.RaycastNonAlloc(origin, direction, _hits, length, _groundMask, QueryTriggerInteraction.Ignore);
@@ -261,6 +319,8 @@ namespace Convoy.Vehicle
                 GroundedWheels = grounded,
                 TotalWheels = _wheels.Length,
                 Sliding = sliding,
+                UpsideDownTime = _recovery?.UpsideDownTime ?? 0f,
+                RecoveryCooldown = _recovery?.CooldownRemaining ?? 0f,
             };
         }
 
