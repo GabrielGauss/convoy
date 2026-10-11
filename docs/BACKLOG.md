@@ -59,6 +59,11 @@ Estimates are ideal hours for a Unity beginner; DEV estimates assume senior C# s
 - **Measured:** 0→3 s full throttle 63 km/h without vs 107 km/h with nitro (Sandbox, Play mode).
 - **Later (M-01):** boost generates heat and draws Engineer power; tank becomes the power budget.
 
+### S-01 Sprint prototype: canyon run to the Monolith · AI → GV review · ~8 h · P0 — *added 2026-10-11 (D-014)*
+- Scene `Sprint_01`: ~1.1 km canyon road, jumps, boulder field, rough section, narrow pass, nitro straight; 5 ordered checkpoints; finish between the Monolith pillars (Blender model).
+- `Convoy.Race`: `SprintRun` (clock starts on first movement, ordered checkpoints, finish requires all, best time), `SprintController` (recovery to last checkpoint), `SprintHud` (timer, result screen, Enter/Start to restart).
+- **AC:** start → finish completable in one run; reset returns to last checkpoint; timer stops at the Monolith; restart works.
+
 ### C-01 Pilot chase camera · GV · ~8 h · P0
 - Cinemachine 3 follow camera; distance and FOV scale with speed; damping; terrain collision avoidance; look-back button.
 - **AC:** no clipping through terrain on the test track; vehicle always readable on screen; no motion sickness reported in PT-01.
@@ -69,7 +74,7 @@ Estimates are ideal hours for a Unity beginner; DEV estimates assume senior C# s
 - **AC:** two fork routes differ measurably in time *and* damage taken; AI spline paths authored for both routes.
 - **Deps:** V-01 (needs a drivable car to tune scale).
 
-### PT-01 Handling playtest · All · 2 h · P0 — **GATE**
+### PT-01 Handling playtest · All · 2 h · P0 — **GATE** — *partial 2026-10-11: Gabriel 5/5 and wants to keep driving; Lead Dev + ND pending (`docs/playtests/PT-01_2026-10-11.md`)*
 - Free driving in the sandbox, no objectives.
 - **Pass:** all three want to keep driving. **Fail:** iterate V-01/C-01 before anything else.
 

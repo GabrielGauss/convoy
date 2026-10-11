@@ -119,6 +119,13 @@ See `CLAUDE.md`. Summary: AI drafts on branches; humans review, own, and merge. 
 - First Jackal model built in Blender via MCP (`SourceArt/Jackal.blend` → `Assets/_Convoy/Art/Vehicles/Jackal.fbx`), visual only: physics collider and wheel anchors unchanged. Placeholder quality, not final art (D-011 still applies to final assets).
 - Sandbox gets a placeholder loop (`Track_Loop`) for handling tests; does not replace T-01.
 
+## D-014 — Prototype race format: point-to-point sprint to the Monolith
+**Date:** 2026-10-11 · **Status:** Proposed (Gabriel, creative director) — confirm with Narrative & Game Designer (GDD owner)
+- After PT-01 (partial), Gabriel wants the first playable race to be a **sprint**: start → obstacles, ramps, rough ground, canyon → finish at a futuristic wasteland **Monolith** gate. The run completes when the vehicle passes between its pillars.
+- Prototype scene `Sprint_01` (S-01). Ordered checkpoints feed V-02 recovery (`IRecoveryPointProvider`), so resets go to the last checkpoint and cannot skip any.
+- **Impact to review:** D-006 "Race Royale" and T-01 assume a loop/route race. Open question for the GDD owner: is the Monolith sprint the core format, a mode, or a vertical-slice level? T-01's fork (short/risky vs long/safe) fits a sprint well.
+- Sprint logic is a minimal slice of R-01 (clock, checkpoints, finish, result screen); R-01 still owns countdown, AI rivals, positions and the results loop.
+
 ---
 
 ## Open questions
