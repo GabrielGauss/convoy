@@ -43,7 +43,7 @@ Leave the defaults for now.
    Inside it: *3D Object → Cylinder*, Rotation `0,0,90`, Scale `0.76,0.12,0.76`, and **remove its Capsule Collider** (otherwise it fights the ground).
 5. Select `Jackal`, in **Vehicle Controller**:
    - **Config** → `Jackal_VehicleConfig`.
-   - **Wheels** → size `4`, then for each element:
+   - **Wheels** → size `4`, then **expand every element**: new elements start empty (no anchor, all boxes unticked). For each element:
 
    | Element | Anchor | Visual | Steers | Driven | Rear |
    |---|---|---|---|---|---|
@@ -99,3 +99,5 @@ git push
 | Won't turn at speed | Raise *High Speed Steer Factor* |
 | Spins out too easily | Raise *Rear Lateral Grip* or lower *Engine Force* |
 | Red error "has no VehicleConfig assigned" | Step 5, Config field |
+| Car doesn't move at all, no error | Click inside the Game view first: the game only receives keys while it has focus |
+| Red error "Wheel element N has no Anchor" / "No wheel is marked Driven" | Wheels list was created empty: expand each element, drag the anchor, tick the boxes (use the Inspector padlock while dragging) |
