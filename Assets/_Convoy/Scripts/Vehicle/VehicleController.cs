@@ -46,6 +46,14 @@ namespace Convoy.Vehicle
         public VehicleConfig Config => _config;
         public VehicleState State => _state;
         public PilotCommand CurrentCommand => _command;
+        public int WheelCount => _wheels.Length;
+
+        /// <summary>Suspension compression of wheel <paramref name="index"/> last physics step, 0 = fully extended, 1 = bottomed out. Read-only, for debug/presentation.</summary>
+        public float GetWheelCompression01(int index)
+        {
+            if (_config == null || index < 0 || index >= _lastCompression.Length) return 0f;
+            return Mathf.Clamp01(_lastCompression[index] / _config.suspensionRestLength);
+        }
 
         public void SetPilotCommand(PilotCommand command)
         {

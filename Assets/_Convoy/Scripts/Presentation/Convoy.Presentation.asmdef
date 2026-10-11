@@ -3,7 +3,8 @@
     "rootNamespace": "Convoy.Presentation",
     "references": [
         "Convoy.Core",
-        "Convoy.Vehicle"
+        "Convoy.Vehicle",
+        "Unity.InputSystem"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

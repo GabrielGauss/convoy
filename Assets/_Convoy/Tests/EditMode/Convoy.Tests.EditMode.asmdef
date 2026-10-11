@@ -5,7 +5,8 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "Convoy.Core",
-        "Convoy.Vehicle"
+        "Convoy.Vehicle",
+        "Convoy.Presentation"
     ],
     "includePlatforms": [
         "Editor"
