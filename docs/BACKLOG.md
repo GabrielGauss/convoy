@@ -44,7 +44,7 @@ Estimates are ideal hours for a Unity beginner; DEV estimates assume senior C# s
   - EditMode tests cover the pure math (suspension force, grip curve).
 - **Deps:** F-01. Keyboard input is fine before F-03 lands.
 
-### V-02 Recovery · GV (+AI) · ~4 h · P0 — *auto-right + manual reset + cooldown done (38/38 EditMode, verified in Play mode 2026-10-11); resets to last safe pose until T-01 provides checkpoints via `IRecoveryPointProvider`*
+### V-02 Recovery · GV (+AI) · ~4 h · P0 — *done: auto-right + manual reset + cooldown; in `Sprint_01` resets go to the last checkpoint via `IRecoveryPointProvider` (verified 2026-10-11); T-01 must implement the same provider*
 - Auto-right when upside down > 2 s; manual reset to last valid checkpoint, facing track direction.
 - **AC:** back racing within 3 s; reset cannot skip checkpoints; cooldown prevents spam.
 - **Deps:** V-01, T-01 (checkpoints).
@@ -59,7 +59,7 @@ Estimates are ideal hours for a Unity beginner; DEV estimates assume senior C# s
 - **Measured:** 0→3 s full throttle 63 km/h without vs 107 km/h with nitro (Sandbox, Play mode).
 - **Later (M-01):** boost generates heat and draws Engineer power; tank becomes the power budget.
 
-### S-01 Sprint prototype: canyon run to the Monolith · AI → GV review · ~8 h · P0 — *added 2026-10-11 (D-014)*
+### S-01 Sprint prototype: canyon run to the Monolith · AI → GV review · ~8 h · P0 — *added 2026-10-11 (D-014); built and verified: autopilot completed start → Monolith (5/5 checkpoints, 1:46 with 3 resets); reset-to-checkpoint, result screen and restart verified in Play mode*
 - Scene `Sprint_01`: ~1.1 km canyon road, jumps, boulder field, rough section, narrow pass, nitro straight; 5 ordered checkpoints; finish between the Monolith pillars (Blender model).
 - `Convoy.Race`: `SprintRun` (clock starts on first movement, ordered checkpoints, finish requires all, best time), `SprintController` (recovery to last checkpoint), `SprintHud` (timer, result screen, Enter/Start to restart).
 - **AC:** start → finish completable in one run; reset returns to last checkpoint; timer stops at the Monolith; restart works.
