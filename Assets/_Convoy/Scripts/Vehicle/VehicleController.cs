@@ -58,6 +58,30 @@ namespace Convoy.Vehicle
 
             if (_config == null)
                 Debug.LogError($"{name}: VehicleController has no VehicleConfig assigned.", this);
+            ValidateWheels();
+        }
+
+        /// <summary>Fails loudly on wiring mistakes that would otherwise leave the car silently immobile.</summary>
+        private void ValidateWheels()
+        {
+            if (_wheels.Length == 0)
+            {
+                Debug.LogError($"{name}: VehicleController has no wheels. Set Wheels size to 4 and assign anchors.", this);
+                return;
+            }
+
+            for (int i = 0; i < _wheels.Length; i++)
+                if (_wheels[i] == null || _wheels[i].anchor == null)
+                    Debug.LogError($"{name}: Wheel element {i} has no Anchor assigned.", this);
+
+            if (CountDriven() == 0)
+                Debug.LogError($"{name}: No wheel is marked Driven, so the engine cannot move the car.", this);
+
+            bool anySteers = false;
+            foreach (Wheel w in _wheels)
+                if (w != null && w.steers && w.anchor != null) anySteers = true;
+            if (!anySteers)
+                Debug.LogWarning($"{name}: No wheel is marked Steers, so the car cannot turn.", this);
         }
 
         private void ApplyBodySettings()
