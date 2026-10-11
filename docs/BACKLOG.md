@@ -49,17 +49,22 @@ Estimates are ideal hours for a Unity beginner; DEV estimates assume senior C# s
 - **AC:** back racing within 3 s; reset cannot skip checkpoints; cooldown prevents spam.
 - **Deps:** V-01, T-01 (checkpoints).
 
-### V-03 Debug overlay & live tuning · AI → GV review · ~4 h · P0
+### V-03 Debug overlay & live tuning · AI → GV review · ~4 h · P0 — *done: F1 overlay, self-bootstrapping, compiled out of release; measured 0.05–0.09 ms in Play mode (2026-10-11)*
 - Overlay: speed, RPM-equivalent, slip angle, grounded wheel count, suspension compression, FPS. Toggle with F1.
 - **AC:** overlay costs < 0.5 ms; off in release builds.
 - **Deps:** V-01.
+
+### V-04 Nitro (pilot boost) · GV (+AI) · ~4 h · P0 — *added by Gabriel 2026-10-11 (D-013); done*
+- Hold Shift / RB: finite tank (~3 s), refills after 1 s delay (~10 s to full), +12 m/s top speed. Must release after running dry.
+- **Measured:** 0→3 s full throttle 63 km/h without vs 107 km/h with nitro (Sandbox, Play mode).
+- **Later (M-01):** boost generates heat and draws Engineer power; tank becomes the power budget.
 
 ### C-01 Pilot chase camera · GV · ~8 h · P0
 - Cinemachine 3 follow camera; distance and FOV scale with speed; damping; terrain collision avoidance; look-back button.
 - **AC:** no clipping through terrain on the test track; vehicle always readable on screen; no motion sickness reported in PT-01.
 - **Deps:** V-01.
 
-### T-01 Greybox track · ND · ~12 h · P0
+### T-01 Greybox track · ND · ~12 h · P0 — *note: Sandbox now has a placeholder loop (`Track_Loop`: barriers, nitro straight, jump, start gantry) for handling tests only; T-01 is still the real race track with routes + checkpoints*
 - ProBuilder greybox: 3–5 min loop; start line; ≥ 6 checkpoints; one **fork** (short/risky vs. long/safe); one jump; one rough-terrain section; static obstacles.
 - **AC:** two fork routes differ measurably in time *and* damage taken; AI spline paths authored for both routes.
 - **Deps:** V-01 (needs a drivable car to tune scale).
@@ -120,7 +125,7 @@ Estimates are ideal hours for a Unity beginner; DEV estimates assume senior C# s
 
 ## Week 6–8 — Test, build, decide
 
-### U-01 Minimal per-seat HUD · AI → GV review · ~6 h · P1
+### U-01 Minimal per-seat HUD · AI → GV review · ~6 h · P1 — *first slice done: analogue speedometer + digital km/h + nitro bar (IMGUI prototype, no assets); per-seat layout still to do*
 - Speed, temperature, damage, ammo, position, checkpoint progress; per viewport.
 
 ### W-01 Wreck state (attrition test) · GV · ~4 h · P1

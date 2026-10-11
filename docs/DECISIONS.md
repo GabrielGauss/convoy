@@ -112,6 +112,13 @@ See `CLAUDE.md`. Summary: AI drafts on branches; humans review, own, and merge. 
 - Chosen over the official Unity MCP (needs Unity AI subscription) and IvanMurzak/Unity-MCP (defaults to a cloud endpoint).
 - D-011 still applies: Claude edits scenes through the editor only when asked; humans review and merge.
 
+## D-013 — Pilot nitro, prototype HUD and first vehicle art
+**Date:** 2026-10-11 · **Status:** Accepted (Gabriel, creative director)
+- Nitro on the Pilot seat now (Shift/RB, finite tank). It is the seed of the GDD boost mechanic: M-01 will make boost cost Engineer power and generate heat. All tunables in `VehicleConfig`.
+- Speedometer + nitro bar as the first U-01 slice, drawn with IMGUI from procedural textures (no assets, self-bootstrapping). To be rebuilt per-seat in UI Toolkit; keep the look.
+- First Jackal model built in Blender via MCP (`SourceArt/Jackal.blend` → `Assets/_Convoy/Art/Vehicles/Jackal.fbx`), visual only: physics collider and wheel anchors unchanged. Placeholder quality, not final art (D-011 still applies to final assets).
+- Sandbox gets a placeholder loop (`Track_Loop`) for handling tests; does not replace T-01.
+
 ---
 
 ## Open questions
