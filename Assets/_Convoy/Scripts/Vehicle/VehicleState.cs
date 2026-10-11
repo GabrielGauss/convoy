@@ -30,6 +30,12 @@ namespace Convoy.Vehicle
         /// <summary>True when any tyre hit its friction limit this step.</summary>
         public bool Sliding;
 
+        /// <summary>Nitro tank level, 0..1.</summary>
+        public float BoostFraction;
+
+        /// <summary>True while nitro is pushing the vehicle.</summary>
+        public bool Boosting;
+
         /// <summary>Seconds the vehicle has been stuck upside down (V-02 auto-right triggers at the configured delay).</summary>
         public float UpsideDownTime;
 

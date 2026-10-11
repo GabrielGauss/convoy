@@ -9,8 +9,8 @@ namespace Convoy.Input
     /// Bindings are defined in code so the sandbox works with zero editor setup.
     /// F-03 replaces this with a per-seat Input Actions asset and device assignment.
     ///
-    /// Keyboard: W/S or ↑/↓ throttle/brake · A/D or ←/→ steer · Space handbrake · R reset
-    /// Gamepad:  RT throttle · LT brake/reverse · left stick steer · A/Cross handbrake · Y/Triangle reset
+    /// Keyboard: W/S or ↑/↓ throttle/brake · A/D or ←/→ steer · Space handbrake · Shift nitro · R reset
+    /// Gamepad:  RT throttle · LT brake/reverse · left stick steer · A/Cross handbrake · RB nitro · Y/Triangle reset
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class PilotInputSource : MonoBehaviour
@@ -32,6 +32,7 @@ namespace Convoy.Input
         private InputAction _steerStick;
         private InputAction _handbrake;
         private InputAction _reset;
+        private InputAction _boost;
         private float _keyboardSteer;
 
         private void Awake()
@@ -64,6 +65,11 @@ namespace Convoy.Input
             _handbrake.AddBinding("<Keyboard>/space");
             _handbrake.AddBinding("<Gamepad>/buttonSouth");
 
+            _boost = new InputAction("Boost", InputActionType.Button);
+            _boost.AddBinding("<Keyboard>/leftShift");
+            _boost.AddBinding("<Keyboard>/rightShift");
+            _boost.AddBinding("<Gamepad>/rightShoulder");
+
             _reset = new InputAction("Reset", InputActionType.Button);
             _reset.AddBinding("<Keyboard>/r");
             _reset.AddBinding("<Gamepad>/buttonNorth");
@@ -77,6 +83,7 @@ namespace Convoy.Input
             _steerStick.Enable();
             _handbrake.Enable();
             _reset.Enable();
+            _boost.Enable();
         }
 
         private void OnDisable()
@@ -87,6 +94,7 @@ namespace Convoy.Input
             _steerStick.Disable();
             _handbrake.Disable();
             _reset.Disable();
+            _boost.Disable();
             _receiver?.SetPilotCommand(PilotCommand.Neutral);
         }
 
@@ -98,6 +106,7 @@ namespace Convoy.Input
             _steerStick.Dispose();
             _handbrake.Dispose();
             _reset.Dispose();
+            _boost.Dispose();
         }
 
         private void Update()
@@ -123,6 +132,7 @@ namespace Convoy.Input
                 Throttle = throttle,
                 Steer = steer,
                 Handbrake = _handbrake.IsPressed(),
+                Boost = _boost.IsPressed(),
                 Reset = _reset.WasPressedThisFrame(),
             });
         }

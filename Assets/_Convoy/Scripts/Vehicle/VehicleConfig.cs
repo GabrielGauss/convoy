@@ -68,6 +68,20 @@ namespace Convoy.Vehicle
         [Tooltip("Pitch/yaw/roll acceleration while airborne, rad/s².")]
         [Min(0f)] public float airControl = 2.5f;
 
+        [Header("Boost / nitro")]
+        [Tooltip("Extra forward force while boosting, N. Applied at the centre of mass along the ground.")]
+        [Min(0f)] public float boostForce = 7000f;
+        [Tooltip("Top speed added while boosting, m/s.")]
+        [Min(0f)] public float boostTopSpeedBonus = 12f;
+        [Tooltip("Tank fraction used per second of boost (0.33 ≈ 3 s from full).")]
+        [Min(0.01f)] public float boostDrainPerSecond = 0.33f;
+        [Tooltip("Tank fraction refilled per second when not boosting (0.1 ≈ 10 s to full).")]
+        [Min(0f)] public float boostRegenPerSecond = 0.1f;
+        [Tooltip("Seconds after releasing boost before the tank starts refilling.")]
+        [Min(0f)] public float boostRegenDelay = 1f;
+        [Tooltip("Minimum tank needed to start a new boost, so an empty tank can't flicker on and off.")]
+        [Range(0f, 1f)] public float boostMinToStart = 0.15f;
+
         [Header("Recovery (V-02)")]
         [Tooltip("Upside down = vehicle up · world up below this. 0.3 ≈ tilted more than 72°.")]
         [Range(-1f, 1f)] public float upsideDownDot = 0.3f;
