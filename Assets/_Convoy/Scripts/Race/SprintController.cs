@@ -17,8 +17,8 @@ namespace Convoy.Race
         [Tooltip("Checkpoints in driving order. The finish trigger is separate.")]
         [SerializeField] private SprintGate[] _checkpoints = Array.Empty<SprintGate>();
         [SerializeField] private SprintGate _finish;
-        [Tooltip("Vehicle speed that starts the clock, m/s.")]
-        [Min(0f)] [SerializeField] private float _startSpeed = 0.5f;
+        [Tooltip("Horizontal speed that starts the clock, m/s. Vertical motion (suspension settling on spawn) is ignored.")]
+        [Min(0f)] [SerializeField] private float _startSpeed = 1.5f;
 
         private SprintRun _run;
         private Pose _startPose;
@@ -55,7 +55,8 @@ namespace Convoy.Race
         private void FixedUpdate()
         {
             if (_run == null || _vehicle == null) return;
-            _run.Tick(Time.fixedDeltaTime, _vehicle.State.Velocity.magnitude > _startSpeed);
+            Vector3 horizontal = Vector3.ProjectOnPlane(_vehicle.State.Velocity, Vector3.up);
+            _run.Tick(Time.fixedDeltaTime, horizontal.magnitude > _startSpeed);
         }
 
         /// <summary>Called by a <see cref="SprintGate"/> when a vehicle drives through it.</summary>
