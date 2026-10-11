@@ -35,13 +35,22 @@ namespace Convoy.Presentation
         private GUIStyle _style;
         private Rect _rect = new Rect(12f, 12f, 320f, 190f);
 
+        private static VehicleDebugOverlay _instance;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStatics()
+        {
+            // Survives "Enter Play Mode without domain reload".
+            _instance = null;
+        }
+
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         private static void Bootstrap()
         {
-            if (FindAnyObjectByType<VehicleDebugOverlay>() != null) return;
-            var go = new GameObject("[Debug Overlay]") { hideFlags = HideFlags.DontSave };
+            if (_instance != null) return;
+            var go = new GameObject("[Debug Overlay]");
             DontDestroyOnLoad(go);
-            go.AddComponent<VehicleDebugOverlay>();
+            _instance = go.AddComponent<VehicleDebugOverlay>();
         }
 
         private void Update()
