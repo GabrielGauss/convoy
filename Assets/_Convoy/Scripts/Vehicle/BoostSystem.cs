@@ -10,6 +10,7 @@ namespace Convoy.Vehicle
     {
         private readonly VehicleConfig _config;
         private float _sinceLastUse;
+        private bool _needsRelease;
 
         public BoostSystem(VehicleConfig config)
         {
@@ -29,8 +30,10 @@ namespace Convoy.Vehicle
         {
             float dt = Mathf.Max(0f, deltaTime);
 
-            // Hysteresis: once empty you need a minimum refill before boosting again (no flicker on/off).
-            bool canStart = Fraction >= _config.boostMinToStart;
+            // After running dry the button must be released before a new boost (no auto-retrigger bursts),
+            // and a new boost needs a minimum refill (no flicker on/off).
+            if (!requested) _needsRelease = false;
+            bool canStart = !_needsRelease && Fraction >= _config.boostMinToStart;
             bool canContinue = Active && Fraction > 0f;
             Active = requested && (canContinue || canStart);
 
@@ -38,7 +41,11 @@ namespace Convoy.Vehicle
             {
                 Fraction = Mathf.Max(0f, Fraction - _config.boostDrainPerSecond * dt);
                 _sinceLastUse = 0f;
-                if (Fraction <= 0f) Active = false;
+                if (Fraction <= 0f)
+                {
+                    Active = false;
+                    _needsRelease = true;
+                }
             }
             else
             {

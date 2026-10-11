@@ -64,6 +64,18 @@ namespace Convoy.Tests
         }
 
         [Test]
+        public void HoldingAfterEmpty_DoesNotRetrigger()
+        {
+            Run(1f / _config.boostDrainPerSecond + 0.5f, true);   // empty while holding
+            Run(_config.boostRegenDelay + 3f, true);              // keep holding while it refills past the minimum
+            Assert.That(_boost.Fraction, Is.GreaterThan(_config.boostMinToStart));
+            Assert.That(_boost.Active, Is.False);
+
+            _boost.Step(Dt, false);                               // release...
+            Assert.That(_boost.Step(Dt, true), Is.True);          // ...and press again
+        }
+
+        [Test]
         public void Regen_WaitsForDelay()
         {
             Run(1f, true);
