@@ -105,6 +105,13 @@ Status: **Accepted** (team agreed) · **Proposed** (Lead AI recommendation, awai
 **Date:** 2026-10-10 · **Status:** Proposed
 See `CLAUDE.md`. Summary: AI drafts on branches; humans review, own, and merge. AI writes C# logic and tests, not `.unity`/`.prefab` YAML. No AI-generated final assets without license/provenance check.
 
+## D-012 — Unity editor MCP: MCP for Unity (CoplayDev)
+**Date:** 2026-10-11 · **Status:** Accepted (Gabriel)
+- Add `com.coplaydev.unity-mcp` (MIT, free, local-only) pinned to **v10.3.0** so Claude can read the Console, inspect/edit scenes and scripts, and run tests without copy-paste.
+- Editor-only tooling: not included in player builds. Upgrade only by changing the pinned tag in a PR.
+- Chosen over the official Unity MCP (needs Unity AI subscription) and IvanMurzak/Unity-MCP (defaults to a cloud endpoint).
+- D-011 still applies: Claude edits scenes through the editor only when asked; humans review and merge.
+
 ---
 
 ## Open questions
