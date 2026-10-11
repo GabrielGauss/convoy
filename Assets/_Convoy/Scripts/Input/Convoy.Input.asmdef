@@ -1,0 +1,17 @@
+{
+    "name": "Convoy.Input",
+    "rootNamespace": "Convoy.Input",
+    "references": [
+        "Convoy.Core",
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

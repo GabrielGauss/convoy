@@ -1,0 +1,17 @@
+{
+    "name": "Convoy.Presentation",
+    "rootNamespace": "Convoy.Presentation",
+    "references": [
+        "Convoy.Core",
+        "Convoy.Vehicle"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
