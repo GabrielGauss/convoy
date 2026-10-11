@@ -4,6 +4,7 @@
     "references": [
         "Convoy.Core",
         "Convoy.Vehicle",
+        "Convoy.Race",
         "Unity.InputSystem"
     ],
     "includePlatforms": [],
