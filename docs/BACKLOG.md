@@ -161,5 +161,5 @@ H-02 MULE · any networking · loadouts/customization · bosses (designed on pap
 - Race Royale proposal for O-002 (crews per match, elimination, "the prize").
 - First boss encounter design on paper (what crew roles it stresses).
 
-## Next milestone
-M2 draft: `docs/BACKLOG_M2.md` ("Convoy Run vs AI", D-032). Starts only after the M1 exit questions are answered.
+## Next: MVP track & vehicles
+Plan: `docs/BACKLOG_MVP.md` (D-035). Its segment 1 (TK-01) becomes M1's race track, replacing the open-terrain map (`Paramo_01` stays as a test map).

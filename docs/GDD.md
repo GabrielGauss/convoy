@@ -1,11 +1,11 @@
 # CONVOY — Game Design Document (living)
 
-**Working title:** MARAUDERS: *subtitle TBD* (D-034, O-004). Code and repo keep the name CONVOY.
+**CONVOY is the code name** (D-034). The public title is decided before release.
 
 Owner: Narrative & Game Designer · Creative director: Gabriel. Source vision: project brief "01 — Game Design & Vision".
 
 ## One-liner
-A third-person **Convoy Run**: crews of 2–3 drive, fight, and patch up a single junkyard war-machine across a living wasteland, racing rival crews to deliver their cargo at the Monolith (D-032).
+A third-person, top-speed combat sprint: crews of 1–3 drive, shoot and upgrade a junkyard war-machine down a 10 km track that climbs, drops and crosses over itself, where each vehicle class has its own lines to the Monolith (D-035).
 
 ## Pillars
 1. The crew wins, not the individual.
@@ -14,14 +14,13 @@ A third-person **Convoy Run**: crews of 2–3 drive, fight, and patch up a singl
 4. Combat creates racing opportunities rather than replacing racing.
 5. Every crew station must make meaningful decisions.
 
-## Format (D-032, map shape D-031)
-- **The run:** crews start at the edges of one open terrain slice, cross it by one of several routes, and reconverge at the **Monolith**. Win = deliver your cargo through the uplink (UP-01).
-- **Cargo:** the prize and the risk. It shares vehicle capacity with ammo and armour; it can be lost in crashes, stolen, or recovered. Losing cargo hurts, it never ends your run.
-- **Routes:** fast & exposed · resources & slow · high risk & high reward. No route is best at everything; forks are telegraphed and the Engineer calls them.
-- **Robbery:** channelled, visible, interruptible, capped; resources only.
-- **World:** optional bosses as dilemmas; one natural event done well (dust storm); per-run variation (D-031).
-- **Modes:** crews vs crews (online, after the M2 netcode spike) and crews vs AI (offline/co-op).
-- Open: crews per online match and match length (O-002).
+## Format (D-035)
+- **The sprint:** one hand-built ~10 km track (4–5 min), start to the **Monolith**; finish with the uplink (UP-01). Several branches, shortcuts and impossible jumps.
+- **Multi-level:** three layers that cross over and under each other — high (bridges, ridges, ruin rooftops), mid (main road), low (canyon floor, tunnels, river). Falling off a layer: open (O-004).
+- **Weapons, not Mario Kart:** no random item boxes, no rubber-banding. Mounted weapons with ammo and heat; chosen before the race and upgraded during it.
+- **Equip & upgrade:** pre-race loadout from a fixed pool; scrap collected on the track buys upgrades at workshops between segments. No persistent garage in the MVP.
+- **Modes:** crews vs AI rivals first (one rival per class); crews vs crews online after the netcode spike.
+- **Post-MVP (D-032):** cargo delivery, robbery with counterplay, optional bosses, the 4-edge open arena (D-021).
 
 ## Crew stations (D-002)
 | Station | Owns | Key decisions |
@@ -30,14 +29,22 @@ A third-person **Convoy Run**: crews of 2–3 drive, fight, and patch up a singl
 | Gunner | Turret, ammo, overheat, defenses | Target choice, ammo economy, suppress vs. finish |
 | Engineer (Mechanic + Tactician) | Power split, heat, repairs, map/route intel, pings | Boost vs. weapons vs. cooling, repair now vs. later, route call |
 
-2 players: the non-pilot switches stations. Empty station handling: O-001.
+Seats depend on the vehicle class (D-035): sidecar = Pilot + Gunner; JACKAL and heavy = all three. With fewer players than seats, the non-pilot switches stations (D-002).
 
-## Vehicles
-- **R-01 JACKAL** — light, agile, fast acceleration, low armor/payload. *M1 vehicle.*
-- **H-02 MULE** — heavy, durable, more payload/weapons, slower. *Post-M1.*
+## Vehicles (D-035) — the core of the track design
+Every segment offers at least one line that favours each class; no class wins everywhere (target: competent runs within ±5%).
 
-## Race (M1)
-`Paramo_01`: 2 km × 2 km open terrain, Monolith at the centre, three player routes (canyon + chasm jump, toxic river + cave, desert + minefield + Rammer gate), three AI rival convoys from the other edges, uplink finish (D-031). Prototype runs 3–5 min (D-008); shipping target 8–15 min, set by playtest. Cargo, scrap and robbery arrive in M2 (D-032).
+| Class | Crew | Strength | Weakness | Its own lines |
+|---|---|---|---|---|
+| **Sidecar motorbike** | 1–2 | Acceleration, tight turns, smallest target | Fragile, light ammo, mud hurts most, loses any ram | Pipes, girders, cliff ledges, gaps in fences and wrecks |
+| **R-01 JACKAL** | 2–3 | Balanced top speed, drift, nitro | Medium armour, no ramming | Impossible jumps (speed-gated ramps), drift lines |
+| **H-02 MULE** (heavy) | 3 | Armour, firepower, rams walls and rivals, partly ignores mud | Slow acceleration, worst jumper, too heavy for fragile bridges | Rammer walls, plough-through debris, ground-level brute lines |
+
+- The sidecar has three wheels, so it reuses the raycast controller; its visual lean is presentation only.
+- To test: the heavy collapses a fragile bridge and closes that shortcut for whoever is behind.
+
+## Track build (D-035, D-036)
+One track, done well, built in ~2.5 km segments: segment 1 with three layers (JACKAL only) → sidecar + heavy lines → weapons, loadout, upgrades → extend to 10 km. Each step gates on a playtest. Roads and bridges are spline meshes; Unity Terrain is backdrop only. `Paramo_01` remains a test map and backdrop.
 
 ## Visual identity (D-033)
 **Ink-and-print caricature in a junkyard world.** Comic-book ink lines and halftone on aged paper, applied to absurd, proud war-machines built from 1930s–1970s scrap. M1 stays greybox; the look is proven in the ART-01 look spike after PT-01 passes.
@@ -72,7 +79,7 @@ A world that recycles everything: vehicles from the 1930s to the 1970s mixed fre
 Human concept art for 2–3 vehicles → model → shader. Commissioned art needs explicit approval (cost). AI-generated final assets need a licence/provenance check (D-011). Blender-via-MCP models are placeholders (D-013).
 
 ### Open
-- First concept-art brief: JACKAL and MULE faces, gangs and sponsors (ND + Gabriel).
+- First concept-art brief: sidecar, JACKAL and MULE — faces, gangs and sponsors (ND + Gabriel).
 - Factions and their visual codes (ties into Narrative).
 
 ## Risks (ranked)
@@ -80,7 +87,7 @@ Human concept art for 2–3 vehicles → model → shader. Commissioned art need
 2. **Handling** — arcade drift vs. instability on rough terrain; trade-offs must be felt. Test: PT-01 gate.
 3. **Camera/nausea** — passengers in a drifting vehicle. Test: ask every playtest; roll-stabilized Gunner cam.
 4. **Multiplayer** — shared physics vehicle + moving-platform aiming under latency; several crews + AI per session raise server cost. Mitigation: D-007 rules now, spike after M1.
-5. **Scope** — Convoy Run + cargo + robbery + bosses is large for ~45–50 h/week. M1 proves one loop only.
+5. **Scope** — 10 km of layered track + 3 vehicles + weapons + upgrades is large for ~45–50 h/week. M1 proves one loop only.
 
 ## Narrative
-TBD (ND). Placeholder: world bible, factions/sponsors (each faction = a vehicle culture, D-033), why crews race, what the cargo is and why the Monolith takes it (D-032, O-002).
+TBD (ND). Placeholder: world bible, factions/sponsors (each faction = a vehicle culture, D-033), why crews race to the Monolith, what each vehicle culture is (sidecar, JACKAL, heavy gangs).
