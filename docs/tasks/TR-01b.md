@@ -1,6 +1,6 @@
 # TR-01b — Editor generator: Paramo_01 terrain, splat layers, placements
 - **Owner (agent):** combat-engineer            - **Human reviewer/owner:** Gabriel
-- **Status:** spec
+- **Status:** qa
 - **Spec:** docs/specs/TR-01.md
 - **Blocked by:** TR-01a, F-03c (`Convoy.Editor.asmdef`), C-01b (camera `ApplyToScene`); soft: LV-01c (`RammerGate.prefab`), LV-02c (`MudPatch.prefab`) — placeholders until then, re-run after
 - **Allowed files:** `Editor/Terrain/ParamoTerrainGenerator.cs`, `Editor/Terrain/TerrainTextureFactory.cs` (new); `Editor/Convoy.Editor.asmdef` (add `Convoy.Level` only if absent). Orchestrator runs the menu and commits `Scenes/Paramo_01.unity`, `Config/Level/Paramo_01_Layout.asset`, `Terrain/**`, metas (paths under `Assets/_Convoy/` unless stated)
@@ -13,3 +13,4 @@
 ## Verdict log
 | Date | Gate | Verdict | Notes |
 |---|---|---|---|
+| 2026-10-12 | build | done | 7c07e82 |
