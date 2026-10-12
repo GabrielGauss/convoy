@@ -1,6 +1,6 @@
 # TR-01c — World variation runtime, rival route export, route recovery
 - **Owner (agent):** combat-engineer            - **Human reviewer/owner:** Gabriel
-- **Status:** pr
+- **Status:** done (merged in PR #12); AC 4 Gabriel check pending. Further open-terrain work paused by D-035 — `Paramo_01` is a test map/backdrop
 - **Spec:** docs/specs/TR-01.md
 - **Blocked by:** TR-01b (`Paramo_01.unity` owner before it), A-01b (`RacingLine`, `AiPilot`), A-01c (rival setup to reuse)
 - **Allowed files:** `Scripts/Level/Terrain/WorldVariationRunner.cs`, `Scripts/Presentation/ParamoAtmosphere.cs`, `Scripts/Race/RouteRecoveryPoints.cs`, `Scripts/Race/RouteRecoveryMath.cs` (new); `Scripts/Presentation/Convoy.Presentation.asmdef` (add `Convoy.Level`); `Editor/Integration/TR01_ParamoRuntimeSetup.cs` (+ `AiRivalSetup.cs` if extracted) (new); `Tests/EditMode/AI/ParamoRivalRouteTests.cs` + `Convoy.AI.Tests.EditMode.asmdef` (add `Convoy.Level`); `Tests/EditMode/RouteRecoveryMathTests.cs` (new). Orchestrator commits `Paramo_01.unity`, `Config/Level/Paramo_WorldVariation.asset`, metas (paths under `Assets/_Convoy/` unless stated)
@@ -15,6 +15,7 @@
 |---|---|---|---|
 | 2026-10-12 | build | done | 14d1261 |
 | 2026-10-12 | review | APPROVE | AC 1–3 met: rival export tests (length ±1 %, curvature, 10–15 m) + recovery math 0 B GC; runner order -200/atmosphere -150 with EnsureApplied; Level→Core only, Race→Core/Vehicle, only Presentation writes fog (D-007). Orchestrator notes addressed (chasm clamp, shortcuts rejoin/shorter, cave never closable + SanitiseVariation). Documented deviations accepted (no `_layoutSeed`, lift from VehicleConfig, extra files needed for the layout fixes). Non-blocking follow-ups: move `RouteRecoveryPoints._backoffMetres` into an SO config; recovery points include closed shortcuts (reset may land before a rockfall); add warm-up/positive control to `RouteRecoveryMathTests.Queries_DoNotAllocate`. AC 4 still needs Gabriel: storm runs differ, chasm/river reset, ≥ 60 fps at 3 viewpoints. |
+| 2026-10-12 | — | paused-after-merge | D-035: MVP track is a multi-level spline track; no further open-terrain runtime work until ARCH-003 says otherwise |
 
 ## Orchestrator notes before build (from TR-01b review, 2026-10-12)
 - Clamp the chasm cut to the shortcut end (today it slots ~700 m through ridges).

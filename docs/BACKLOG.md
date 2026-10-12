@@ -160,3 +160,6 @@ H-02 MULE · any networking · loadouts/customization · bosses (designed on pap
 - Paper crew test (week 1): one person drives an existing racing game, one calls routes from a printed map, one manages a "heat" timer. Note communication load.
 - Race Royale proposal for O-002 (crews per match, elimination, "the prize").
 - First boss encounter design on paper (what crew roles it stresses).
+
+## Next: MVP track & vehicles
+Plan: `docs/BACKLOG_MVP.md` (D-035). Its segment 1 (TK-01) becomes M1's race track, replacing the open-terrain map (`Paramo_01` stays as a test map).

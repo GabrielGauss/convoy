@@ -10,15 +10,22 @@ Status: **Accepted** (team agreed) · **Proposed** (Lead AI recommendation, awai
 | D-003 | Per-seat cameras; local tests in split-screen | Proposed |
 | D-004 | Arcade raycast vehicle physics | Proposed |
 | D-005 | Input: Unity Input System, gamepad + KB/M from day one | Accepted |
-| D-006 | Game format: "Race Royale" (PvPvE attrition race) | Accepted (format) / Open (numbers) |
+| D-006 | Game format: "Race Royale" (PvPvE attrition race) | Superseded by D-032 |
 | D-007 | Netcode deferred; multiplayer-ready rules enforced now | Proposed |
 | D-008 | Prototype race length 3–5 min | Proposed |
 | D-009 | Git: GitHub private repo, trunk-based, LFS | Accepted |
 | D-010 | Team ownership and capacity | Proposed |
 | D-011 | AI-assisted development rules | Proposed |
-| O-001 | Crew-size balance (2 vs 3 players) | Open |
+| D-032 | Format: "Convoy Run" — cargo to the Monolith; replaces Race Royale and the 4-edge mega-arena | Accepted; deferred to post-MVP by D-035 |
+| D-033 | Art direction: ink-and-print caricature, junkyard era 1930–1970 | Accepted |
+| D-034 | CONVOY is the code name; final title decided before release | Accepted |
+| D-035 | MVP: one 10 km multi-level sprint track + 3 vehicle classes with their own lines | Accepted |
+| D-036 | Track tech: spline-mesh roads + ProBuilder; Unity Terrain only as backdrop | Proposed (Lead Dev) |
+| D-037 | T01 topology = Gabriel's hand-drawn map: two braided main lines + class connectors | Accepted |
+| O-001 | Crew-size balance (2 vs 3 players) | Answered by D-035 (vehicle class scales with crew) |
 | O-002 | Crews per match / elimination & respawn rules | Open |
 | O-003 | Online infrastructure & hosting cost | Open (post-M1) |
+| O-004 | Falling between track layers: route change or reset? | Open (Gabriel; decide by playtest) |
 
 ---
 
@@ -59,7 +66,7 @@ Status: **Accepted** (team agreed) · **Proposed** (Lead AI recommendation, awai
 - Input produces **per-seat command structs**, never drives physics directly (required by D-007).
 
 ## D-006 — Game format: "Race Royale"
-**Date:** 2026-10-10 · **Status:** Accepted (format) · numbers Open (O-002)
+**Date:** 2026-10-10 · **Status:** Superseded by D-032 (2026-10-12)
 - **Decision:** CONVOY is a PvPvE attrition race. Multiple player crews race through a hostile route populated by heavy AI: rival convoys, ambushes, environmental hazards, and **boss encounters**. Reaching the finish/prize is hard; a weak crew may never get there. Modes: crews vs crews (online) and crews vs AI (offline/co-op).
 - **Implications:**
   1. **AI is a core system, not filler.** AI Systems moves from "basic opponents" to a primary pillar after M1 (encounter design, bosses, spawn director).
@@ -136,7 +143,7 @@ See `CLAUDE.md`. Summary: AI drafts on branches; humans review, own, and merge. 
 - **D-020** M2 netcode spike direction: NGO 2.x, host-authoritative, pilot-owned vehicle physics (`ADR-005`).
 
 ## D-021 — North star: PÁRAMO-NEXUS
-**Date:** 2026-10-11 · **Status:** Accepted as long-term vision (Gabriel, creative director) — Narrative & Game Designer to fold it into `GDD.md`
+**Date:** 2026-10-11 · **Status:** Accepted as long-term vision (Gabriel, creative director); amended by D-032 (the 4 km / 4-team arena is no longer the target) — Narrative & Game Designer to fold it into `GDD.md`
 - Source: `docs/design/PARAMO-NEXUS_vision_es.md`. Four asymmetric biome approaches (Mountains N, Toxic Wastes S, Red Canyon E, Dune Valley W) converging on the **Monolith** at the centre; class-gated terrain (Rammer gates, Chasm + bridge terminal, spider cave); Payload uplink finale; X-crossings between convoys.
 - **Not adopted for M1/M2 (scale and cost):** 4 km × 4 km terrain, 4 teams × 10 vehicles + 100k-HP payload, 15–20 min PvP matches, fog of war, fauna AI. These need netcode at scale and a far larger team. Revisit after M2 networking spike and PT data.
 - **Paid assets named in the doc (RayFire, MicroSplat) are NOT approved** (CLAUDE.md cost rule). Use free Unity Terrain, simple fractured meshes, URP fog.
@@ -163,16 +170,83 @@ See `CLAUDE.md`. Summary: AI drafts on branches; humans review, own, and merge. 
 - Placeholder medal times until Gabriel sets a reference run; ND to confirm uplink feel and write the LV-03 brief.
 
 ## D-031 — Open living terrain, not tracks; no medals
-**Date:** 2026-10-11 · **Status:** Accepted (Gabriel, creative director) — supersedes D-022 (sprint/medal loop), D-024 ghosts, D-026, D-028; amends D-021 scale
+**Date:** 2026-10-11 · **Status:** Superseded by D-035 for the world shape (2026-10-12); "no medals" still stands — supersedes D-022 (sprint/medal loop), D-024 ghosts, D-026, D-028; amends D-021 scale
 - Gabriel: "el mundo está vivo, no es un track o una pista, es un terreno completo… sino es un juego de carreras con tiros." Reference maps: `PÁRAMO` technical map + PÁRAMO-NEXUS concept (2026-10-11).
 - **M1 world = one open terrain slice**: free Unity Terrain, **2 km × 2 km** (¼ of the 4 km vision: playable by one small team, crossing ≈ 1.5–2.5 min), Monolith in a crater at the centre, player convoy spawns at one edge, **≥ 3 genuine routes** (canyon, toxic river crossing, open desert/minefield) plus class obstacles (Rammer rock, Chasm jump, mud). No checkpoints, no invisible walls; soft world edge only.
 - **Retry/retention comes from the world, not from medals:** (1) rival AI convoys from other edges racing to the Monolith on their own routes (A-01 follows authored route polylines — the dashed lines in the map); (2) per-run world variation — dust storm on/off, which shortcut is open, mine layout; (3) route discovery; (4) win = first to hold the uplink (UP-01).
 - **Cancelled:** RT-01 (splits + medals), RT-02 (ghost), PR-01 (medal unlocks), LV-03 (Sprint_02 biome sprint → replaced by **TR-01 Páramo terrain slice**). Kept: UP-01, LV-01, LV-02, A-01, crew tasks, D-029 restart. `Sprint_01` stays as a driving test course.
 - **Still out of M1:** 4 teams × 10 vehicles, payload HP, fauna (spiders/beasts — M2 candidate), fog of war, paid assets.
 
+## D-032 — Format: "Convoy Run" (replaces Race Royale and the 4-edge mega-arena)
+**Date:** 2026-10-12 · **Status:** Accepted (Gabriel, creative director); **deferred to post-MVP by D-035** (same day) · supersedes D-006, amends D-021
+- **Why:** Gabriel (2026-10-12): a massive arena is too much work. Source: external "Convoy Sprint" proposal, reviewed by Lead AI. The 4 km × 4 km, 4 teams × 10 vehicles PÁRAMO-NEXUS arena (D-021) stops being the target; it is a possible post-launch expansion only.
+- **Map shape stays D-031:** one open terrain slice (`Paramo_01`, 2 km × 2 km). Its shape already fits: crews start at the edges, several genuine routes, everything reconverges at the **Monolith** (the Nexus).
+- **Objective:** carry **cargo** to the Monolith and deliver it with the uplink (UP-01). *Payload* = the delivery goal; *cargo* = the resources carried. Losing cargo hurts, it never ends your run.
+- **Cargo competes for space** with ammo and armour in the same vehicle (pillar 2). This gives JACKAL vs MULE a strategic meaning, not only a handling one.
+- **Route identities** (proposal for ND to tune on `Paramo_01`): fast & exposed · resources (scrap) & slow · high risk & high reward. Rule: **no route is best at everything**. Forks are telegraphed early and the Engineer owns that intel (D-002, N-01).
+- **World events:** bosses are optional and act as dilemmas (double reward, nobody is forced to fight). One natural event done well (dust storm, already in `WorldVariation`) before adding more.
+- **Robbery with counterplay:** channelled, visible to the victim, interruptible, capped per attempt, resources only. No capture of vehicles or payload. The Gunner does it (harpoon/hook); AI rivals both steal and get stolen from.
+- **Attrition (feeds O-002):** a wreck drops cargo as recoverable crates (W-01), it does not eliminate the crew.
+- **Not adopted from the proposal:** 4 players per team, a Scavenger role, multi-vehicle convoys. The crew stays 2–3 players in one vehicle with 3 stations (D-002); its tasks go to the Gunner (steal) and Engineer (scrap intel).
+- **Length:** prototypes keep D-008 (3–5 min); shipping target 8–15 min, set by playtest.
+- **M1 impact:** none beyond D-031. Cargo, scrap, robbery, boss and event are M2, built and tested against AI first (`docs/BACKLOG_M2.md`, draft).
+
+## D-033 — Art direction: ink-and-print caricature, junkyard era 1930–1970
+**Date:** 2026-10-12 · **Status:** Accepted (Gabriel, creative director) — replaces the GDD era line (1970s–80s); details in `GDD.md` § Visual identity
+- **Reference:** Lorenzo Etherington's *Stranski* illustrations, for **treatment only**. We do not copy his vehicle designs, emblem, characters or names.
+- **Principles:** the vehicle IS the lore (each car = a gang and a culture) · the universe takes itself seriously, the absurd comes from contrast and tribal pride · involuntary faces (grille, intakes and headlights read as an expression) · exaggerated mass (huge bonnet, small cab set back, oversized wheels) · exposed mechanics (rivets, clamps, pipes) · gang decals (numbers, crowned skulls, worn stripes).
+- **Era:** a junkyard world that recycles everything, 1930s–1970s vehicles mixed freely. Analog tech, sponsor culture and improvised engineering stay.
+- **Rendering target (URP):** 2-tone toon ramp, halftone/hatch shadows, inverted-hull ink outlines, paper grain. Starting palette: vintage pink `#C77E9A`, industrial blue `#7788AD`, signal orange `#E88B48`, worn metal `#D8C9AA`, ink `#39302F`.
+- **Hard constraints:** impact frames and flashes are per viewport and can be turned off (photosensitivity; split-screen) · screen-space patterns must stay stable in motion (tested at speed, not in stills) · no `Camera.main` (per-seat cameras, D-003) · presentation only reads simulation state (D-007).
+- **Pipeline:** human concept art for 2–3 vehicles first, then model, then shader. Commissioned art is a paid cost and needs explicit approval. AI-generated final assets need a licence/provenance check (D-011). Blender-via-MCP models stay placeholders (D-013).
+- **Not adopted from the proposal:** its C# VFX controller (`NetworkBehaviour`/`ClientRpc` breaks D-007; it mutates a shared material asset, uses `Camera.main`, `Instantiate`/`Destroy` per hit, string IDs and frame-rate-dependent timing) and a 10-vehicle roster generated by script.
+- **Schedule:** ART-01 look spike after PT-01 passes. Does not block M1 (greybox).
+
+## D-034 — CONVOY is the code name; final title later
+**Date:** 2026-10-12 · **Status:** Accepted (Gabriel)
+- Gabriel (2026-10-12): the MARAUDERS idea is dropped because the name is taken (*Marauders*, Team17 / Small Impact Games, 2022). CONVOY stays as the project's **code name**, as studios do.
+- The public title is chosen before any release, with a trademark/store search first (paid legal advice needs explicit approval).
+- Repo, `Convoy.*` namespaces, asmdefs and scenes keep the name.
+
+## D-035 — MVP: one 10 km multi-level sprint + 3 vehicle classes with their own lines
+**Date:** 2026-10-12 · **Status:** Accepted (Gabriel, creative director) · supersedes D-031 (world shape) · defers D-032 (cargo, robbery, boss) to post-MVP · amends D-002 (seats per class) · answers O-001
+- **Gabriel (2026-10-12):** 3 working vehicles (motorbike, car = JACKAL, heavy) on one sprint with many branches, shortcuts and impossible jumps; ~10 km to start; not linear but multi-dimensional, going up and down ("ahí está el moat"); top-speed racing with weapons, not Mario Kart; you equip and upgrade your vehicle. **One track, done well.**
+- **Length:** 10 km ≈ 2:47 at the JACKAL's 60 m/s top speed; 4–5 min with corners, jumps and combat. Fits D-008.
+- **Multi-level track:** three height layers that cross over and under each other — high (bridges, ridges, ruin rooftops), mid (main road), low (canyon floor, tunnels, river). Finish at the Monolith (uplink, UP-01). What happens when you fall off a layer is **open (O-004)**.
+- **Vehicle classes are the core of the track design** (crew size picks the class, which answers O-001):
+
+| Class | Crew (seats) | Strength | Weakness | Its own lines |
+|---|---|---|---|---|
+| **Sidecar motorbike** | 1–2 (Pilot + Gunner in the sidecar) | Acceleration, tight turns, smallest target | Fragile, light ammo, mud hurts most, loses any ram | Pipes, girders, cliff ledges, gaps in fences and wrecks |
+| **JACKAL** (car) | 2–3 (Pilot, Gunner, Engineer) | Balanced top speed, drift, nitro | Medium armour, no ramming | The impossible jumps (speed-gated ramps) and drift lines |
+| **Heavy (MULE)** | 3 (all stations) | Armour, firepower, rams walls and rivals, partly ignores mud | Slow acceleration, worst jumper, too heavy for fragile bridges | Rammer walls (LV-01), plough-through debris, ground-level brute lines |
+
+  - **Balance rule:** every segment offers at least one line that favours each class, and no class wins everywhere. Target: competent runs of each class finish within ±5% of each other.
+  - **Dynamic idea to test:** the heavy can collapse a fragile bridge, closing that shortcut for whoever comes behind.
+  - The sidecar keeps three wheels, so it reuses the raycast-wheel controller (D-004); a two-wheel bike would need its own balance model.
+- **Weapons, not Mario Kart:** no random item boxes, no rubber-banding (D-019). Weapons are mounted hardware with ammo and heat, chosen and upgraded.
+- **Equip & upgrade (MVP):** pre-race loadout from a fixed pool + in-race upgrades bought with scrap at workshops between segments. **No persistent garage or economy in the MVP** (brief 02).
+- **Build order (one track, done well):** segment 1 (~2.5 km, three layers, JACKAL only) → sidecar + heavy and their lines in segment 1 → weapons, loadout, upgrades → extend to 10 km in ~2.5 km segments with the proven kit. Each phase gates on a playtest. Backlog: `docs/BACKLOG_MVP.md`.
+- **Keep the whole route within ~5 km of the world origin** (32-bit float precision); a winding 10 km route fits in a ~3 × 3 km box.
+- **Kept:** crew stations (D-002), uplink finish (UP-01), Rammer gate (LV-01), mud (LV-02), damage (D-018), AI driving (D-019), art direction (D-033). `Paramo_01` stays as backdrop/low-layer ground and a test map; TR-01c is paused.
+
+## D-036 — Track tech: spline-mesh roads + ProBuilder; Unity Terrain only as backdrop
+**Date:** 2026-10-12 · **Status:** Proposed (Lead AI) — Lead Dev to confirm in TK-00
+- Unity Terrain is a heightmap: no tunnels, overhangs or stacked roads. The layered track needs meshes.
+- Roads, bridges, ramps and ledges = road meshes extruded along **Unity Splines** (free, first-party package; this entry is its package decision) + ProBuilder pieces, built by a re-runnable editor script (D-016, D-030). Terrain = backdrop and lowest ground.
+- AI racing lines come from the same splines (fits D-019 polylines). Jump ramps reuse `ChasmJump.MinClearSpeed` for speed gates.
+
+## D-037 — T01 topology: two braided main lines + class connectors (hand-drawn map)
+**Date:** 2026-10-12 · **Status:** Accepted (Gabriel)
+- **Decision:** T01 (the D-035 10 km track) uses Gabriel's hand-drawn topology in `docs/tracks/T01/`: **Main A** (secondary: narrow, rough, technical) and **Main B** (primary: wide, smooth, fast) run braided from start to the Monolith; **class perks are connectors** between/within them — sidecar = narrow passages/tunnels, heavy = breakable blockades, JACKAL = full-speed jumps.
+- **Why:** two full lines + mid-race line changes give more replay value and crew-vs-crew contact at every crossing than isolated per-segment forks. The earlier "FRACTURA" layout proposal (never committed) is not used.
+- **Rules (detail in `docs/tracks/T01/T01_HANDMAP.md`):** every A/B crossing is classified merge or grade-separated (3 signature over/under crossings); class gates are physical, never locks; failed JACKAL jumps feed the O-004 toggle; shortcut gain ≤ 2–3 s; A/B delta ≤ 2 s per ~60 s section; perks balanced across the last third.
+- **Next:** ARCH-003 digitizes the map into a node graph (`T01_topology.md` + `.json`) and derives the TK-01 spec (segment 1 from START) from it.
+
 ---
 
 ## Open questions
-- **O-001 Crew-size balance:** a full 3-player crew covers all stations at once. Options: fixed crew size per match, or AI crew assist filling empty stations (fits "AI Systems: basic crew assistance"). Lead AI recommendation: **AI assist fills empty stations at reduced competence**. Decide after first crew playtest.
-- **O-002 Match structure:** crews per online match? Elimination permanent or respawn-with-penalty? What is "the prize" mechanically (finish order, loot, extraction)? Owner: Narrative & Game Designer, proposal before end of M1.
+- **O-001 Crew-size balance:** *answered by D-035: the vehicle class matches the crew size (sidecar 1–2, JACKAL 2–3, heavy 3).* Original note: a full 3-player crew covers all stations at once. Options: fixed crew size per match, or AI crew assist filling empty stations (fits "AI Systems: basic crew assistance"). Lead AI recommendation: **AI assist fills empty stations at reduced competence**. Decide after first crew playtest.
+- **O-002 Match structure:** *partly answered by D-032 — the prize is delivered cargo; a wreck drops cargo instead of eliminating.* Still open: crews per online match? Elimination permanent or respawn-with-penalty? What is "the prize" mechanically (finish order, loot, extraction)? Owner: Narrative & Game Designer, proposal before end of M1.
 - **O-003 Online infrastructure:** dedicated server hosting has recurring cost. No paid service without explicit approval. Evaluate in post-M1 netcode spike.
+- **O-004 Falling between layers:** when a vehicle drops from a higher layer, does it (a) land on a lower, slower route and keep racing, (b) reset to the last safe point, or (c) a mix (lands where there is road, resets over voids)? Owner: Gabriel. Lead AI recommendation to test first: (c). TK-01 builds a toggle so PT data decides.

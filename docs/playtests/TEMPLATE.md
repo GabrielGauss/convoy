@@ -19,6 +19,7 @@ Track · vehicle · AI count · race length · config changes since last test
 3. When were you overwhelmed?
 4. Could you always tell what was happening on screen? Any nausea?
 5. Name one decision you made that mattered.
+6. If you lost (time, cargo, the run): did it feel fair? Which decision cost you?
 
 ## Verdict
 - What worked:
