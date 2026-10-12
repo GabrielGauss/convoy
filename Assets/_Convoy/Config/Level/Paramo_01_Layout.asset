@@ -1,0 +1,236 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddf20e5421915534b982039d3028d6b8, type: 3}
+  m_Name: Paramo_01_Layout
+  m_EditorClassIdentifier: Convoy.Level::Convoy.Level.TerrainLayout
+  data:
+    generatorVersion: 1
+    seed: 1
+    sizeMetres: 2000
+    heightScale: 300
+    baseHeight: 80
+    heightmapResolution: 1025
+    alphamapResolution: 512
+    noise:
+    - centre: {x: 0, y: 0}
+      radius: 0
+      falloff: 0
+      wavelength: 600
+      amplitude: 14
+      octaves: 5
+      ridged: 0
+    - centre: {x: 600, y: -300}
+      radius: 450
+      falloff: 150
+      wavelength: 220
+      amplitude: 40
+      octaves: 4
+      ridged: 1
+    - centre: {x: -600, y: -250}
+      radius: 450
+      falloff: 150
+      wavelength: 120
+      amplitude: 6
+      octaves: 3
+      ridged: 0
+    edgeBand: 120
+    edgeRise: 90
+    crater:
+      centre: {x: 0, y: 0}
+      rimRadius: 260
+      rimHeight: 35
+      floorRadius: 110
+      floorDepth: 25
+      outerRadius: 520
+      plateauRadius: 30
+      plateauHeight: 3
+    river:
+      nodes:
+      - {x: -1000, y: -300}
+      - {x: -500, y: -380}
+      - {x: -100, y: -420}
+      - {x: 200, y: -450}
+      - {x: 380, y: -560}
+      width: 40
+      depth: 6
+      shoulder: 15
+    chasm:
+      centre: {x: 560, y: -410}
+      yawDeg: 19.983107
+      gapWidth: 24
+      length: 16
+      depth: 30
+      rampAngleDeg: 12
+      landingDrop: 2
+    routes:
+    - id: canyon
+      kind: 0
+      shortcutId: 
+      nodes:
+      - {x: 0, y: -860}
+      - {x: 250, y: -760}
+      - {x: 520, y: -520}
+      - {x: 640, y: -300}
+      - {x: 600, y: -120}
+      - {x: 420, y: 40}
+      - {x: 0, y: 0}
+      width: 12
+      shoulder: 10
+      carveDepth: 8
+      coveredRange: {x: 0, y: 0}
+    - id: river
+      kind: 0
+      shortcutId: cave
+      nodes:
+      - {x: 0, y: -860}
+      - {x: -60, y: -600}
+      - {x: -60, y: -430}
+      - {x: -40, y: -250}
+      - {x: 0, y: 0}
+      width: 12
+      shoulder: 10
+      carveDepth: 0
+      coveredRange: {x: 538, y: 698}
+    - id: desert
+      kind: 0
+      shortcutId: 
+      nodes:
+      - {x: 0, y: -860}
+      - {x: -300, y: -750}
+      - {x: -620, y: -450}
+      - {x: -650, y: -100}
+      - {x: -400, y: 80}
+      - {x: 0, y: 0}
+      width: 12
+      shoulder: 10
+      carveDepth: 0
+      coveredRange: {x: 0, y: 0}
+    - id: chasm
+      kind: 1
+      shortcutId: chasm
+      nodes:
+      - {x: 520, y: -520}
+      - {x: 600, y: -300}
+      width: 12
+      shoulder: 10
+      carveDepth: 0
+      coveredRange: {x: 0, y: 0}
+    - id: rammer
+      kind: 1
+      shortcutId: rammer
+      nodes:
+      - {x: -300, y: -750}
+      - {x: -480, y: -480}
+      width: 12
+      shoulder: 10
+      carveDepth: 0
+      coveredRange: {x: 0, y: 0}
+    - id: rival_w
+      kind: 2
+      shortcutId: 
+      nodes:
+      - {x: -860, y: 150}
+      - {x: -400, y: 80}
+      - {x: 0, y: 0}
+      width: 10
+      shoulder: 10
+      carveDepth: 0
+      coveredRange: {x: 0, y: 0}
+    - id: rival_n
+      kind: 2
+      shortcutId: 
+      nodes:
+      - {x: 0, y: 860}
+      - {x: 0, y: 300}
+      - {x: 0, y: 0}
+      width: 10
+      shoulder: 10
+      carveDepth: 0
+      coveredRange: {x: 0, y: 0}
+    - id: rival_e
+      kind: 2
+      shortcutId: 
+      nodes:
+      - {x: 860, y: 250}
+      - {x: 420, y: 40}
+      - {x: 0, y: 0}
+      width: 10
+      shoulder: 10
+      carveDepth: 0
+      coveredRange: {x: 0, y: 0}
+    obstacles:
+    - kind: 0
+      position: {x: 0, y: 0}
+      yawDeg: 0
+      scale: {x: 8, y: 80, z: 8}
+      shortcutId: 
+    - kind: 1
+      position: {x: -400, y: -600}
+      yawDeg: -33.690067
+      scale: {x: 1, y: 1, z: 1}
+      shortcutId: rammer
+    - kind: 2
+      position: {x: -59.3, y: -424}
+      yawDeg: 6.3
+      scale: {x: 16, y: 1, z: 48}
+      shortcutId: 
+    - kind: 2
+      position: {x: -627.8, y: -359.5}
+      yawDeg: -4.9
+      scale: {x: 16, y: 1, z: 48}
+      shortcutId: 
+    - kind: 3
+      position: {x: 554.19037, y: -425.9765}
+      yawDeg: 19.983107
+      scale: {x: 12, y: 2.1255658, z: 10}
+      shortcutId: chasm
+    - kind: 5
+      position: {x: 547.3555, y: -444.77237}
+      yawDeg: 19.983107
+      scale: {x: 16, y: 6, z: 10}
+      shortcutId: chasm
+    - kind: 5
+      position: {x: -344.376, y: -683.436}
+      yawDeg: -33.690067
+      scale: {x: 16, y: 6, z: 10}
+      shortcutId: rammer
+    - kind: 5
+      position: {x: -48.8, y: -329.6}
+      yawDeg: 6.3
+      scale: {x: 16, y: 6, z: 10}
+      shortcutId: cave
+    spawns:
+    - id: player
+      position: {x: 0, y: -860}
+      yawDeg: 0
+      rival: 0
+      padRadius: 25
+    - id: rival_w
+      position: {x: -860, y: 150}
+      yawDeg: 90
+      rival: 1
+      padRadius: 25
+    - id: rival_n
+      position: {x: 0, y: 860}
+      yawDeg: 180
+      rival: 1
+      padRadius: 25
+    - id: rival_e
+      position: {x: 860, y: 250}
+      yawDeg: -90
+      rival: 1
+      padRadius: 25
+    maxRouteSlopeDeg: 18
+    routeSampleSpacing: 2
+    maxJunctionSlopeDeg: 2
+    basaltSlopeMinDeg: 28
+    basaltSlopeMaxDeg: 40
