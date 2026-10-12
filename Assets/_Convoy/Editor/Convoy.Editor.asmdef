@@ -6,7 +6,10 @@
         "Convoy.Level",
         "Convoy.Vehicle",
         "Convoy.Presentation",
-        "Unity.RenderPipelines.Core.Runtime"
+        "Unity.RenderPipelines.Core.Runtime",
+        "Convoy.Crew",
+        "Convoy.Input",
+        "Unity.InputSystem"
     ],
     "includePlatforms": [
         "Editor"
