@@ -13,3 +13,8 @@
 ## Verdict log
 | Date | Gate | Verdict | Notes |
 |---|---|---|---|
+
+## Orchestrator notes before build (from TR-01b review, 2026-10-12)
+- Clamp the chasm cut to the shortcut end (today it slots ~700 m through ridges).
+- Cave sits on the main river route: closing it must leave a detour (or never close the cave; vary another shortcut).
+- Retune layout: chasm shortcut must be genuinely shorter than the canyon route; chasm/rammer shortcuts must rejoin their routes (now 39 m / 74 m off).
