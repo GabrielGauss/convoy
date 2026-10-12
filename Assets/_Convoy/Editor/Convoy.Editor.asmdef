@@ -1,0 +1,22 @@
+{
+    "name": "Convoy.Editor",
+    "rootNamespace": "Convoy.Editor",
+    "references": [
+        "Convoy.Core",
+        "Convoy.Level",
+        "Convoy.Vehicle",
+        "Convoy.Presentation",
+        "Unity.RenderPipelines.Core.Runtime"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
