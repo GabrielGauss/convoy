@@ -2,6 +2,8 @@ using System;
 using Convoy.Race;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.TestTools.Constraints;
+using Is = UnityEngine.TestTools.Constraints.Is;
 
 namespace Convoy.Tests
 {

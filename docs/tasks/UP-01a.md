@@ -16,3 +16,5 @@
 | 2026-10-11 | spec | APPROVED | Lead AI (delegated); D-023..D-030 accepted |
 | 2026-10-11 | build | launched | |
 | 2026-10-11 | build | done | 498683c |
+| 2026-10-11 | qa | FAIL | CS1061 `Is.Not.AllocatingGCMemory` needs `UnityEngine.TestTools.Constraints` (Unity's extended `Is`) |
+| 2026-10-11 | qa-fix | orchestrator | 1-line using alias added (builder rate-limited) |
