@@ -19,3 +19,18 @@
 | Date | Gate | Verdict | Notes |
 |---|---|---|---|
 | 2026-10-11 | launch | — | Gabriel approved roster/roadmap; architect launched |
+| 2026-10-11 | spec | done | architect: deliverables complete — ADR-001..005 (`docs/adr/`), specs F-03/D-01/A-01/C-01/Q-01 (`docs/specs/`), 13 split task files. Proposed D-015 (Cinemachine, in C-01 spec), D-016..D-020 (in ADRs); DECISIONS.md untouched. No asmdefs created (builders create them per ADR-001). |
+
+## Open questions for humans
+1. **Accept D-015 (Cinemachine 3)?** C-01a is blocked until then (Gabriel + Lead Dev).
+2. **Damage depth (D-018):** single hull pool for M1, per-subsystem damage only if PT-02 shows Engineer active % < 60. OK? (Gabriel)
+3. **O-001:** recommendation recorded (AI assist at reduced competence) but deferred to after PT-02 (K-02, P2); M1 empty stations idle. Confirm. (Gabriel + ND)
+4. **D-014 vs T-01:** A-01/Q-01 target `Sprint_01` (single route "main"); route columns and fork choice wait for T-01. Is Sprint_01 the M1 race track or is T-01 still a loop? (ND)
+5. **Human reference time** for A-01 AC 4: Gabriel's best `Sprint_01` time needs recording (provisional bound ≤ 2:00).
+6. **Removal of `PilotInputSource` / `SandboxChaseCamera`:** integration scripts only disable them; deleting needs explicit approval after F-03c/C-01b pass.
+7. **D-020 (M2 netcode):** pilot-owned vehicle physics + host-authoritative everything else, NGO 2.x spike. Lead Dev to confirm direction before the post-M1 spike.
+
+## Suggested batch-2 order (file conflicts serialised)
+Wave 1 (parallel): F-03a, D-01a, A-01a · then Q-01a (needs F-03a), C-01a (needs D-015).
+Wave 2: F-03b, D-01b, A-01b → Q-01b (after D-01b).
+Wave 3 (orchestrator, one at a time — shared prefab/scenes): F-03c → D-01c → A-01c → C-01b.
