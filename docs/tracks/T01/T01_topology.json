@@ -1,0 +1,1477 @@
+{
+ "track": "T01",
+ "source": "docs/tracks/T01/T01_map_*.png (900x1600 px)",
+ "version": "0.2 (Gabriel answers 2026-10-12)",
+ "scale": {
+  "m_per_px": 4.519,
+  "basis": "mean START\u2192FINISH length of A and B = 10 km (D-035)",
+  "origin_map_px": [
+   285,
+   760
+  ],
+  "axes": "world x = map right, world z = map up; y (height) not yet assigned"
+ },
+ "bbox_m": {
+  "x": 2282,
+  "z": 4090,
+  "max_dist_from_origin_m": 2342
+ },
+ "mains": {
+  "A": {
+   "length_m": 9916,
+   "role": "secondary: narrow, rough, technical",
+   "polyline_map_px": [
+    [
+     264,
+     1211
+    ],
+    [
+     260,
+     1187
+    ],
+    [
+     261,
+     1162
+    ],
+    [
+     262,
+     1138
+    ],
+    [
+     272,
+     1117
+    ],
+    [
+     283,
+     1096
+    ],
+    [
+     293,
+     1074
+    ],
+    [
+     284,
+     1052
+    ],
+    [
+     263,
+     1039
+    ],
+    [
+     242,
+     1026
+    ],
+    [
+     236,
+     1003
+    ],
+    [
+     244,
+     981
+    ],
+    [
+     254,
+     959
+    ],
+    [
+     267,
+     942
+    ],
+    [
+     288,
+     932
+    ],
+    [
+     304,
+     915
+    ],
+    [
+     289,
+     897
+    ],
+    [
+     267,
+     888
+    ],
+    [
+     246,
+     877
+    ],
+    [
+     246,
+     855
+    ],
+    [
+     258,
+     835
+    ],
+    [
+     271,
+     814
+    ],
+    [
+     292,
+     804
+    ],
+    [
+     304,
+     821
+    ],
+    [
+     309,
+     844
+    ],
+    [
+     326,
+     862
+    ],
+    [
+     345,
+     878
+    ],
+    [
+     369,
+     879
+    ],
+    [
+     394,
+     880
+    ],
+    [
+     417,
+     874
+    ],
+    [
+     422,
+     851
+    ],
+    [
+     413,
+     829
+    ],
+    [
+     397,
+     810
+    ],
+    [
+     380,
+     792
+    ],
+    [
+     369,
+     771
+    ],
+    [
+     380,
+     750
+    ],
+    [
+     401,
+     740
+    ],
+    [
+     422,
+     729
+    ],
+    [
+     438,
+     712
+    ],
+    [
+     438,
+     687
+    ],
+    [
+     424,
+     669
+    ],
+    [
+     400,
+     665
+    ],
+    [
+     375,
+     665
+    ],
+    [
+     355,
+     653
+    ],
+    [
+     336,
+     637
+    ],
+    [
+     335,
+     613
+    ],
+    [
+     335,
+     588
+    ],
+    [
+     329,
+     565
+    ],
+    [
+     305,
+     564
+    ],
+    [
+     282,
+     572
+    ],
+    [
+     263,
+     586
+    ],
+    [
+     256,
+     609
+    ],
+    [
+     251,
+     632
+    ],
+    [
+     234,
+     647
+    ],
+    [
+     215,
+     638
+    ],
+    [
+     216,
+     613
+    ],
+    [
+     219,
+     589
+    ],
+    [
+     219,
+     565
+    ],
+    [
+     214,
+     543
+    ],
+    [
+     204,
+     521
+    ],
+    [
+     202,
+     498
+    ],
+    [
+     197,
+     477
+    ],
+    [
+     178,
+     460
+    ],
+    [
+     167,
+     439
+    ],
+    [
+     171,
+     415
+    ],
+    [
+     168,
+     391
+    ],
+    [
+     167,
+     367
+    ],
+    [
+     175,
+     344
+    ],
+    [
+     188,
+     324
+    ],
+    [
+     211,
+     319
+    ],
+    [
+     234,
+     324
+    ],
+    [
+     259,
+     326
+    ],
+    [
+     283,
+     322
+    ],
+    [
+     307,
+     325
+    ],
+    [
+     329,
+     335
+    ],
+    [
+     351,
+     343
+    ],
+    [
+     373,
+     352
+    ],
+    [
+     391,
+     368
+    ],
+    [
+     404,
+     388
+    ],
+    [
+     414,
+     410
+    ],
+    [
+     423,
+     432
+    ],
+    [
+     433,
+     454
+    ],
+    [
+     444,
+     474
+    ],
+    [
+     464,
+     487
+    ],
+    [
+     486,
+     496
+    ],
+    [
+     508,
+     506
+    ],
+    [
+     520,
+     509
+    ]
+   ]
+  },
+  "B": {
+   "length_m": 10086,
+   "role": "primary: wide, smooth, fast",
+   "polyline_map_px": [
+    [
+     264,
+     1207
+    ],
+    [
+     266,
+     1183
+    ],
+    [
+     269,
+     1159
+    ],
+    [
+     271,
+     1134
+    ],
+    [
+     271,
+     1110
+    ],
+    [
+     261,
+     1088
+    ],
+    [
+     246,
+     1069
+    ],
+    [
+     231,
+     1050
+    ],
+    [
+     216,
+     1031
+    ],
+    [
+     207,
+     1009
+    ],
+    [
+     201,
+     986
+    ],
+    [
+     204,
+     962
+    ],
+    [
+     215,
+     941
+    ],
+    [
+     237,
+     934
+    ],
+    [
+     256,
+     948
+    ],
+    [
+     272,
+     966
+    ],
+    [
+     295,
+     965
+    ],
+    [
+     317,
+     956
+    ],
+    [
+     341,
+     961
+    ],
+    [
+     356,
+     979
+    ],
+    [
+     363,
+     1001
+    ],
+    [
+     386,
+     996
+    ],
+    [
+     407,
+     985
+    ],
+    [
+     407,
+     962
+    ],
+    [
+     399,
+     940
+    ],
+    [
+     393,
+     917
+    ],
+    [
+     386,
+     894
+    ],
+    [
+     376,
+     872
+    ],
+    [
+     364,
+     851
+    ],
+    [
+     364,
+     827
+    ],
+    [
+     374,
+     806
+    ],
+    [
+     378,
+     783
+    ],
+    [
+     375,
+     760
+    ],
+    [
+     391,
+     744
+    ],
+    [
+     412,
+     734
+    ],
+    [
+     432,
+     722
+    ],
+    [
+     439,
+     699
+    ],
+    [
+     435,
+     676
+    ],
+    [
+     421,
+     657
+    ],
+    [
+     404,
+     639
+    ],
+    [
+     381,
+     632
+    ],
+    [
+     356,
+     633
+    ],
+    [
+     340,
+     626
+    ],
+    [
+     342,
+     602
+    ],
+    [
+     344,
+     578
+    ],
+    [
+     341,
+     554
+    ],
+    [
+     338,
+     530
+    ],
+    [
+     325,
+     510
+    ],
+    [
+     302,
+     504
+    ],
+    [
+     278,
+     503
+    ],
+    [
+     253,
+     504
+    ],
+    [
+     228,
+     504
+    ],
+    [
+     203,
+     506
+    ],
+    [
+     187,
+     524
+    ],
+    [
+     172,
+     544
+    ],
+    [
+     154,
+     562
+    ],
+    [
+     133,
+     571
+    ],
+    [
+     111,
+     567
+    ],
+    [
+     96,
+     548
+    ],
+    [
+     82,
+     528
+    ],
+    [
+     72,
+     507
+    ],
+    [
+     61,
+     486
+    ],
+    [
+     53,
+     463
+    ],
+    [
+     60,
+     441
+    ],
+    [
+     80,
+     426
+    ],
+    [
+     100,
+     412
+    ],
+    [
+     121,
+     400
+    ],
+    [
+     142,
+     390
+    ],
+    [
+     164,
+     380
+    ],
+    [
+     186,
+     372
+    ],
+    [
+     211,
+     371
+    ],
+    [
+     236,
+     373
+    ],
+    [
+     259,
+     378
+    ],
+    [
+     282,
+     384
+    ],
+    [
+     304,
+     394
+    ],
+    [
+     323,
+     408
+    ],
+    [
+     336,
+     428
+    ],
+    [
+     348,
+     449
+    ],
+    [
+     354,
+     472
+    ],
+    [
+     370,
+     489
+    ],
+    [
+     391,
+     501
+    ],
+    [
+     414,
+     506
+    ],
+    [
+     438,
+     502
+    ],
+    [
+     458,
+     490
+    ],
+    [
+     481,
+     496
+    ],
+    [
+     502,
+     507
+    ],
+    [
+     523,
+     519
+    ],
+    [
+     542,
+     532
+    ],
+    [
+     545,
+     532
+    ]
+   ]
+  }
+ },
+ "nodes": [
+  {
+   "id": "START",
+   "kind": "start",
+   "level": "n/a",
+   "map_px": [
+    264,
+    1211
+   ],
+   "world_m": [
+    -94.9,
+    -2038.1
+   ],
+   "arc_m": {
+    "A": 0,
+    "B": 0
+   }
+  },
+  {
+   "id": "M0",
+   "kind": "merge-end",
+   "level": "n/a",
+   "map_px": [
+    280,
+    1102
+   ],
+   "world_m": [
+    -22.6,
+    -1545.5
+   ],
+   "arc_m": {
+    "A": 515,
+    "B": 452
+   }
+  },
+  {
+   "id": "C2",
+   "kind": "crossing",
+   "level": "over-under-locked",
+   "map_px": [
+    260,
+    952
+   ],
+   "world_m": [
+    -113.0,
+    -867.6
+   ],
+   "arc_m": {
+    "A": 1347,
+    "B": 1545
+   },
+   "note": "no line change (D-037 amendment)"
+  },
+  {
+   "id": "C3",
+   "kind": "crossing",
+   "level": "merge-short",
+   "map_px": [
+    380,
+    880
+   ],
+   "world_m": [
+    429.3,
+    -542.3
+   ],
+   "arc_m": {
+    "A": 2937,
+    "B": 2870
+   }
+  },
+  {
+   "id": "M4a",
+   "kind": "merge-start",
+   "level": "n/a",
+   "map_px": [
+    388,
+    801
+   ],
+   "world_m": [
+    465.5,
+    -185.3
+   ],
+   "arc_m": {
+    "A": 3489,
+    "B": 3263
+   }
+  },
+  {
+   "id": "M4b",
+   "kind": "merge-end",
+   "level": "n/a",
+   "map_px": [
+    412,
+    667
+   ],
+   "world_m": [
+    573.9,
+    420.3
+   ],
+   "arc_m": {
+    "A": 4352,
+    "B": 4063
+   }
+  },
+  {
+   "id": "M5a",
+   "kind": "merge-start",
+   "level": "n/a",
+   "map_px": [
+    341,
+    641
+   ],
+   "world_m": [
+    253.1,
+    537.8
+   ],
+   "arc_m": {
+    "A": 4709,
+    "B": 4456
+   }
+  },
+  {
+   "id": "M5b",
+   "kind": "merge-end",
+   "level": "n/a",
+   "map_px": [
+    329,
+    565
+   ],
+   "world_m": [
+    198.8,
+    881.2
+   ],
+   "arc_m": {
+    "A": 5066,
+    "B": 4777
+   }
+  },
+  {
+   "id": "C6",
+   "kind": "crossing",
+   "level": "over-under-locked",
+   "map_px": [
+    203,
+    510
+   ],
+   "world_m": [
+    -370.6,
+    1129.8
+   ],
+   "arc_m": {
+    "A": 6394,
+    "B": 5617
+   },
+   "note": "no line change (D-037 amendment)"
+  },
+  {
+   "id": "C7",
+   "kind": "crossing",
+   "level": "over-under-locked",
+   "map_px": [
+    168,
+    378
+   ],
+   "world_m": [
+    -528.7,
+    1726.3
+   ],
+   "arc_m": {
+    "A": 7050,
+    "B": 7343
+   },
+   "note": "no line change (D-037 amendment)"
+  },
+  {
+   "id": "M8a",
+   "kind": "merge-start",
+   "level": "n/a",
+   "map_px": [
+    453,
+    480
+   ],
+   "world_m": [
+    759.2,
+    1265.3
+   ],
+   "arc_m": {
+    "A": 8875,
+    "B": 8943
+   }
+  },
+  {
+   "id": "FINISH",
+   "kind": "finish",
+   "level": "n/a",
+   "map_px": [
+    530,
+    515
+   ],
+   "world_m": [
+    1107.2,
+    1107.2
+   ],
+   "arc_m": {
+    "A": 9915,
+    "B": 10086
+   }
+  },
+  {
+   "id": "J3",
+   "kind": "line-change-ramp",
+   "level": "jackal ramp",
+   "map_px": [
+    410,
+    660
+   ],
+   "world_m": [
+    564.9,
+    451.9
+   ],
+   "note": "JACKAL ramp at the end of M4 that jumps to the other line"
+  }
+ ],
+ "connector_ends": [
+  {
+   "id": "B@1414",
+   "kind": "connector-end",
+   "line": "B",
+   "arc_m": 1414,
+   "map_px": [
+    237,
+    934
+   ],
+   "world_m": [
+    -216.9,
+    -786.3
+   ]
+  },
+  {
+   "id": "A@2006",
+   "kind": "connector-end",
+   "line": "A",
+   "arc_m": 2006,
+   "map_px": [
+    246,
+    861
+   ],
+   "world_m": [
+    -176.2,
+    -456.4
+   ]
+  },
+  {
+   "id": "B@3118",
+   "kind": "connector-end",
+   "line": "B",
+   "arc_m": 3118,
+   "map_px": [
+    364,
+    829
+   ],
+   "world_m": [
+    357.0,
+    -311.8
+   ]
+  },
+  {
+   "id": "B@4456",
+   "kind": "connector-end",
+   "line": "B",
+   "arc_m": 4456,
+   "map_px": [
+    347,
+    629
+   ],
+   "world_m": [
+    280.2,
+    592.0
+   ]
+  },
+  {
+   "id": "A@5649",
+   "kind": "connector-end",
+   "line": "A",
+   "arc_m": 5649,
+   "map_px": [
+    244,
+    638
+   ],
+   "world_m": [
+    -185.3,
+    551.3
+   ]
+  },
+  {
+   "id": "B@6015",
+   "kind": "connector-end",
+   "line": "B",
+   "arc_m": 6015,
+   "map_px": [
+    136,
+    570
+   ],
+   "world_m": [
+    -673.3,
+    858.6
+   ]
+  },
+  {
+   "id": "B@2418",
+   "kind": "connector-end",
+   "line": "B",
+   "arc_m": 2418,
+   "map_px": [
+    407,
+    975
+   ],
+   "world_m": [
+    551.3,
+    -971.6
+   ]
+  },
+  {
+   "id": "A@3218",
+   "kind": "connector-end",
+   "line": "A",
+   "arc_m": 3218,
+   "map_px": [
+    422,
+    851
+   ],
+   "world_m": [
+    619.1,
+    -411.2
+   ]
+  },
+  {
+   "id": "A@2354",
+   "kind": "connector-end",
+   "line": "A",
+   "arc_m": 2354,
+   "map_px": [
+    292,
+    804
+   ],
+   "world_m": [
+    31.6,
+    -198.8
+   ]
+  },
+  {
+   "id": "A@3746",
+   "kind": "connector-end",
+   "line": "A",
+   "arc_m": 3746,
+   "map_px": [
+    378,
+    753
+   ],
+   "world_m": [
+    420.3,
+    31.6
+   ]
+  },
+  {
+   "id": "A@4148",
+   "kind": "connector-end",
+   "line": "A",
+   "arc_m": 4148,
+   "map_px": [
+    438,
+    697
+   ],
+   "world_m": [
+    691.4,
+    284.7
+   ]
+  },
+  {
+   "id": "B@5016",
+   "kind": "connector-end",
+   "line": "B",
+   "arc_m": 5016,
+   "map_px": [
+    327,
+    513
+   ],
+   "world_m": [
+    189.8,
+    1116.2
+   ]
+  },
+  {
+   "id": "A@5635",
+   "kind": "connector-end",
+   "line": "A",
+   "arc_m": 5635,
+   "map_px": [
+    246,
+    636
+   ],
+   "world_m": [
+    -176.2,
+    560.4
+   ]
+  },
+  {
+   "id": "B@6141",
+   "kind": "connector-end",
+   "line": "B",
+   "arc_m": 6141,
+   "map_px": [
+    109,
+    565
+   ],
+   "world_m": [
+    -795.3,
+    881.2
+   ]
+  },
+  {
+   "id": "A@7791",
+   "kind": "connector-end",
+   "line": "A",
+   "arc_m": 7791,
+   "map_px": [
+    292,
+    323
+   ],
+   "world_m": [
+    31.6,
+    1974.8
+   ]
+  },
+  {
+   "id": "B@8193",
+   "kind": "connector-end",
+   "line": "B",
+   "arc_m": 8193,
+   "map_px": [
+    336,
+    428
+   ],
+   "world_m": [
+    230.5,
+    1500.3
+   ]
+  },
+  {
+   "id": "B@3141",
+   "kind": "connector-end",
+   "line": "B",
+   "arc_m": 3141,
+   "map_px": [
+    365,
+    824
+   ],
+   "world_m": [
+    361.5,
+    -289.2
+   ]
+  },
+  {
+   "id": "B@4885",
+   "kind": "connector-end",
+   "line": "B",
+   "arc_m": 4885,
+   "map_px": [
+    339,
+    539
+   ],
+   "world_m": [
+    244.0,
+    998.7
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "id": "A:START-M0",
+   "type": "A",
+   "frm": "START",
+   "to": "M0",
+   "length_m": 515
+  },
+  {
+   "id": "A:M0-C2",
+   "type": "A",
+   "frm": "M0",
+   "to": "C2",
+   "length_m": 831
+  },
+  {
+   "id": "A:C2-C3",
+   "type": "A",
+   "frm": "C2",
+   "to": "C3",
+   "length_m": 1591
+  },
+  {
+   "id": "A:C3-M4a",
+   "type": "A",
+   "frm": "C3",
+   "to": "M4a",
+   "length_m": 551
+  },
+  {
+   "id": "A:M4a-M4b",
+   "type": "A",
+   "frm": "M4a",
+   "to": "M4b",
+   "length_m": 863
+  },
+  {
+   "id": "A:M4b-M5a",
+   "type": "A",
+   "frm": "M4b",
+   "to": "M5a",
+   "length_m": 357
+  },
+  {
+   "id": "A:M5a-M5b",
+   "type": "A",
+   "frm": "M5a",
+   "to": "M5b",
+   "length_m": 357
+  },
+  {
+   "id": "A:M5b-C6",
+   "type": "A",
+   "frm": "M5b",
+   "to": "C6",
+   "length_m": 1329
+  },
+  {
+   "id": "A:C6-C7",
+   "type": "A",
+   "frm": "C6",
+   "to": "C7",
+   "length_m": 655
+  },
+  {
+   "id": "A:C7-M8a",
+   "type": "A",
+   "frm": "C7",
+   "to": "M8a",
+   "length_m": 1826
+  },
+  {
+   "id": "A:M8a-FINISH",
+   "type": "A",
+   "frm": "M8a",
+   "to": "FINISH",
+   "length_m": 1039
+  },
+  {
+   "id": "B:START-M0",
+   "type": "B",
+   "frm": "START",
+   "to": "M0",
+   "length_m": 452
+  },
+  {
+   "id": "B:M0-C2",
+   "type": "B",
+   "frm": "M0",
+   "to": "C2",
+   "length_m": 1094
+  },
+  {
+   "id": "B:C2-C3",
+   "type": "B",
+   "frm": "C2",
+   "to": "C3",
+   "length_m": 1324
+  },
+  {
+   "id": "B:C3-M4a",
+   "type": "B",
+   "frm": "C3",
+   "to": "M4a",
+   "length_m": 393
+  },
+  {
+   "id": "B:M4a-M4b",
+   "type": "B",
+   "frm": "M4a",
+   "to": "M4b",
+   "length_m": 800
+  },
+  {
+   "id": "B:M4b-M5a",
+   "type": "B",
+   "frm": "M4b",
+   "to": "M5a",
+   "length_m": 393
+  },
+  {
+   "id": "B:M5a-M5b",
+   "type": "B",
+   "frm": "M5a",
+   "to": "M5b",
+   "length_m": 321
+  },
+  {
+   "id": "B:M5b-C6",
+   "type": "B",
+   "frm": "M5b",
+   "to": "C6",
+   "length_m": 841
+  },
+  {
+   "id": "B:C6-C7",
+   "type": "B",
+   "frm": "C6",
+   "to": "C7",
+   "length_m": 1726
+  },
+  {
+   "id": "B:C7-M8a",
+   "type": "B",
+   "frm": "C7",
+   "to": "M8a",
+   "length_m": 1600
+  },
+  {
+   "id": "B:M8a-FINISH",
+   "type": "B",
+   "frm": "M8a",
+   "to": "FINISH",
+   "length_m": 1143
+  },
+  {
+   "id": "S3",
+   "type": "sidecar",
+   "frm": "B@1414",
+   "to": "A@2006",
+   "length_m": 746,
+   "direction": "assumed",
+   "note": "narrow cut B\u2192A after C2"
+  },
+  {
+   "id": "S2",
+   "type": "sidecar",
+   "frm": "B@3118",
+   "to": "B@4456",
+   "length_m": 926,
+   "direction": "assumed",
+   "note": "tunnel B\u2192B skipping B's mid S"
+  },
+  {
+   "id": "S1",
+   "type": "sidecar",
+   "frm": "A@5649",
+   "to": "B@6015",
+   "length_m": 542,
+   "direction": "assumed",
+   "note": "A lobe bottom \u2192 B top-left loop (skips C6); S1 and H2 run side by side as one contact corridor (heavy can wreck the sidecar)"
+  },
+  {
+   "id": "H4",
+   "type": "heavy",
+   "frm": "B@2418",
+   "to": "A@3218",
+   "length_m": 628,
+   "direction": "assumed",
+   "note": "wall B\u2192A before M4"
+  },
+  {
+   "id": "H3",
+   "type": "heavy",
+   "frm": "A@2354",
+   "to": "A@3746",
+   "length_m": 452,
+   "direction": "assumed",
+   "note": "diagonal across A's lobe into M4 (triple crossing)"
+  },
+  {
+   "id": "H1",
+   "type": "heavy",
+   "frm": "A@4148",
+   "to": "B@5016",
+   "length_m": 1116,
+   "direction": "assumed",
+   "note": "parallel brute line right of M4/M5"
+  },
+  {
+   "id": "H2",
+   "type": "heavy",
+   "frm": "A@5635",
+   "to": "B@6141",
+   "length_m": 831,
+   "direction": "assumed",
+   "note": "A lobe bottom \u2192 B loop (overlaps S1); S1 and H2 run side by side as one contact corridor (heavy can wreck the sidecar)"
+  },
+  {
+   "id": "J1",
+   "type": "jackal",
+   "frm": "A@7791",
+   "to": "B@8193",
+   "length_m": 637,
+   "direction": "confirmed A\u2192B",
+   "note": "top jump A\u2192B: loses ~400 m but skips rough A; \u2248 +2\u20133 s under the placeholder model"
+  },
+  {
+   "id": "J24",
+   "type": "jackal",
+   "frm": "B@3141",
+   "to": "B@4885",
+   "length_m": 1640,
+   "direction": "confirmed",
+   "note": "jump from B over the triple crossing, lands on its own track, rejoins B near M5b; \u2248 104 m shorter, \u2248 +5 s under model"
+  }
+ ],
+ "unresolved": [],
+ "segments": [
+  {
+   "id": "SEG1",
+   "tk": "TK-01",
+   "frm": "START",
+   "to": "M4a",
+   "A_m": 3489,
+   "B_m": 3263
+  },
+  {
+   "id": "SEG2",
+   "frm": "M4a",
+   "to": "C6"
+  },
+  {
+   "id": "SEG3",
+   "frm": "C6",
+   "to": "M8a"
+  },
+  {
+   "id": "SEG4",
+   "frm": "M8a",
+   "to": "FINISH"
+  }
+ ]
+}

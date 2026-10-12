@@ -1,6 +1,6 @@
 # ARCH-003 — Re-plan for the D-035 MVP: track kit, vehicle classes, impacted specs
 - **Owner (agent):** architect (opus)            - **Human reviewer/owner:** Gabriel + Lead Dev
-- **Status:** todo
+- **Status:** review (delivered 2026-10-12; awaiting Gabriel + Lead Dev)
 - **Blocked by:** PR #10 merged (D-033..D-036, `docs/BACKLOG_MVP.md`)
 - **Allowed files:** `docs/adr/ADR-007-mvp-track-classes.md` (new), `docs/tracks/T01/T01_topology.{md,json}` (new), `docs/specs/{TK-00,TK-01,VH-01,VH-02}.md` (new), `docs/tasks/{TK-00,TK-01,VH-01,VH-02}.md`, consistency edits to existing `docs/specs/*.md` and `docs/tasks/*.md` listed below (note each edit in the report)
 - **Acceptance criteria:**
@@ -23,3 +23,4 @@
 |---|---|---|---|
 | 2026-10-12 | todo | created | Lead AI, from Gabriel's MVP decisions (D-035) |
 | 2026-10-12 | todo | amended | Added AC 5: T01 hand-drawn topology input (D-037) |
+| 2026-10-12 | spec→review | delivered | ADR-007 (+D-038), specs TK-00/TK-01/VH-01/VH-02, T01_topology.{md,json,png}, impact review in ADR-007; awaiting Gabriel + Lead Dev |

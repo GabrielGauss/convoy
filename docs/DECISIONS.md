@@ -22,6 +22,7 @@ Status: **Accepted** (team agreed) · **Proposed** (Lead AI recommendation, awai
 | D-035 | MVP: one 10 km multi-level sprint track + 3 vehicle classes with their own lines | Accepted |
 | D-036 | Track tech: spline-mesh roads + ProBuilder; Unity Terrain only as backdrop | Proposed (Lead Dev) |
 | D-037 | T01 topology = Gabriel's hand-drawn map: two braided main lines + class connectors | Accepted |
+| D-038 | MVP class & track architecture (ADR-007): classes as data, track kit in Level, physical class gates, O-004 toggle | Proposed (architect) |
 | O-001 | Crew-size balance (2 vs 3 players) | Answered by D-035 (vehicle class scales with crew) |
 | O-002 | Crews per match / elimination & respawn rules | Open |
 | O-003 | Online infrastructure & hosting cost | Open (post-M1) |
@@ -242,6 +243,15 @@ See `CLAUDE.md`. Summary: AI drafts on branches; humans review, own, and merge. 
 - **Why:** two full lines + mid-race line changes give more replay value and crew-vs-crew contact at every crossing than isolated per-segment forks. The earlier "FRACTURA" layout proposal (never committed) is not used.
 - **Rules (detail in `docs/tracks/T01/T01_HANDMAP.md`):** every A/B crossing is classified merge or grade-separated (3 signature over/under crossings); class gates are physical, never locks; failed JACKAL jumps feed the O-004 toggle; shortcut gain ≤ 2–3 s; A/B delta ≤ 2 s per ~60 s section; perks balanced across the last third.
 - **Next:** ARCH-003 digitizes the map into a node graph (`T01_topology.md` + `.json`) and derives the TK-01 spec (segment 1 from START) from it.
+- **Amended 2026-10-12 (Gabriel's answers, topology v0.2):** crossings C2, C6, C7 are **locked over/under** (no line change; stops line-hopping); J4+J2 = one JACKAL line (J24) that lands on its own track and rejoins B; J3 = JACKAL line-change ramp at the end of M4; S1 and H2 run side by side as a contact corridor (robbery there is post-MVP, D-032).
+
+## D-038 — MVP class & track architecture (ADR-007)
+**Date:** 2026-10-12 · **Status:** Proposed (architect, ARCH-003) — Lead Dev + Gabriel to approve
+- `VehicleClass` (+ `VehicleClassMask`) and `IVehicleClassSource` in Core; classes are data (`VehicleConfig`, `DamageConfig`, `ClassTraction`, `SeatLayout`, camera profile), never subclasses or `switch` in behaviour code.
+- Track kit in `Convoy.Level` (graph, road profiles, pure mesh builder; + `Unity.Splines`) with editor-baked meshes; layers = physics layers `Road_L0..L2`.
+- Class gates are physical: geometry (sidecar), class mask + speed (heavy walls), speed (JACKAL jumps via `ChasmJump.MinClearSpeed`).
+- O-004 = `RaceRulesConfig.layerFallMode` {LandAndContinue, ResetToRoute, Hybrid}, default Hybrid; recovery becomes layer-aware (`TrackRecoveryPoints`).
+- AI racing lines sampled from the same splines; one line per class route. Full text: `docs/adr/ADR-007-mvp-track-classes.md`.
 
 ---
 

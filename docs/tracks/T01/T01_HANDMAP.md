@@ -30,7 +30,7 @@
    - **Merge:** shared road, crew contact (PvP).
    - **Grade-separated crossing:** bridge / tunnel — this is where the D-035 layers live.
    - Pick **3 signature over/under crossings**; turn the rest into clean merges/splits. No ambiguous flat intersections.
-3. **Sidecar/heavy overlap top-left:** both connect B's loop (~100,575) to A (~220,640). Give it to one class, or split it: sidecar tunnel underneath, heavy breakable wall on a separate line.
+3. **Sidecar/heavy top-left:** both connect B's loop (~100,575) to A (~220,640). **Decided:** they run side by side as one contact corridor (answer 4).
 4. **Central triple crossing (~330,770) = signature moment.** JACKAL diagonal, heavy diagonal and sidecar vertical meet at one point. Stack it:
    - sidecar → tunnel on the low layer,
    - heavy → breakable wall at ground level,
@@ -42,7 +42,9 @@
    - **Sidecar:** passage width (natural gate).
    - **Heavy:** wall stays broken once rammed, leaving debris that slows followers (reuses LV-01 Rammer gate, class-based break per ARCH-003).
    - **JACKAL:** speed threshold (`ChasmJump.MinClearSpeed`). Other classes may attempt; failing drops them to the lower layer → O-004 toggle.
-8. **Open:** purple dot at ~(410,660) — ramp or drawing leftover? → ask Gabriel.
+8. **Answered:** the purple dot at ~(410,660) is a JACKAL ramp that changes line at the end of M4 (J3).
+
+**Gabriel's answers (2026-10-12):** J4+J2 = one JACKAL line (lands on its own track, joins B) · J1 runs A→B · S1/H2 run side by side as a contact corridor (heavy can wreck the sidecar; sidecar robbing the heavy is post-MVP, D-032) · C2/C6/C7 locked over/under (architect's call). Details: `T01_topology.md` v0.2.
 
 ## Next step (owned by ARCH-003)
 Digitize the map into a **node graph** — `T01_topology.md` + `T01_topology.json` in this folder:
