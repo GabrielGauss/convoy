@@ -162,6 +162,14 @@ See `CLAUDE.md`. Summary: AI drafts on branches; humans review, own, and merge. 
 - **D-030** Integration scripts expose `ApplyToScene(string scenePath)`.
 - Placeholder medal times until Gabriel sets a reference run; ND to confirm uplink feel and write the LV-03 brief.
 
+## D-031 — Open living terrain, not tracks; no medals
+**Date:** 2026-10-11 · **Status:** Accepted (Gabriel, creative director) — supersedes D-022 (sprint/medal loop), D-024 ghosts, D-026, D-028; amends D-021 scale
+- Gabriel: "el mundo está vivo, no es un track o una pista, es un terreno completo… sino es un juego de carreras con tiros." Reference maps: `PÁRAMO` technical map + PÁRAMO-NEXUS concept (2026-10-11).
+- **M1 world = one open terrain slice**: free Unity Terrain, **2 km × 2 km** (¼ of the 4 km vision: playable by one small team, crossing ≈ 1.5–2.5 min), Monolith in a crater at the centre, player convoy spawns at one edge, **≥ 3 genuine routes** (canyon, toxic river crossing, open desert/minefield) plus class obstacles (Rammer rock, Chasm jump, mud). No checkpoints, no invisible walls; soft world edge only.
+- **Retry/retention comes from the world, not from medals:** (1) rival AI convoys from other edges racing to the Monolith on their own routes (A-01 follows authored route polylines — the dashed lines in the map); (2) per-run world variation — dust storm on/off, which shortcut is open, mine layout; (3) route discovery; (4) win = first to hold the uplink (UP-01).
+- **Cancelled:** RT-01 (splits + medals), RT-02 (ghost), PR-01 (medal unlocks), LV-03 (Sprint_02 biome sprint → replaced by **TR-01 Páramo terrain slice**). Kept: UP-01, LV-01, LV-02, A-01, crew tasks, D-029 restart. `Sprint_01` stays as a driving test course.
+- **Still out of M1:** 4 teams × 10 vehicles, payload HP, fauna (spiders/beasts — M2 candidate), fog of war, paid assets.
+
 ---
 
 ## Open questions

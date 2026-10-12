@@ -1,6 +1,6 @@
 # LV-03c — Integration: Sprint_02 race wiring, Monolith/uplink, definition, Build Settings
 - **Owner (agent):** level-builder (script) → orchestrator (runs)            - **Human reviewer/owner:** Narrative & Game Designer + Gabriel
-- **Status:** spec
+- **Status:** cancelled (D-031 — open terrain, no medals)
 - **Spec:** docs/specs/LV-03.md · ADR-006
 - **Blocked by:** LV-03b, F-03c, C-01b, UP-01c, RT-01d (ApplyToScene entry points)
 - **Allowed files:** `Editor/Integration/LV03_WireSprint02.cs` (new). Orchestrator commits `Sprint_02.unity`, `Config/Sprints/ToxicWastes_SprintDefinition.asset`, `ProjectSettings/EditorBuildSettings.asset`, metas (paths under `Assets/_Convoy/` unless stated)

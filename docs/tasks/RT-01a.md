@@ -1,6 +1,6 @@
 # RT-01a — Splits in SprintRun, medals, SprintDefinition, save model + store
 - **Owner (agent):** ui-input-engineer            - **Human reviewer/owner:** Gabriel
-- **Status:** building
+- **Status:** cancelled (D-031 — open terrain, no medals)
 - **Spec:** docs/specs/RT-01.md · ADR-006
 - **Blocked by:** —
 - **Allowed files:** `Scripts/Race/SprintRun.cs` (additive), `Medals.cs`, `SprintDefinition.cs`, `SaveData.cs`, `SaveStore.cs` (new); `Tests/EditMode/SprintRunTests.cs` (add), `MedalRulesTests.cs`, `SaveStoreTests.cs` (new) (paths under `Assets/_Convoy/` unless stated)

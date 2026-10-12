@@ -1,6 +1,6 @@
 # PR-01c — Integration: SprintCatalog asset in both sprints + editor save tools
 - **Owner (agent):** ui-input-engineer (script) → orchestrator (runs)            - **Human reviewer/owner:** Gabriel
-- **Status:** spec
+- **Status:** cancelled (D-031 — open terrain, no medals)
 - **Spec:** docs/specs/PR-01.md · ADR-006
 - **Blocked by:** PR-01b, LV-03c, RT-01d
 - **Allowed files:** `Editor/Integration/PR01_ProgressionSetup.cs`, `Editor/SaveTools.cs` (new). Orchestrator commits `Config/Sprints/SprintCatalog.asset`, `Sprint_01.unity`, `Sprint_02.unity`, metas (paths under `Assets/_Convoy/` unless stated)

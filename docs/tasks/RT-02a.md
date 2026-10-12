@@ -1,6 +1,6 @@
 # RT-02a — Ghost track, sampler and binary file format (pure)
 - **Owner (agent):** vehicle-engineer            - **Human reviewer/owner:** Gabriel
-- **Status:** spec
+- **Status:** cancelled (D-031 — open terrain, no medals)
 - **Spec:** docs/specs/RT-02.md · ADR-006
 - **Blocked by:** —
 - **Allowed files:** `Scripts/Race/Ghost.cs` (new); `Tests/EditMode/GhostTrackTests.cs`, `GhostFileTests.cs` (new) (paths under `Assets/_Convoy/` unless stated)

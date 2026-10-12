@@ -1,6 +1,6 @@
 # LV-03a — BiomeLayout data + layout/heightfield maths + validator (pure)
 - **Owner (agent):** level-builder            - **Human reviewer/owner:** Narrative & Game Designer + Gabriel
-- **Status:** spec
+- **Status:** cancelled (D-031 — open terrain, no medals)
 - **Spec:** docs/specs/LV-03.md · ADR-006
 - **Blocked by:** LV-01a (Convoy.Level + test asmdef)
 - **Allowed files:** `Scripts/Level/BiomeLayout.cs`, `LayoutMath.cs`, `HeightfieldMath.cs`, `LayoutValidator.cs` (new); `Tests/EditMode/Level/LayoutMathTests.cs`, `HeightfieldMathTests.cs`, `LayoutValidatorTests.cs` (new) (paths under `Assets/_Convoy/` unless stated)

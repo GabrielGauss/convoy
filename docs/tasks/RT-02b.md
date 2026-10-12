@@ -1,6 +1,6 @@
 # RT-02b — GhostRecorder (Race) + GhostRenderer (Presentation) + PlayMode test
 - **Owner (agent):** vehicle-engineer            - **Human reviewer/owner:** Gabriel
-- **Status:** spec
+- **Status:** cancelled (D-031 — open terrain, no medals)
 - **Spec:** docs/specs/RT-02.md · ADR-006
 - **Blocked by:** RT-02a, RT-01b (Save/Definition/LastOutcome), D-01b (PlayMode asmdef)
 - **Allowed files:** `Scripts/Race/GhostRecorder.cs`, `Scripts/Presentation/GhostRenderer.cs` (new); `Tests/PlayMode/GhostRecordTests.cs` (new) (paths under `Assets/_Convoy/` unless stated)
