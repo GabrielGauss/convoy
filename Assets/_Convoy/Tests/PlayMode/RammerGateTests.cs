@@ -13,6 +13,7 @@ using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.TestTools;
+using UnityEngine.TestTools.Constraints;
 // Unity's Is extends NUnit's Is with Is.Not.AllocatingGCMemory(); all the usual NUnit constraints still work.
 using Is = UnityEngine.TestTools.Constraints.Is;
 using Object = UnityEngine.Object;
