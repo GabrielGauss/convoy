@@ -7,7 +7,8 @@
         "Convoy.Core",
         "Convoy.Vehicle",
         "Convoy.Input",
-        "Convoy.Level"
+        "Convoy.Level",
+        "Convoy.Race"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
