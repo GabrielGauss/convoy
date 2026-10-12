@@ -1,6 +1,6 @@
 # TR-01b — Editor generator: Paramo_01 terrain, splat layers, placements
 - **Owner (agent):** combat-engineer            - **Human reviewer/owner:** Gabriel
-- **Status:** spec
+- **Status:** pr
 - **Spec:** docs/specs/TR-01.md
 - **Blocked by:** TR-01a, F-03c (`Convoy.Editor.asmdef`), C-01b (camera `ApplyToScene`); soft: LV-01c (`RammerGate.prefab`), LV-02c (`MudPatch.prefab`) — placeholders until then, re-run after
 - **Allowed files:** `Editor/Terrain/ParamoTerrainGenerator.cs`, `Editor/Terrain/TerrainTextureFactory.cs` (new); `Editor/Convoy.Editor.asmdef` (add `Convoy.Level` only if absent). Orchestrator runs the menu and commits `Scenes/Paramo_01.unity`, `Config/Level/Paramo_01_Layout.asset`, `Terrain/**`, metas (paths under `Assets/_Convoy/` unless stated)
@@ -13,3 +13,5 @@
 ## Verdict log
 | Date | Gate | Verdict | Notes |
 |---|---|---|---|
+| 2026-10-12 | build | done | 7c07e82 |
+| 2026-10-12 | review | APPROVE | `ApplyToScene` + menu + version refusal per D-030/spec; only `Paramo_Generated` children rebuilt, TerrainData/river mesh/materials updated in place (GUID stable), seeded blockers → idempotent (QA: 3 runs, 2.6 s, 0 errors, ~169 fps); Convoy.Editor is Editor-only; render/greybox constants commented (incl. cc1dcbf ×4 Monolith, 6 m beam). Non-blocking follow-ups: (1) Convoy.Editor.asmdef created here with Vehicle/Presentation/RP refs (F-03c not landed) — F-03c adopts it, no duplicate asmdef; (2) player Jackal/camera/volume set up inline — switch to F-03c/C-01b `ApplyToScene` when they land; (3) `ParamoRouteGizmos` does `GameObject.Find` per scene repaint (editor-only, negligible); (4) blocker boulder size/jitter ranges uncommented. |
