@@ -31,6 +31,7 @@ graph TD
     Vehicle["Convoy.Vehicle"]
     Combat["Convoy.Combat (new, G-01)"]
     Crew["Convoy.Crew (new, F-03)"]
+    Level["Convoy.Level (new, LV-01, ADR-006)"]
   end
   subgraph L0["L0 — contracts (engine-free)"]
     Core["Convoy.Core"]
@@ -46,6 +47,7 @@ graph TD
   Race --> Core
   Vehicle --> Core
   Combat --> Core
+  Level --> Core
   Crew --> Core
   Telemetry --> Race
   Telemetry --> Vehicle
@@ -55,6 +57,7 @@ graph TD
   Presentation --> Race
   Presentation --> Crew
   Presentation --> Combat
+  Presentation --> Level
   Presentation --> Vehicle
   Presentation --> Core
   Net -. M2 .-> Crew
@@ -66,6 +69,7 @@ graph TD
   Editor -.-> Telemetry
   Editor -.-> Input
   Editor -.-> AI
+  Editor -.-> Level
 ```
 
 ### Module table
@@ -74,12 +78,13 @@ Folder layout stays `Assets/_Convoy/Scripts/<Module>/` (existing code is **not**
 | Module (asmdef) | Namespace | Folder | Responsibility | May reference | Must never reference |
 |---|---|---|---|---|---|
 | `Convoy.Core` *(exists)* | `Convoy.Core` | `Scripts/Core/` | Engine-free contracts: `SeatId`, seat command structs + receiver interfaces, `VehicleId`, `DamageEvent`/`IDamageable`, `ISeatStatus`, `IPowerSupply` (M-01). Data only, no behaviour beyond clamping. | — (`noEngineReferences: true`) | anything, incl. `UnityEngine` |
-| `Convoy.Vehicle` *(exists)* | `Convoy.Vehicle` | `Scripts/Vehicle/` | Raycast vehicle, `VehicleConfig`, `VehicleState`, boost, recovery, **health/damage (D-01)**, Engineer station power/heat/repair (M-01/M-02). Implements `IPilotCommandReceiver`, `IDamageable`, later `IEngineerCommandReceiver`. | Core | Combat, Crew, Input, AI, Race, Presentation, Telemetry |
+| `Convoy.Vehicle` *(exists)* | `Convoy.Vehicle` | `Scripts/Vehicle/` | Raycast vehicle, `VehicleConfig`, `VehicleState`, boost, recovery, **health/damage (D-01)**, **surface modifiers (LV-02, ADR-006)**, Engineer station power/heat/repair (M-01/M-02). Implements `IPilotCommandReceiver`, `IDamageable`, later `IEngineerCommandReceiver`. | Core | Combat, Crew, Level, Input, AI, Race, Presentation, Telemetry |
+| `Convoy.Level` *(new, LV-01a — ADR-006, D-023)* | `Convoy.Level` | `Scripts/Level/` | Interactive level pieces: Rammer gate (speed-breakable wall), biome layout data + generation maths (LV-03); later chasm bridge terminal, mines. Detects breakers by `Rigidbody` mass/velocity, not by vehicle type. | Core | Vehicle, Combat, Crew, Input, AI, Race, Presentation, Telemetry |
 | `Convoy.Combat` *(new, G-01)* | `Convoy.Combat` | `Scripts/Combat/` | Turret station, weapons, ammo, overheat, hit resolution. Applies damage **only via `IDamageable`**; reads weapon power via `IPowerSupply`. Implements `IGunnerCommandReceiver`. | Core | **Vehicle**, Crew, Input, AI, Race, Presentation, Telemetry |
 | `Convoy.Crew` *(new, F-03)* | `Convoy.Crew` | `Scripts/Crew/` | Seat assignment (who occupies which seat), station switching (K-01), per-vehicle `VehicleSeats` router (seat → receiver, neutral on vacate, activity counters), `CrewConfig`. | Core | Vehicle, Combat, Input, AI, Race, Presentation, Telemetry |
 | `Convoy.Input` *(exists)* | `Convoy.Input` | `Scripts/Input/` | Devices → players → seat commands (`SeatInputRouter`), Input Actions asset, `InputSeatConfig`, view-only input (look-back). Temporary `PilotInputSource` until F-03c. | Core, Crew, `Unity.InputSystem` | Vehicle, Combat, AI, Race, Presentation, Telemetry |
 | `Convoy.AI` *(new, A-01)* | `Convoy.AI` | `Scripts/AI/` | Racing-line path following → `PilotCommand`; stuck recovery; later rival gunners and seat assist (O-001). Reads `VehicleState` / `VehicleConfig`. | Core, Vehicle | Input, Combat, Crew, Race, Presentation, Telemetry |
-| `Convoy.Race` *(exists)* | `Convoy.Race` | `Scripts/Race/` | Sprint/race flow, checkpoints, finish, results; implements `IRecoveryPointProvider`. | Core, Vehicle | Input, AI, Combat, Crew, Presentation, Telemetry |
+| `Convoy.Race` *(exists)* | `Convoy.Race` | `Scripts/Race/` | Sprint/race flow, checkpoints, finish, results; implements `IRecoveryPointProvider`. Páramo Run (ADR-006): splits, uplink, medals, local save, ghost recording, biome progression. | Core, Vehicle | Input, AI, Combat, Crew, Presentation, Telemetry |
 | `Convoy.Telemetry` *(new, Q-01)* | `Convoy.Telemetry` | `Scripts/Telemetry/` | Samples state each tick, writes one CSV per race. Read-only like Presentation. | Core, Vehicle, Race (+ Crew/Combat when needed) | Input, AI, Presentation; and **no simulation module may reference Telemetry** |
 | `Convoy.Presentation` *(exists)* | `Convoy.Presentation` | `Scripts/Presentation/` | Cameras (C-01), HUD, debug overlay, VFX/audio hooks. Read-only. | every runtime module above + `Unity.InputSystem`, `Unity.Cinemachine` (after D-015) | Editor, Tests, Net |
 | `Convoy.Editor` *(new, first integration task F-03c)* | `Convoy.EditorTools` | `Assets/_Convoy/Editor/` | Versioned **integration scripts** (scene/prefab/asset wiring) + menu items. Editor-only. | any runtime module, `UnityEditor` | — (nothing references it) |
@@ -108,6 +113,7 @@ Builders create these when their task first needs the folder (Unity generates th
 - `Convoy.AI` (A-01a): references `["Convoy.Core", "Convoy.Vehicle"]`.
 - `Convoy.Telemetry` (Q-01a): references `["Convoy.Core", "Convoy.Vehicle", "Convoy.Race"]`.
 - `Convoy.Combat` (G-01, not batch 2): references `["Convoy.Core"]`.
+- `Convoy.Level` (LV-01a, ADR-006): references `["Convoy.Core"]`; test asmdef `Convoy.Level.Tests.EditMode` under `Tests/EditMode/Level/`. `Convoy.Editor` adds `Convoy.Level` (LV-01c).
 - `Convoy.Input` (F-03b edit): add `"Convoy.Crew"`.
 - `Convoy.Presentation` (edits, one per task that needs it): `"Convoy.Crew"`, `"Convoy.Input"` (F-03b), `"Convoy.AI"` (A-01b), `"Unity.Cinemachine"` (C-01a, after D-015).
 - `Convoy.Editor` (F-03c): namespace `Convoy.EditorTools` (a namespace ending in `.Editor` shadows Unity's `Editor` base class inside it and causes confusing compile errors), `"includePlatforms": ["Editor"]`, references all runtime `Convoy.*` modules it wires + `Unity.InputSystem`; later integration tasks add references (A-01c: `Convoy.AI`; C-01b: `Unity.Cinemachine`).
@@ -117,6 +123,7 @@ Builders create these when their task first needs the folder (Unity generates th
 Builders never open Unity and never hand-edit `.unity` / `.prefab` / `.asset` YAML (CLAUDE.md). Anything that needs wiring is a **separate integration task** (`<ID>c`/`<ID>b` suffix) whose deliverable is an editor script:
 - File: `Assets/_Convoy/Editor/Integration/<TaskId>_<Name>.cs`, menu `Convoy/Integration/<TaskId> <Name>`.
 - **Idempotent** (running twice changes nothing), logs every change, **never deletes**: it disables components (`enabled = false`) instead. Removing old components/files needs Gabriel's approval (CLAUDE.md hard limit).
+- **Scene-parametric** (ADR-006, D-030): exposes `public static void ApplyToScene(string scenePath)`; the menu item calls it for the task's default scenes. New biome scenes (LV-03c) reuse these entry points instead of duplicating wiring.
 - Uses `ScriptableObject.CreateInstance` + `AssetDatabase.CreateAsset` for configs, `PrefabUtility.LoadPrefabContents` / `SaveAsPrefabAsset` / `UnloadPrefabContents` for prefabs, `EditorSceneManager.OpenScene` / `MarkSceneDirty` / `SaveScene` for scenes.
 - The orchestrator runs it in the single Unity Editor (MCP), runs tests, commits the resulting scene/prefab/asset/meta diff on the integration task's branch.
 
@@ -129,6 +136,7 @@ Unity runs `FixedUpdate` of all components in an undefined order unless `[Defaul
 | −40 | `VehicleSeats` (F-03b) | count seat activity for the tick |
 | 0 | `VehicleController` (unchanged) | simulate |
 | 0 | `SprintController` (unchanged; reads last tick's state — acceptable) | race clock |
+| +40 | `GhostRecorder` (RT-02b, ADR-006) | sample the pose after simulation, before telemetry |
 | +50 | `RaceTelemetry` (Q-01b) | sample state after simulation |
 
 Human input still arrives in `Update` (per rendered frame) and is latched by the vehicle (existing `_resetLatched`), see ADR-002.

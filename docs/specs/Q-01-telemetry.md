@@ -99,7 +99,8 @@ Sources resolved once at start: `SprintController` (same GameObject), its `Vehic
 ## Dependencies
 - Q-01a blocked by: — (only Core types `SeatActivity` from F-03a; if F-03a isn't merged yet, Q-01a is blocked by F-03a).
 - Q-01b blocked by: Q-01a, **D-01b** (both edit `VehicleController.cs`/`VehicleState.cs`; serialise), F-03b (`ISeatStatus` implementation; seat columns are blank without it, so not a hard block if late).
-- Blocks: PT-02, A-01 human-reference time capture (optional).
+- Blocks: PT-02, A-01 human-reference time capture (optional), LV-02b (next editor of `VehicleController.cs`/`VehicleState.cs`, ADR-006 § 9).
+- ADR-006 notes: with an uplink zone (UP-01) `Finished` fires when the hold completes, so `finished`/`race_time_s` include the hold — no change needed. Once RT-01a is merged, `splits_s` may read `SprintRun.TryGetSplit` instead of tracking splits itself (optional).
 
 ## Allowed files
 - **Q-01a:** `Assets/_Convoy/Scripts/Telemetry/**` (new asmdef + `RaceTelemetryRecorder.cs`, `TelemetryCsv.cs`, structs), `Assets/_Convoy/Tests/EditMode/Telemetry/**` (new test asmdef + tests).

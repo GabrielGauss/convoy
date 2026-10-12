@@ -212,6 +212,7 @@ The Pilot bindings are **exactly** today's `PilotInputSource` bindings (+ LookBa
 - **F-03c:** `Assets/_Convoy/Editor/Convoy.Editor.asmdef` (new, per ADR-001), `Assets/_Convoy/Editor/Integration/F03_InputSeatsSetup.cs` (new). The **orchestrator** commits the resulting changes to `Jackal.prefab`, `Sandbox.unity`, `Sprint_01.unity`, the three assets above and all generated `.meta` files.
 
 ## F-03c integration script — `Convoy/Integration/F-03 Input Seats Setup`
+*(ADR-006, D-030)* Expose `public static void ApplyToScene(string scenePath)`; the menu item calls it for the scenes listed below. LV-03c reuses it for `Sprint_02`.
 Idempotent, never deletes, logs each change:
 1. Create `InputSeatConfig.asset`, `Crew_Config.asset` if missing.
 2. Create `PlayerSlot.prefab` if missing (GameObject + `PlayerInput`, actions = `ConvoyControls`, notification behaviour = Invoke C# Events).

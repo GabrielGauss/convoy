@@ -123,6 +123,7 @@ Presentation fix (A-01b): `SpeedometerHud` and `VehicleDebugOverlay` auto-target
 `Assets/_Convoy/Config/AI/AI_Steady.asset` (cornerSpeedScale 0.85), `AI_Balanced.asset` (0.92), `AI_Aggressive.asset` (0.98); other fields default.
 
 ## A-01c integration script — `Convoy/Integration/A-01 Sprint AI Setup`
+*(ADR-006, D-030)* Expose `public static void ApplyToScene(string scenePath)`; the menu item calls it for the scenes listed below. LV-03c reuses it for `Sprint_02`.
 1. Create the three profiles if missing.
 2. In `Sprint_01`, if `RacingLine_Main` is missing: collect objects named `Road_<n>`, sort by `n` numerically, take every 4th world position (y + 0.5 m) as children `WP_000…`; append one point 20 m past the finish gate along its forward. `_halfWidth = 4`.
 3. If `Rival_1..3` missing: instantiate `Jackal.prefab` at the player's start pose offset (−4 m right, −8 m back), (+4 m, −8 m), (0, −16 m); add `AiPilot` (line, profiles Steady/Balanced/Aggressive, mask = Default, `_waitForVehicle` = player Jackal).

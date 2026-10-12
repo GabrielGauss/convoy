@@ -36,6 +36,7 @@
 4. **Seats by `SeatId`, vehicles by `VehicleId`.** No `LocalPlayer` singletons, no `static` mutable gameplay state, no `FindAnyObjectByType` in simulation (allowed in presentation bootstrap and editor scripts).
 5. **One choke point per authoritative change:** damage only via `IDamageable.ApplyDamage`; repair only via `VehicleDamage.Repair`; checkpoints only via the race controller; recovery only via `VehicleRecovery`. In M2 each becomes "host only".
 6. **State is serializable structs** (`VehicleState`, `VehicleDamageState`, `SprintRun` fields, `SeatActivity`). Events (`Finished`, `Damaged`) are for presentation/telemetry; simulation logic must never depend on an event being delivered.
+   *(ADR-006)* Páramo Run adds replicated race state (`UplinkHold` progress, splits, Rammer gate broken flags — the gate's speed-retention write runs where the breaker's physics is owned). Save data and ghosts are **local only**, never replicated.
 7. **Deterministic-ish AI:** no `UnityEngine.Random` in simulation; use a seeded `System.Random` owned by the system.
 8. **Presentation never writes simulation** (ADR-001). Flow requests (restart) go through named methods that can become server requests.
 9. **No persistence in simulation:** `PlayerPrefs`/files only from presentation/telemetry/bootstrap. (Known exception to clean up in R-01: `SprintController` saves the best time.)

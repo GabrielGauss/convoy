@@ -141,6 +141,7 @@ public sealed class VehicleHealth
   - Unity background: with `Physics.reuseCollisionCallbacks` = true (Unity default since 2018.3) the `Collision` object passed to `OnCollisionEnter` is reused, so reading `impulse` and `GetContact(0)` allocates nothing.
 - `VehicleController` (minimal edit): `GetComponent<VehicleDamage>()` once in `Awake` (may be null → `HandlingModifiers.None`). In `FixedUpdate` multiply: `topSpeed` (the boost bonus is added *after* scaling, unscaled), `engineForce`, `frontLateralGrip`/`rearLateralGrip`, `maxSteerAngle`. The speed-dependent steer falloff keeps using the **unscaled** `topSpeed` so steering feel doesn't shift with damage.
 - `VehicleState` gains `Health01` (1 when no `VehicleDamage`) and `Wrecked`.
+- *(ADR-006, LV-02)* Per-wheel `SurfaceModifiers` (toxic mud) multiply on top of these `HandlingModifiers`; both are exactly `1f` by default, so full health off-surface stays bit-identical.
 - Damage does **nothing else** in D-01: no wreck behaviour (W-01), no repair input (M-02), no VFX (presentation later). The debug overlay shows HP.
 
 ### What later tasks plug in
