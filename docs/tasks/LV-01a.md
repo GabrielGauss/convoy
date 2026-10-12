@@ -16,3 +16,4 @@
 | 2026-10-11 | spec | APPROVED | Lead AI (delegated); D-023..D-030 accepted |
 | 2026-10-11 | build | launched | |
 | 2026-10-11 | build | relaunched | |
+| 2026-10-12 | build | done | 035af4c (combat-engineer; qa pending in Unity Editor) |
