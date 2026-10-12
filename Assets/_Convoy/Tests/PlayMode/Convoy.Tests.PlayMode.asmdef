@@ -6,7 +6,8 @@
         "UnityEditor.TestRunner",
         "Convoy.Core",
         "Convoy.Vehicle",
-        "Convoy.Input"
+        "Convoy.Input",
+        "Convoy.AI"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

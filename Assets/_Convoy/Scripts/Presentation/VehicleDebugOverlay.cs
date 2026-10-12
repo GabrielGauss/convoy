@@ -1,5 +1,6 @@
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
 using System.Diagnostics;
+using Convoy.AI;
 using Convoy.Vehicle;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -67,7 +68,7 @@ namespace Convoy.Presentation
                 _searchTimer -= Time.unscaledDeltaTime;
                 if (_target == null && _searchTimer <= 0f)
                 {
-                    _target = FindAnyObjectByType<VehicleController>();
+                    _target = FindPlayerVehicle();
                     _searchTimer = VehicleSearchInterval;
                 }
 
@@ -82,6 +83,17 @@ namespace Convoy.Presentation
             _cost.Stop();
             // Reported cost = this Update + last frame's OnGUI, so the < 0.5 ms AC can be read live.
             _costMs = (float)_cost.Elapsed.TotalMilliseconds + _guiCostMs;
+        }
+
+        // A-01b: the HUD must show the human's car, never a rival. Rivals carry an AiPilot, so take the first
+        // VehicleController without one. Only runs (at most once a second) while there is no target, so the
+        // array FindObjectsByType allocates is not a per-frame cost.
+        private static VehicleController FindPlayerVehicle()
+        {
+            VehicleController[] vehicles = FindObjectsByType<VehicleController>(FindObjectsSortMode.None);
+            foreach (VehicleController vehicle in vehicles)
+                if (!vehicle.TryGetComponent<AiPilot>(out _)) return vehicle;
+            return null;
         }
 
         private void RebuildText()

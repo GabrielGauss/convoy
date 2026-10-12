@@ -166,7 +166,39 @@ namespace Convoy.AI.Tests
             Assert.AreEqual(2, brain.ResetRequests);
         }
 
+        [Test]
+        public void ResetRequest_WaitsForTheVehicleRecoveryCooldown_ThenIsSentOnce()
+        {
+            // The vehicle's auto-right started its cooldown (the brain never sent anything): a reset sent now
+            // would be dropped by VehicleRecovery, so the brain must hold it until the vehicle reports 0.
+            AiDriverBrain brain = Brain(TestPaths.Straight(300f));
+            AiSensorFrame lost = Frame(new Vector3(40f, 0f, 50f), Vector3.forward, 0f); // 40 m > offPathResetDistance
+            lost.RecoveryCooldown = 1.5f;
+
+            Assert.AreEqual(0, CountResets(brain, lost, 2f), "no request while the vehicle is cooling down");
+            Assert.AreEqual(AiDriveMode.RequestReset, brain.Mode, "the request is pending, not forgotten");
+
+            lost.RecoveryCooldown = 0f;
+            Assert.IsTrue(brain.Step(lost).Reset, "sent on the first step the vehicle can accept it");
+            Assert.AreEqual(1, brain.ResetRequests);
+        }
+
         // --- Performance -----------------------------------------------------
+
+        [Test]
+        public void AllocationCounter_DetectsAnAllocation()
+        {
+            // Positive control for Step_DoesNotAllocate (A-01a review): if this runtime's counter always
+            // returned 0, the 0-byte assertion would pass vacuously. Prove it sees a known allocation.
+            long before = System.GC.GetAllocatedBytesForCurrentThread();
+            _sink = new byte[1024];
+            long allocated = System.GC.GetAllocatedBytesForCurrentThread() - before;
+
+            Assert.GreaterOrEqual(allocated, 1024L, "GC.GetAllocatedBytesForCurrentThread does not report allocations here");
+        }
+
+        // Static sink so the probe allocation can't be optimised away.
+        private static byte[] _sink;
 
         [Test]
         public void Step_DoesNotAllocate()
