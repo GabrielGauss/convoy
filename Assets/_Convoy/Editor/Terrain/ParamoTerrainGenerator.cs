@@ -168,6 +168,7 @@ namespace Convoy.Editor
             // ---- player rig (what Sprint_01 uses: Jackal prefab with its own PilotInputSource, chase camera, volume;
             // the HUD/audio/debug overlay spawn themselves at runtime). F-03c/C-01b will own this once they land.
             VehicleController jackal = EnsurePlayer(scene, playerSpawn);
+            if (jackal != null) F03_InputSeatsSetup.ConfigureJackal(jackal.gameObject); // F-03c: crew input, no keyboard on the prefab
             EnsureCamera(scene, jackal);
             EnsureVolume(scene);
 

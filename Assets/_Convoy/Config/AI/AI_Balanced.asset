@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24a875ddd6ad8f548976bbd575bcb28c, type: 3}
+  m_Name: AI_Balanced
+  m_EditorClassIdentifier: Convoy.AI::Convoy.AI.AiDriverProfile
+  lookaheadBase: 6
+  lookaheadPerSpeed: 0.5
+  steerGain: 1
+  maxLateralAccel: 14
+  cornerSpeedScale: 0.92
+  brakingDecel: 12
+  planningHorizon: 120
+  planningStep: 5
+  curvatureSpan: 8
+  throttleGain: 0.5
+  coastBand: 1
+  useBoost: 1
+  boostClearDistance: 80
+  laneWidth: 2.5
+  laneChangeRate: 3
+  obstacleCheckDistance: 25
+  obstacleRadius: 1
+  obstacleCastHeight: 0.8
+  walkableNormalUp: 0.5
+  stuckSpeed: 1
+  stuckTime: 2.5
+  reverseTime: 1.5
+  maxReverseAttempts: 2
+  offPathResetDistance: 25
+  wrongWayTime: 4
+  recoveryBackoff: 10
+  projectionWindow: 8
+  arriveDistance: 5
+  releaseSpeed: 1.5

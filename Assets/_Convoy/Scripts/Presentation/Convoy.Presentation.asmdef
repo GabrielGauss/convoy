@@ -8,6 +8,7 @@
         "Convoy.Crew",
         "Convoy.Vehicle",
         "Convoy.Race",
+        "Convoy.Level",
         "Unity.InputSystem"
     ],
     "includePlatforms": [],
