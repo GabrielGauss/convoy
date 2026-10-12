@@ -1,6 +1,6 @@
 # LV-02a — Surface profile, modifiers and per-wheel cache (pure)
 - **Owner (agent):** vehicle-engineer            - **Human reviewer/owner:** Gabriel
-- **Status:** spec
+- **Status:** qa
 - **Spec:** docs/specs/LV-02.md · ADR-006
 - **Blocked by:** —
 - **Allowed files:** `Scripts/Vehicle/SurfaceProfile.cs`, `WheelSurfaceCache.cs` (new); `Tests/EditMode/SurfaceModifiersTests.cs` (new) (paths under `Assets/_Convoy/` unless stated)
@@ -11,3 +11,4 @@
 | Date | Gate | Verdict | Notes |
 |---|---|---|---|
 | 2026-10-11 | spec | written | architect (ARCH-002); awaiting Gabriel's spec approval |
+| 2026-10-12 | build | done | fabfe83 |
