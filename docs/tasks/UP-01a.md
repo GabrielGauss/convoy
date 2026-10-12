@@ -1,6 +1,6 @@
 # UP-01a — Uplink pure hold logic + UplinkConfig
 - **Owner (agent):** ai-engineer            - **Human reviewer/owner:** Gabriel
-- **Status:** review
+- **Status:** pr
 - **Spec:** docs/specs/UP-01.md · ADR-006
 - **Blocked by:** — (ADR-006 approval)
 - **Allowed files:** `Scripts/Race/UplinkConfig.cs`, `UplinkHold.cs` (new); `Tests/EditMode/UplinkHoldTests.cs` (new) (paths under `Assets/_Convoy/` unless stated)
@@ -20,3 +20,4 @@
 | 2026-10-11 | qa-fix | orchestrator | 1-line using alias added (builder rate-limited) |
 | 2026-10-11 | qa | PASS | Gabriel's Editor: EditMode 246/246 after fix (daeb646) |
 | 2026-10-11 | perf | PASS | Tick verified 0 B with Unity's AllocatingGCMemory constraint |
+| 2026-10-12 | review | APPROVE | Matches UP-01 Tick rule exactly (NaN/neg dt, sticky Complete, Reset/Decay, km/h limit, epsilon with why-comment); SO holds all tuning; _camelCase ok; tests cover AC1-2 + 0-alloc. Nits: name `3.6f` as a MpsToKmh const. Follow-up: spec places `UplinkRingMath` in UplinkHold.cs but it was not built here and UP-01b's allowed files exclude UplinkHold.cs -> add `UplinkRingMath.cs` (new) to UP-01b allowed files. |
