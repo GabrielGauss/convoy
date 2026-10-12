@@ -1,6 +1,6 @@
 # LV-02a — Surface profile, modifiers and per-wheel cache (pure)
 - **Owner (agent):** vehicle-engineer            - **Human reviewer/owner:** Gabriel
-- **Status:** qa
+- **Status:** pr
 - **Spec:** docs/specs/LV-02.md · ADR-006
 - **Blocked by:** —
 - **Allowed files:** `Scripts/Vehicle/SurfaceProfile.cs`, `WheelSurfaceCache.cs` (new); `Tests/EditMode/SurfaceModifiersTests.cs` (new) (paths under `Assets/_Convoy/` unless stated)
@@ -12,3 +12,4 @@
 |---|---|---|---|
 | 2026-10-11 | spec | written | architect (ARCH-002); awaiting Gabriel's spec approval |
 | 2026-10-12 | build | done | fabfe83 |
+| 2026-10-12 | review | APPROVE | Matches spec interfaces exactly; None = literal 1f, NaN/negative → 1f via `!(m >= 0f)`; cache uses validity flag (any int id valid), Clear drops ref; 0 B GC tests with positive control + warm-up; Vehicle asmdef Core-only; why-comments good. No changes required. |
