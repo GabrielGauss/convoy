@@ -1,6 +1,6 @@
 # TR-01a — Pure terrain synthesis, TerrainLayout SO, WorldVariation selection
 - **Owner (agent):** combat-engineer            - **Human reviewer/owner:** Gabriel
-- **Status:** spec
+- **Status:** qa
 - **Spec:** docs/specs/TR-01.md
 - **Blocked by:** LV-01a (creates `Convoy.Level.asmdef` and the `Tests/EditMode/Level/` test asmdef)
 - **Allowed files:** `Scripts/Level/Terrain/*.cs` (new: `TerrainLayout`, `TerrainLayoutData` + defs, `HeightField`, `TerrainSynthesis`, `ChasmJump`, `DeterministicRng`, `ParamoLayoutDefaults`, `WorldVariationConfig`, `WorldVariation`, `WorldVariationRules`); `Tests/EditMode/Level/TerrainSynthesisTests.cs`, `WorldVariationRulesTests.cs` (new) (paths under `Assets/_Convoy/` unless stated)
@@ -16,3 +16,4 @@
 ## Verdict log
 | Date | Gate | Verdict | Notes |
 |---|---|---|---|
+| 2026-10-12 | build | done | d252b8a |
