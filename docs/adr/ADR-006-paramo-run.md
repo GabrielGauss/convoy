@@ -76,7 +76,7 @@ Physical side effect: when a gate breaks, `RammerGate` scales the breaker's hori
 - **Inside test is geometric, not a trigger:** `UplinkZone.Contains(vehicle.State.Position)` (oriented box via `InverseTransformPoint`). Triggers stop reporting `OnTriggerStay` when a stopped Rigidbody sleeps — exactly the "hold still" case — so they are unreliable here.
 - **Clock keeps running during the uplink**; the finish time is the moment the hold completes (braking into the zone is part of the skill). Leaving the zone resets progress (config: `Reset` or `Decay`). A V-02 reset during the uplink teleports to the last checkpoint → outside → progress resets.
 - Telemetry (Q-01) is unaffected: `Finished` still marks the end; `race_time_s` includes the hold.
-- UP-01c (integration) adds `Uplink` object to `Sprint_01` at the `Finish` gate pose and wires it. Nothing is deleted.
+- UP-01c (integration) adds an `Uplink` object to `Sprint_01` at the `Finish` gate pose and wires it. Nothing is deleted.
 
 ### 6. Restart
 Restart stays a **scene reload** in M1 (`SprintController.Restart()`): it resets breakables, debris, AI, physics for free. Target: input → car controllable again **≤ 2.0 s** on Gabriel's PC (RT-01 AC). Persistent things survive the reload by design: the save file and ghost file (disk), `MusicPlayer` (`DontDestroyOnLoad`). RT-01 adds a **quick restart** anywhere in a run (hold Backspace / gamepad Back 0.4 s). An in-place reset (no reload) is deferred until playtests show the reload hurts retry (D-029).
@@ -112,18 +112,49 @@ stateDiagram-v2
 | File | Edited by (in order) |
 |---|---|
 | `Scripts/Race/SprintController.cs` | UP-01b → RT-01b → PR-01b |
-| `Scripts/Race/SprintRun.cs` | RT-01a only |
-| `Scripts/Presentation/SprintHud.cs` | RT-01b → PR-01b |
+| `Scripts/Race/SprintRun.cs` | RT-01a only (additive) |
+| `Scripts/Presentation/SprintHud.cs` | RT-01c → PR-01b |
 | `Scripts/Vehicle/VehicleController.cs`, `VehicleState.cs` | D-01b → Q-01b → LV-02b |
-| `Tests/PlayMode/Convoy.Tests.PlayMode.asmdef` | D-01b (creates) → A-01b → UP-01b → LV-01b → LV-02b |
-| `Editor/Convoy.Editor.asmdef` | F-03c (creates) → … → LV-01c (adds `Convoy.Level`) |
-| `Scenes/Sprint_01.unity` (orchestrator) | F-03c → A-01c → C-01b → UP-01c → RT-01c |
+| `Tests/PlayMode/Convoy.Tests.PlayMode.asmdef` | D-01b (creates) → A-01b → UP-01b (adds `Convoy.Race`) → LV-01b (adds `Convoy.Level`) |
+| `Editor/Convoy.Editor.asmdef` | F-03c (creates) → A-01c → C-01b → LV-01c (adds `Convoy.Level`) |
+| `Scenes/Sprint_01.unity` (orchestrator) | F-03c → A-01c → C-01b → UP-01c → RT-01d → PR-01c |
 | `Scenes/Sandbox.unity` (orchestrator) | F-03c → C-01b → LV-01c → LV-02c |
-| `Scenes/Sprint_02.unity` (new, orchestrator) | LV-03b only |
-| `ProjectSettings/EditorBuildSettings.asset` (orchestrator) | LV-03b |
+| `Scenes/Sprint_02.unity` (new, orchestrator) | LV-03b → LV-03c → PR-01c |
+| `ProjectSettings/EditorBuildSettings.asset` (orchestrator) | LV-03c |
+
+### Task graph (Páramo Run batch)
+```mermaid
+graph LR
+  UP01a[UP-01a] --> UP01b[UP-01b] --> UP01c[UP-01c]
+  RT01a[RT-01a] --> RT01b[RT-01b] --> RT01c[RT-01c] --> RT01d[RT-01d]
+  UP01b --> RT01b
+  UP01c --> RT01d
+  RT02a[RT-02a] --> RT02b[RT-02b] --> RT02c[RT-02c]
+  RT01b --> RT02b
+  LV01a[LV-01a] --> LV01b[LV-01b] --> LV01c[LV-01c]
+  LV02a[LV-02a] --> LV02b[LV-02b] --> LV02c[LV-02c]
+  LV01c --> LV02c
+  LV01a --> LV03a[LV-03a] --> LV03b[LV-03b] --> LV03c[LV-03c]
+  BRIEF{{ND brief}} --> LV03b
+  LV01c --> LV03b
+  LV02c --> LV03b
+  UP01c --> LV03c
+  RT01d --> LV03c
+  RT01a --> PR01a[PR-01a] --> PR01b[PR-01b] --> PR01c[PR-01c]
+  RT01c --> PR01b
+  LV03c --> PR01c
+  D01b([D-01b]) --> UP01b
+  D01b --> LV02b
+  Q01b([Q-01b]) --> LV02b
+  F03c([F-03c]) --> UP01c
+  C01b([C-01b]) --> UP01c
+  A01c([A-01c]) --> UP01c
+  C01b --> LV01c
+```
+Rounded nodes are batch-2 tasks (ARCH-001). Wave 1 (parallel, no file overlap): UP-01a, RT-01a, RT-02a, LV-01a, LV-02a; then LV-03a, PR-01a.
 
 ### 10. Changes made to existing ADRs/specs (consistency edits in this task)
-1. **ADR-001:** `Convoy.Level` added to the layer diagram, module table and asmdef list; Race and Vehicle responsibility lines extended; execution-order table gains `GhostRecorder` (+40); integration scripts must expose `ApplyToScene(string scenePath)` so new biome scenes reuse them (LV-03b).
+1. **ADR-001:** `Convoy.Level` added to the layer diagram, module table and asmdef list; Race and Vehicle responsibility lines extended; execution-order table gains `GhostRecorder` (+40); integration scripts must expose `ApplyToScene(string scenePath)` so new biome scenes reuse them (LV-03c).
 2. **ADR-003:** note that `SurfaceModifiers` (LV-02) multiply with `HandlingModifiers` and are likewise exactly 1 outside zones.
 3. **ADR-005:** list of replicated state gains run/uplink state; ghosts and save data are local-only.
 4. **D-01 spec:** Blocks list gains LV-02b (same `VehicleController.cs`).
@@ -148,4 +179,4 @@ To be copied into `DECISIONS.md` by a human (architect does not edit it).
 - **D-027 — Surface modifiers via ground-collider tags** · Proposed · Owner: Gabriel — Per-wheel lookup of a `SurfaceTag` on the collider hit by the suspension ray (no trigger volumes); multipliers default to exactly 1; nitro push unaffected by surfaces (counterplay to mud).
 - **D-028 — Sprint identity, medals and unlocks** · Proposed · Owner: Gabriel + ND — One `SprintDefinition` SO per biome (stable `sprintId`, scene name, Bronze/Silver/Gold/Monolith times, inclusive at hundredths); `SprintCatalog` lists sprints in order with unlock rules; unlocks are derived from saved medals, never stored. Toxic Wastes requires Silver in Red Canyon.
 - **D-029 — Restart = scene reload in M1** · Proposed · Owner: Gabriel — Target ≤ 2.0 s to control; quick restart anywhere (hold Back 0.4 s). In-place reset only if PT data shows the reload hurts retries.
-- **D-030 — Integration scripts are scene-parametric** · Proposed · Owner: Lead Dev — Every integration script exposes `public static void ApplyToScene(string scenePath)` (menu items call it for their default scenes), so a generated biome scene (LV-03b) reuses F-03c/C-01b/UP-01c/RT-01c wiring instead of duplicating it.
+- **D-030 — Integration scripts are scene-parametric** · Proposed · Owner: Lead Dev — Every integration script exposes `public static void ApplyToScene(string scenePath)` (menu items call it for their default scenes), so a generated biome scene (LV-03c) reuses F-03c/C-01b/UP-01c/RT-01d wiring instead of duplicating it.
