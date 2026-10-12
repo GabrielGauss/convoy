@@ -160,3 +160,6 @@ H-02 MULE · any networking · loadouts/customization · bosses (designed on pap
 - Paper crew test (week 1): one person drives an existing racing game, one calls routes from a printed map, one manages a "heat" timer. Note communication load.
 - Race Royale proposal for O-002 (crews per match, elimination, "the prize").
 - First boss encounter design on paper (what crew roles it stresses).
+
+## Next milestone
+M2 draft: `docs/BACKLOG_M2.md` ("Convoy Run vs AI", D-032). Starts only after the M1 exit questions are answered.
