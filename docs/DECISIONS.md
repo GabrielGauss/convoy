@@ -150,6 +150,18 @@ See `CLAUDE.md`. Summary: AI drafts on branches; humans review, own, and merge. 
 - Biome order: **Red Canyon** (`Sprint_01`, exists) → **Toxic Wastes** (mud, shortest line) → Mountains / Dune Valley later.
 - AI rivals (A-01) and crew stations (K-01/G-01/M-01) stay in M1 scope but serve this loop; T-01 becomes "second biome sprint with a fork" instead of a loop.
 
+## D-023..D-030 — Páramo Run architecture (ADR-006)
+**Date:** 2026-10-11 · **Status:** Accepted (Lead AI, delegated by Gabriel) — details and rationale in `docs/adr/ADR-006-paramo-run.md`
+- **D-023** `Convoy.Level` module (Core only) for interactive level pieces (Rammer gate first).
+- **D-024** Local save: versioned JSON `convoy_save.json` + binary ghosts in `persistentDataPath`; no online services.
+- **D-025** Uplink finish: hold 4 s in the Monolith zone, leaving resets; scenes without a zone keep the instant finish.
+- **D-026** Ghost: best run only, 25 Hz, ≤ 300 s, ≤ 512 KB, 0 B per-frame GC, no colliders.
+- **D-027** Surface modifiers via ground-collider tags per wheel; defaults exactly 1; nitro unaffected by mud.
+- **D-028** `SprintDefinition` per biome with medal times; unlocks derived from saved medals (Toxic Wastes needs Silver in Red Canyon).
+- **D-029** Restart = scene reload (≤ 2 s target) + quick restart (hold Back 0.4 s).
+- **D-030** Integration scripts expose `ApplyToScene(string scenePath)`.
+- Placeholder medal times until Gabriel sets a reference run; ND to confirm uplink feel and write the LV-03 brief.
+
 ---
 
 ## Open questions
