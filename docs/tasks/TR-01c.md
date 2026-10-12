@@ -1,6 +1,6 @@
 # TR-01c — World variation runtime, rival route export, route recovery
 - **Owner (agent):** combat-engineer            - **Human reviewer/owner:** Gabriel
-- **Status:** spec
+- **Status:** paused (D-035, 2026-10-12) — `Paramo_01` is now a test map/backdrop; do not build until ARCH-003 says otherwise
 - **Spec:** docs/specs/TR-01.md
 - **Blocked by:** TR-01b (`Paramo_01.unity` owner before it), A-01b (`RacingLine`, `AiPilot`), A-01c (rival setup to reuse)
 - **Allowed files:** `Scripts/Level/Terrain/WorldVariationRunner.cs`, `Scripts/Presentation/ParamoAtmosphere.cs`, `Scripts/Race/RouteRecoveryPoints.cs`, `Scripts/Race/RouteRecoveryMath.cs` (new); `Scripts/Presentation/Convoy.Presentation.asmdef` (add `Convoy.Level`); `Editor/Integration/TR01_ParamoRuntimeSetup.cs` (+ `AiRivalSetup.cs` if extracted) (new); `Tests/EditMode/AI/ParamoRivalRouteTests.cs` + `Convoy.AI.Tests.EditMode.asmdef` (add `Convoy.Level`); `Tests/EditMode/RouteRecoveryMathTests.cs` (new). Orchestrator commits `Paramo_01.unity`, `Config/Level/Paramo_WorldVariation.asset`, metas (paths under `Assets/_Convoy/` unless stated)
@@ -13,6 +13,7 @@
 ## Verdict log
 | Date | Gate | Verdict | Notes |
 |---|---|---|---|
+| 2026-10-12 | spec | paused | D-035: MVP track is a multi-level spline track; open-terrain runtime on hold |
 
 ## Orchestrator notes before build (from TR-01b review, 2026-10-12)
 - Clamp the chasm cut to the shortcut end (today it slots ~700 m through ridges).
