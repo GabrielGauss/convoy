@@ -15,4 +15,4 @@
 | 2026-10-11 | spec | written | architect (ARCH-002); awaiting Gabriel's spec approval |
 | 2026-10-11 | spec | APPROVED | Lead AI (delegated); D-023..D-030 accepted |
 | 2026-10-11 | build | launched | |
-| 2026-10-11 | build | done | build \| done \| 498683c |
+| 2026-10-11 | build | done | 498683c |
