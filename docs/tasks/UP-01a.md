@@ -1,0 +1,15 @@
+# UP-01a — Uplink pure hold logic + UplinkConfig
+- **Owner (agent):** ai-engineer            - **Human reviewer/owner:** Gabriel
+- **Status:** spec
+- **Spec:** docs/specs/UP-01.md · ADR-006
+- **Blocked by:** — (ADR-006 approval)
+- **Allowed files:** `Scripts/Race/UplinkConfig.cs`, `UplinkHold.cs` (new); `Tests/EditMode/UplinkHoldTests.cs` (new) (paths under `Assets/_Convoy/` unless stated)
+- **Acceptance criteria:**
+  1. Spec AC 1: completes on exactly the 200th 0.02 s step for 4 s; Complete sticky
+  2. Spec AC 2: Reset/Decay/speed-limit cases
+  3. Zero-alloc `Tick` (`Is.Not.AllocatingGCMemory()`)
+  - Always: compiles with 0 errors; all existing tests stay green; no per-frame GC alloc in Update/FixedUpdate hot paths; no hand-edited `.unity`/`.prefab`/`.asset` YAML.
+## Verdict log
+| Date | Gate | Verdict | Notes |
+|---|---|---|---|
+| 2026-10-11 | spec | written | architect (ARCH-002); awaiting Gabriel's spec approval |
