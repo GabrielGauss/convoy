@@ -1,6 +1,6 @@
 # QA-CI-01 — Cloud compile + EditMode test harness (no Unity)
 - **Owner (agent):** qa-engineer            - **Human reviewer/owner:** Lead Dev
-- **Status:** building
+- **Status:** cancelled
 - **Blocked by:** —
 - **Allowed files:** `tools/ci/**` (new), `docs/tasks/QA-CI-01.md`, `README.md` (one short section)
 - **Acceptance criteria:**
@@ -13,3 +13,4 @@
 | Date | Gate | Verdict | Notes |
 |---|---|---|---|
 | 2026-10-11 | launch | — | Gabriel unavailable for Editor QA; cloud pre-gate requested by orchestrator |
+| 2026-10-11 | — | cancelled | Gabriel's Editor available again; agent run rejected by Gabriel |
