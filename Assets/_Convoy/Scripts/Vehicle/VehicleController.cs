@@ -43,6 +43,7 @@ namespace Convoy.Vehicle
         private BoostSystem _boost;
         private IRecoveryPointProvider _recoveryPointProvider;
         private bool _resetLatched;
+        private VehicleDamage _damage; // D-01: damage multiplier (1.0 at full health)
 
         public VehicleConfig Config => _config;
         public VehicleState State => _state;
@@ -72,6 +73,7 @@ namespace Convoy.Vehicle
         private void Awake()
         {
             _body = GetComponent<Rigidbody>();
+            TryGetComponent(out _damage); // D-01: damage multiplier (1.0 at full health)
             _lastCompression = new float[_wheels.Length];
             _wheelSpin = new float[_wheels.Length];
             ApplyBodySettings();
@@ -129,6 +131,7 @@ namespace Convoy.Vehicle
 #endif
 
             float dt = Time.fixedDeltaTime;
+            HandlingModifiers mods = _damage != null ? _damage.Modifiers : HandlingModifiers.None; // D-01: damage multiplier (1.0 at full health)
             if (TryRecover(dt)) return;
 
             Vector3 up = transform.up;
@@ -143,12 +146,12 @@ namespace Convoy.Vehicle
                 out float drive, out float brake);
 
             float driveTopSpeed = drive >= 0f
-                ? _config.topSpeed + (boosting ? _config.boostTopSpeedBonus : 0f)
+                ? _config.topSpeed * mods.TopSpeed + (boosting ? _config.boostTopSpeedBonus : 0f) // D-01: damage multiplier (1.0 at full health)
                 : _config.reverseTopSpeed;
             float driveFactor = VehicleMath.DriveFactor(forwardSpeed, driveTopSpeed);
             int drivenCount = CountDriven();
-            float steerAngle = VehicleMath.SteerAngle(_command.Steer, _config.maxSteerAngle, forwardSpeed,
-                _config.topSpeed, _config.highSpeedSteerFactor);
+            float steerAngle = VehicleMath.SteerAngle(_command.Steer, _config.maxSteerAngle * mods.Steer, forwardSpeed,
+                _config.topSpeed, _config.highSpeedSteerFactor); // D-01: damage multiplier (1.0 at full health)
 
             int grounded = 0;
             bool sliding = false;
@@ -191,7 +194,7 @@ namespace Convoy.Vehicle
                 // --- Longitudinal: drive, brake, rolling resistance ---
                 float longitudinal = 0f;
                 if (wheel.driven && drivenCount > 0)
-                    longitudinal += drive * _config.engineForce * driveFactor / drivenCount;
+                    longitudinal += drive * _config.engineForce * mods.EngineForce * driveFactor / drivenCount; // D-01: damage multiplier (1.0 at full health)
 
                 longitudinal += VehicleMath.BrakeForce(wheelForwardSpeed, brake,
                     _config.brakeForce / _wheels.Length, massPerWheel, dt);
@@ -203,7 +206,7 @@ namespace Convoy.Vehicle
                 longitudinal -= wheelForwardSpeed * _config.rollingResistance * massPerWheel;
 
                 // --- Lateral grip ---
-                float grip = wheel.rear ? _config.rearLateralGrip : _config.frontLateralGrip;
+                float grip = (wheel.rear ? _config.rearLateralGrip : _config.frontLateralGrip) * mods.Grip; // D-01: damage multiplier (1.0 at full health)
                 if (wheel.rear && _command.Handbrake) grip *= _config.handbrakeRearGripMultiplier;
                 float lateral = VehicleMath.LateralGripForce(wheelLateralSpeed, grip, massPerWheel, dt);
 
@@ -219,7 +222,7 @@ namespace Convoy.Vehicle
             // --- Boost: push along the ground, fading out near boosted top speed ---
             if (boosting && grounded > 0)
             {
-                float boostedTop = _config.topSpeed + _config.boostTopSpeedBonus;
+                float boostedTop = _config.topSpeed * mods.TopSpeed + _config.boostTopSpeedBonus; // D-01: damage multiplier (1.0 at full health)
                 Vector3 push = Vector3.ProjectOnPlane(transform.forward, up).normalized;
                 _body.AddForce(push * _config.boostForce * VehicleMath.DriveFactor(forwardSpeed, boostedTop), ForceMode.Force);
             }
@@ -349,6 +352,8 @@ namespace Convoy.Vehicle
                 Boosting = _boost != null && _boost.Active,
                 UpsideDownTime = _recovery?.UpsideDownTime ?? 0f,
                 RecoveryCooldown = _recovery?.CooldownRemaining ?? 0f,
+                Health01 = _damage != null ? _damage.State.Health01 : 1f, // D-01: damage multiplier (1.0 at full health)
+                Wrecked = _damage != null && _damage.State.Wrecked, // D-01: damage multiplier (1.0 at full health)
             };
         }
 
