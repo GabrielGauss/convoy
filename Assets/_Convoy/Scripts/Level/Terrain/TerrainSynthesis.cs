@@ -132,6 +132,31 @@ namespace Convoy.Level
             return into.Count;
         }
 
+        /// <summary>Centreline arclength of a route with its corners rounded exactly as Build carves them, m (XZ).</summary>
+        public static float RouteLength(RouteDef route)
+        {
+            if (route.nodes == null || route.nodes.Length < 2) return 0f;
+            return RoutePath.Build(route.nodes, CornerRadius(route)).Length;
+        }
+
+        /// <summary>
+        /// Like <see cref="SampleRoute"/> but every interval is equal: the spacing is the route length divided into the
+        /// whole number of steps closest to <paramref name="targetSpacing"/>. Why: AI waypoints (TR-01c) must all be
+        /// 10-15 m apart, and plain sampling leaves a short last interval at the route end.
+        /// </summary>
+        public static int SampleRouteEven(HeightField h, RouteDef route, float targetSpacing, List<Vector3> into)
+        {
+            if (targetSpacing <= 0f) throw new ArgumentOutOfRangeException(nameof(targetSpacing));
+            float length = RouteLength(route);
+            if (length <= 0f)
+            {
+                into?.Clear();
+                return 0;
+            }
+            int steps = Mathf.Max(1, Mathf.RoundToInt(length / targetSpacing));
+            return SampleRoute(h, route, length / steps, into);
+        }
+
         // ---------------------------------------------------------------- stages
 
         private static void ApplyNoise(HeightField h, TerrainLayoutData layout)
@@ -493,7 +518,12 @@ namespace Convoy.Level
             // Far side: cut down to the landing height, then back up to the bed at the route grade.
             float runout = Mathf.Max(0f, (h.HeightScale - landing) / grade);
 
+            // Never past the far end of the shortcut the chasm cuts (TR-01c review): beyond it the cone would slot a
+            // trench through whatever lies ahead (ridges, the route the shortcut rejoins). The far-side bed meets the
+            // cone long before the end on the defaults (asserted by tests), so the clamp only bounds the cut.
             float reachAlong = halfGap + runout;
+            if (TryShortcutFarEnd(layout.routes, c.centre, fwd, out float farEnd))
+                reachAlong = Mathf.Min(reachAlong, Mathf.Max(halfGap, farEnd));
             float rx = Mathf.Abs(fwd.x) * reachAlong + Mathf.Abs(right.x) * halfLen;
             float rz = Mathf.Abs(fwd.y) * reachAlong + Mathf.Abs(right.y) * halfLen;
             CellRange(h, c.centre.x - rx, c.centre.x + rx, out int x0, out int x1);
@@ -509,12 +539,37 @@ namespace Convoy.Level
                     float across = Vector2.Dot(rel, right);
                     if (across < -halfLen || across > halfLen) continue;
                     float along = Vector2.Dot(rel, fwd);
-                    if (along < -halfGap) continue;
+                    if (along < -halfGap || along > reachAlong) continue;
                     int i = z * res + x;
                     float cap = along <= halfGap ? floorY : landing + grade * (along - halfGap);
                     if (heights[i] > cap) heights[i] = cap;
                 }
             }
+        }
+
+        /// <summary>
+        /// The Shortcut route the chasm sits on (the one whose centreline passes closest to the chasm centre, within
+        /// its half-width) and how far ahead of the centre, along the jump direction, its far end lies.
+        /// </summary>
+        private static bool TryShortcutFarEnd(RouteDef[] routes, Vector2 centre, Vector2 fwd, out float farEnd)
+        {
+            farEnd = 0f;
+            if (routes == null) return false;
+            float best = float.PositiveInfinity;
+            bool found = false;
+            for (int r = 0; r < routes.Length; r++)
+            {
+                RouteDef route = routes[r];
+                if (route.kind != RouteKind.Shortcut || route.nodes == null || route.nodes.Length < 2) continue;
+                float d = PolylineDistance(route.nodes, centre);
+                if (d > route.width * 0.5f || d >= best) continue;
+                best = d;
+                found = true;
+                // Either end may be "ahead": the jump direction, not the node order, decides which.
+                farEnd = Mathf.Max(Vector2.Dot(route.nodes[0] - centre, fwd),
+                    Vector2.Dot(route.nodes[route.nodes.Length - 1] - centre, fwd));
+            }
+            return found;
         }
 
         private static float[] PadHeights(HeightField h, SpawnDef[] spawns)

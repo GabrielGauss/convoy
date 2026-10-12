@@ -59,6 +59,8 @@ Throttle = `clamp((v_allowed − v) × throttleGain, −1, 1)` with a `coastBand
 - Stuck = |speed| < `stuckSpeed` (1 m/s) for `stuckTime` (2.5 s) while the brain asks for throttle > 0.5.
 - `Reversing` for `reverseTime` (1.5 s): throttle −1, steer mirrored. Up to `maxReverseAttempts` (2).
 - Then `RequestReset`: one command with `Reset = true`. The vehicle's own `VehicleRecovery` applies cooldown and teleports to the pose from its `IRecoveryPointProvider`.
+- *(A-01b)* The request is held (Neutral) while `VehicleState.RecoveryCooldown > 0` (passed in `AiSensorFrame.RecoveryCooldown`): auto-right also starts that cooldown, and a reset sent during it is silently dropped.
+- *(A-01a, recorded in A-01b)* The reverse-attempt counter clears after `stuckTime` seconds of healthy driving (moving and making progress), so one rock early on doesn't use up the attempts for a different rock later.
 - Also request reset when off-path > `offPathResetDistance` (25 m) or making negative progress for `wrongWayTime` (4 s). Upside-down is already handled by the vehicle's auto-right.
 - **Recovery point:** `AiPilot` implements `IRecoveryPointProvider` with the path pose at `progress − recoveryBackoff` (10 m), facing the path tangent. It never returns a point *ahead* of progress, so a reset can't skip anything. When R-01 lands, R-01 may replace this with checkpoint-based recovery for all racers.
 
@@ -70,6 +72,11 @@ Until R-01 provides a countdown, `AiPilot` has an optional `_waitForVehicle` (`V
 
 ### Routes / forks (T-01)
 One `RacingLine` per route. In A-01 each rival is assigned a route in the Inspector. Choosing a route at a fork by risk preference is **out of A-01 scope** (P1 follow-up once T-01's fork exists).
+
+### Implementation notes (A-01b)
+- `RacingLine` takes ordered child waypoints **or** `Configure(points, closed, halfWidth)` from code; open polylines of any shape are supported (TR-01 rival routes end at the crater; the brain brakes to a stop at the end).
+- `AiPilot` casts its three lane spheres from the car's centre along the path tangent, one per *path* lane (same geometry as `LaneSelector`). Initial overlaps (distance 0) count only if the collider has a Rigidbody (a car beside us); static ones (ground on rough terrain) are ignored. It skips the step while the vehicle has not yet written its first `VehicleState`.
+- `AiPilot.Configure(line, profile, waitFor)` wires a rival from code; editor scripts set the serialized fields. Profiler row: `Convoy.AiPilot.FixedUpdate`.
 
 ## Consequences
 - + No new packages; reuses the proven autopilot idea; logic fully unit-testable.

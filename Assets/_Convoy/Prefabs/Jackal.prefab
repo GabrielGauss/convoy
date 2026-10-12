@@ -710,6 +710,7 @@ GameObject:
   - component: {fileID: 2721711194778210404}
   - component: {fileID: 4471324249865091792}
   - component: {fileID: 1920837596307778076}
+  - component: {fileID: 8822603834176674408}
   m_Layer: 0
   m_Name: Jackal
   m_TagString: Untagged
@@ -813,7 +814,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8784893930239436176}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7bcdfb85684f447a9fd3c7790636cab6, type: 3}
   m_Name: 
@@ -822,3 +823,16 @@ MonoBehaviour:
   _keyboardSteerSpeed: 4
   _keyboardSteerReturn: 6
   _stickDeadzone: 0.12
+--- !u!114 &8822603834176674408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8784893930239436176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 113006e04f46b42419fa685c8bb421b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Convoy.Crew::Convoy.Crew.VehicleSeats
+  _config: {fileID: 11400000, guid: 170c123837250a2419e0a6f437f74609, type: 2}

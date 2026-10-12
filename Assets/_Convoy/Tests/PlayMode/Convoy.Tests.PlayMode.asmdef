@@ -1,0 +1,27 @@
+{
+    "name": "Convoy.Tests.PlayMode",
+    "rootNamespace": "Convoy.Tests.PlayMode",
+    "references": [
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "Convoy.Core",
+        "Convoy.Vehicle",
+        "Convoy.Input",
+        "Convoy.Level",
+        "Convoy.Race",
+        "Convoy.AI"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

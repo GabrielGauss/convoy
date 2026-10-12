@@ -91,6 +91,29 @@ namespace Convoy.Tests
         }
 
         [Test]
+        public void Build_ShowsHealthPercent()
+        {
+            VehicleState s = Driving();
+            s.Health01 = 0.42f;
+            string text = new DebugOverlayText().Build("Jackal", s, 40f, Wheels(0f), 1, 2f, 60f, 0f);
+
+            StringAssert.Contains("HP         42%", text);
+            Assert.That(text, Does.Not.Contain("WRECKED"));
+        }
+
+        [Test]
+        public void Build_FlagsWrecked()
+        {
+            VehicleState s = Driving();
+            s.Health01 = 0f;
+            s.Wrecked = true;
+            string text = new DebugOverlayText().Build("Jackal", s, 40f, Wheels(0f), 1, 2f, 60f, 0f);
+
+            StringAssert.Contains("HP         0%", text);
+            StringAssert.Contains("WRECKED", text);
+        }
+
+        [Test]
         public void Build_ToleratesFewerWheelsThanCount()
         {
             Assert.DoesNotThrow(() =>

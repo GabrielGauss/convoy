@@ -59,6 +59,11 @@ namespace Convoy.Presentation
             }
             _sb.Append('\n');
 
+            // D-01: hull health. Reads VehicleState only (presentation never touches VehicleDamage directly).
+            _sb.Append("HP         ").Append((state.Health01 * 100f).ToString("0", Inv)).Append('%');
+            if (state.Wrecked) _sb.Append("  <color=#ff5a5a>WRECKED</color>");
+            _sb.Append('\n');
+
             if (state.UpsideDownTime > 0f)
                 _sb.Append("<color=#ff5a5a>Upside down ")
                    .Append(state.UpsideDownTime.ToString("0.0", Inv)).Append(" / ")

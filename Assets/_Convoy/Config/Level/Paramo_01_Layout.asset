@@ -64,10 +64,10 @@ MonoBehaviour:
       depth: 6
       shoulder: 15
     chasm:
-      centre: {x: 560, y: -410}
-      yawDeg: 19.983107
+      centre: {x: 559.4178, y: -329.26868}
+      yawDeg: -20.684082
       gapWidth: 24
-      length: 16
+      length: 36
       depth: 30
       rampAngleDeg: 12
       landingDrop: 2
@@ -79,8 +79,8 @@ MonoBehaviour:
       - {x: 0, y: -860}
       - {x: 250, y: -760}
       - {x: 520, y: -520}
-      - {x: 640, y: -300}
-      - {x: 600, y: -120}
+      - {x: 740, y: -400}
+      - {x: 700, y: -160}
       - {x: 420, y: 40}
       - {x: 0, y: 0}
       width: 12
@@ -89,7 +89,7 @@ MonoBehaviour:
       coveredRange: {x: 0, y: 0}
     - id: river
       kind: 0
-      shortcutId: cave
+      shortcutId: 
       nodes:
       - {x: 0, y: -860}
       - {x: -60, y: -600}
@@ -106,6 +106,7 @@ MonoBehaviour:
       nodes:
       - {x: 0, y: -860}
       - {x: -300, y: -750}
+      - {x: -660, y: -690}
       - {x: -620, y: -450}
       - {x: -650, y: -100}
       - {x: -400, y: 80}
@@ -118,8 +119,8 @@ MonoBehaviour:
       kind: 1
       shortcutId: chasm
       nodes:
-      - {x: 520, y: -520}
-      - {x: 600, y: -300}
+      - {x: 612.4, y: -469.6}
+      - {x: 420, y: 40}
       width: 12
       shoulder: 10
       carveDepth: 0
@@ -129,7 +130,7 @@ MonoBehaviour:
       shortcutId: rammer
       nodes:
       - {x: -300, y: -750}
-      - {x: -480, y: -480}
+      - {x: -628, y: -498}
       width: 12
       shoulder: 10
       carveDepth: 0
@@ -174,8 +175,8 @@ MonoBehaviour:
       scale: {x: 8, y: 80, z: 8}
       shortcutId: 
     - kind: 1
-      position: {x: -400, y: -600}
-      yawDeg: -33.690067
+      position: {x: -442.737, y: -640.3362}
+      yawDeg: -52.46519
       scale: {x: 1, y: 1, z: 1}
       shortcutId: rammer
     - kind: 2
@@ -189,25 +190,20 @@ MonoBehaviour:
       scale: {x: 16, y: 1, z: 48}
       shortcutId: 
     - kind: 3
-      position: {x: 554.19037, y: -425.9765}
-      yawDeg: 19.983107
+      position: {x: 565.4224, y: -345.17288}
+      yawDeg: -20.684082
       scale: {x: 12, y: 2.1255658, z: 10}
       shortcutId: chasm
     - kind: 5
-      position: {x: 547.3555, y: -444.77237}
-      yawDeg: 19.983107
+      position: {x: 572.48676, y: -363.88373}
+      yawDeg: -20.684082
       scale: {x: 16, y: 6, z: 10}
       shortcutId: chasm
     - kind: 5
-      position: {x: -344.376, y: -683.436}
-      yawDeg: -33.690067
+      position: {x: -363.43866, y: -701.26056}
+      yawDeg: -52.46519
       scale: {x: 16, y: 6, z: 10}
       shortcutId: rammer
-    - kind: 5
-      position: {x: -48.8, y: -329.6}
-      yawDeg: 6.3
-      scale: {x: 16, y: 6, z: 10}
-      shortcutId: cave
     spawns:
     - id: player
       position: {x: 0, y: -860}

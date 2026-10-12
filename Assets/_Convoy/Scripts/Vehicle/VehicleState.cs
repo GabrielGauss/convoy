@@ -42,6 +42,12 @@ namespace Convoy.Vehicle
         /// <summary>Seconds until another reset is allowed.</summary>
         public float RecoveryCooldown;
 
+        /// <summary>Hull health 0..1 (D-01). 1 when the vehicle has no VehicleDamage component.</summary>
+        public float Health01;
+
+        /// <summary>Health reached 0 (D-01). W-01 decides what a wreck does; D-01 only reports it.</summary>
+        public bool Wrecked;
+
         public bool IsAirborne => GroundedWheels == 0;
         public float SpeedKmh => Velocity.magnitude * 3.6f;
     }

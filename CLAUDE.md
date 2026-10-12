@@ -4,7 +4,7 @@ Read `docs/DECISIONS.md`, `docs/TECH_DESIGN.md`, and the relevant task in `docs/
 
 ## Current direction (2026-10-12) — read before any task
 - **MVP = one ~10 km multi-level sprint track + 3 vehicle classes** (sidecar motorbike 1–2 seats, JACKAL 2–3, heavy 3), each with its own lines; mounted weapons, pre-race loadout, in-run upgrades; no persistent garage (D-035). Plan: `docs/BACKLOG_MVP.md`.
-- **Track tech:** spline-mesh roads + ProBuilder; Unity Terrain only as backdrop (D-036, proposed). `Paramo_01` is a test map/backdrop; **TR-01c is paused**.
+- **Track tech:** spline-mesh roads + ProBuilder; Unity Terrain only as backdrop (D-036, proposed). `Paramo_01` is a test map/backdrop; TR-01c merged (PR #12), no further open-terrain work.
 - **Deferred to post-MVP:** cargo, robbery, bosses (D-032); the open-arena world shape of D-031.
 - **Art:** ink-and-print caricature, junkyard 1930–1970 (D-033); still greybox until ART-01.
 - **Open:** falling between layers (O-004) — build it as a config toggle, never hard-code one behaviour.
