@@ -40,12 +40,21 @@ namespace Convoy.Vehicle
         private readonly RaycastHit[] _hits = new RaycastHit[MaxRayHits];
         private VehicleState _state;
         private VehicleRecovery _recovery;
+        private BoostSystem _boost;
         private IRecoveryPointProvider _recoveryPointProvider;
         private bool _resetLatched;
 
         public VehicleConfig Config => _config;
         public VehicleState State => _state;
         public PilotCommand CurrentCommand => _command;
+        public int WheelCount => _wheels.Length;
+
+        /// <summary>Suspension compression of wheel <paramref name="index"/> last physics step, 0 = fully extended, 1 = bottomed out. Read-only, for debug/presentation.</summary>
+        public float GetWheelCompression01(int index)
+        {
+            if (_config == null || index < 0 || index >= _lastCompression.Length) return 0f;
+            return Mathf.Clamp01(_lastCompression[index] / _config.suspensionRestLength);
+        }
 
         public void SetPilotCommand(PilotCommand command)
         {
@@ -66,7 +75,11 @@ namespace Convoy.Vehicle
             _lastCompression = new float[_wheels.Length];
             _wheelSpin = new float[_wheels.Length];
             ApplyBodySettings();
-            if (_config != null) _recovery = new VehicleRecovery(_config);
+            if (_config != null)
+            {
+                _recovery = new VehicleRecovery(_config);
+                _boost = new BoostSystem(_config);
+            }
 
             if (_config == null)
                 Debug.LogError($"{name}: VehicleController has no VehicleConfig assigned.", this);
@@ -123,10 +136,15 @@ namespace Convoy.Vehicle
             float forwardSpeed = Vector3.Dot(velocity, transform.forward);
             float massPerWheel = _config.mass / _wheels.Length;
 
+            _boost ??= new BoostSystem(_config);
+            bool boosting = _boost.Step(dt, _command.Boost);
+
             VehicleMath.ResolveLongitudinal(_command.Throttle, forwardSpeed, _config.reverseThreshold,
                 out float drive, out float brake);
 
-            float driveTopSpeed = drive >= 0f ? _config.topSpeed : _config.reverseTopSpeed;
+            float driveTopSpeed = drive >= 0f
+                ? _config.topSpeed + (boosting ? _config.boostTopSpeedBonus : 0f)
+                : _config.reverseTopSpeed;
             float driveFactor = VehicleMath.DriveFactor(forwardSpeed, driveTopSpeed);
             int drivenCount = CountDriven();
             float steerAngle = VehicleMath.SteerAngle(_command.Steer, _config.maxSteerAngle, forwardSpeed,
@@ -196,6 +214,14 @@ namespace Convoy.Vehicle
                 _body.AddForceAtPosition(wheelForward * longitudinal + wheelRight * lateral, contact, ForceMode.Force);
 
                 UpdateWheelVisual(i, wheel, origin - up * (hit.distance - _config.wheelRadius), wheelForwardSpeed, steerAngle);
+            }
+
+            // --- Boost: push along the ground, fading out near boosted top speed ---
+            if (boosting && grounded > 0)
+            {
+                float boostedTop = _config.topSpeed + _config.boostTopSpeedBonus;
+                Vector3 push = Vector3.ProjectOnPlane(transform.forward, up).normalized;
+                _body.AddForce(push * _config.boostForce * VehicleMath.DriveFactor(forwardSpeed, boostedTop), ForceMode.Force);
             }
 
             // --- Downforce (only while touching the ground, so jumps still fly) ---
@@ -319,6 +345,8 @@ namespace Convoy.Vehicle
                 GroundedWheels = grounded,
                 TotalWheels = _wheels.Length,
                 Sliding = sliding,
+                BoostFraction = _boost?.Fraction ?? 0f,
+                Boosting = _boost != null && _boost.Active,
                 UpsideDownTime = _recovery?.UpsideDownTime ?? 0f,
                 RecoveryCooldown = _recovery?.CooldownRemaining ?? 0f,
             };

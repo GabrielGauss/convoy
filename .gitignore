@@ -57,3 +57,6 @@ desktop.ini
 
 # Visual Studio new solution format
 *.slnx
+
+# Claude agent worktrees (local only)
+/.claude/

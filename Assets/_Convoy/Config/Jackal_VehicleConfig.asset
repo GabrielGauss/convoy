@@ -13,24 +13,36 @@ MonoBehaviour:
   m_Name: Jackal_VehicleConfig
   m_EditorClassIdentifier: Convoy.Vehicle::Convoy.Vehicle.VehicleConfig
   mass: 1200
-  centerOfMassOffset: {x: 0, y: -0.45, z: 0}
+  centerOfMassOffset: {x: 0, y: -0.55, z: 0}
   angularDamping: 0.6
-  suspensionRestLength: 0.45
+  suspensionRestLength: 0.3
   wheelRadius: 0.38
-  springStiffness: 35000
-  springDamping: 3500
-  engineForce: 9000
-  topSpeed: 40
+  springStiffness: 55000
+  springDamping: 5000
+  engineForce: 12500
+  topSpeed: 60
   reverseTopSpeed: 12
   brakeForce: 14000
   reverseThreshold: 0.6
   rollingResistance: 0.05
-  tireFriction: 1.25
-  frontLateralGrip: 0.45
-  rearLateralGrip: 0.4
-  maxSteerAngle: 32
-  highSpeedSteerFactor: 0.35
-  handbrakeRearGripMultiplier: 0.3
-  handbrakeBrakeForce: 2500
-  downforce: 2.5
+  tireFriction: 1.4
+  frontLateralGrip: 0.55
+  rearLateralGrip: 0.42
+  maxSteerAngle: 34
+  highSpeedSteerFactor: 0.45
+  handbrakeRearGripMultiplier: 0.12
+  handbrakeBrakeForce: 1200
+  downforce: 3.5
   airControl: 2.5
+  boostForce: 11000
+  boostTopSpeedBonus: 18
+  boostDrainPerSecond: 0.33
+  boostRegenPerSecond: 0.1
+  boostRegenDelay: 1
+  boostMinToStart: 0.15
+  upsideDownDot: 0.3
+  autoRightDelay: 2
+  autoRightMaxSpeed: 3
+  resetCooldown: 3
+  recoveryLift: 1
+  safePoseInterval: 1

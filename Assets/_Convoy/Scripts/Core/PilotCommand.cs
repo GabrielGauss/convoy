@@ -18,6 +18,9 @@ namespace Convoy.Core
 
         public bool Handbrake;
 
+        /// <summary>Hold to use the nitro tank.</summary>
+        public bool Boost;
+
         /// <summary>Request a reset to the last checkpoint (handled by V-02).</summary>
         public bool Reset;
 
@@ -30,6 +33,7 @@ namespace Convoy.Core
                 Throttle = Math.Clamp(Throttle, -1f, 1f),
                 Steer = Math.Clamp(Steer, -1f, 1f),
                 Handbrake = Handbrake,
+                Boost = Boost,
                 Reset = Reset,
             };
         }

@@ -44,27 +44,37 @@ Estimates are ideal hours for a Unity beginner; DEV estimates assume senior C# s
   - EditMode tests cover the pure math (suspension force, grip curve).
 - **Deps:** F-01. Keyboard input is fine before F-03 lands.
 
-### V-02 Recovery · GV (+AI) · ~4 h · P0 — *auto-right + manual reset + cooldown done (38/38 EditMode, verified in Play mode 2026-10-11); resets to last safe pose until T-01 provides checkpoints via `IRecoveryPointProvider`*
+### V-02 Recovery · GV (+AI) · ~4 h · P0 — *done: auto-right + manual reset + cooldown; in `Sprint_01` resets go to the last checkpoint via `IRecoveryPointProvider` (verified 2026-10-11); T-01 must implement the same provider*
 - Auto-right when upside down > 2 s; manual reset to last valid checkpoint, facing track direction.
 - **AC:** back racing within 3 s; reset cannot skip checkpoints; cooldown prevents spam.
 - **Deps:** V-01, T-01 (checkpoints).
 
-### V-03 Debug overlay & live tuning · AI → GV review · ~4 h · P0
+### V-03 Debug overlay & live tuning · AI → GV review · ~4 h · P0 — *done: F1 overlay, self-bootstrapping, compiled out of release; measured 0.05–0.09 ms in Play mode (2026-10-11)*
 - Overlay: speed, RPM-equivalent, slip angle, grounded wheel count, suspension compression, FPS. Toggle with F1.
 - **AC:** overlay costs < 0.5 ms; off in release builds.
 - **Deps:** V-01.
+
+### V-04 Nitro (pilot boost) · GV (+AI) · ~4 h · P0 — *added by Gabriel 2026-10-11 (D-013); done*
+- Hold Shift / RB: finite tank (~3 s), refills after 1 s delay (~10 s to full), +12 m/s top speed. Must release after running dry.
+- **Measured:** 0→3 s full throttle 63 km/h without vs 107 km/h with nitro (Sandbox, Play mode).
+- **Later (M-01):** boost generates heat and draws Engineer power; tank becomes the power budget.
+
+### S-01 Sprint prototype: canyon run to the Monolith · AI → GV review · ~8 h · P0 — *added 2026-10-11 (D-014); built and verified: autopilot completed start → Monolith (5/5 checkpoints, 1:46 with 3 resets); reset-to-checkpoint, result screen and restart verified in Play mode*
+- Scene `Sprint_01`: ~1.1 km canyon road, jumps, boulder field, rough section, narrow pass, nitro straight; 5 ordered checkpoints; finish between the Monolith pillars (Blender model).
+- `Convoy.Race`: `SprintRun` (clock starts on first movement, ordered checkpoints, finish requires all, best time), `SprintController` (recovery to last checkpoint), `SprintHud` (timer, result screen, Enter/Start to restart).
+- **AC:** start → finish completable in one run; reset returns to last checkpoint; timer stops at the Monolith; restart works.
 
 ### C-01 Pilot chase camera · GV · ~8 h · P0
 - Cinemachine 3 follow camera; distance and FOV scale with speed; damping; terrain collision avoidance; look-back button.
 - **AC:** no clipping through terrain on the test track; vehicle always readable on screen; no motion sickness reported in PT-01.
 - **Deps:** V-01.
 
-### T-01 Greybox track · ND · ~12 h · P0
+### T-01 Greybox track · ND · ~12 h · P0 — *note: Sandbox now has a placeholder loop (`Track_Loop`: barriers, nitro straight, jump, start gantry) for handling tests only; T-01 is still the real race track with routes + checkpoints*
 - ProBuilder greybox: 3–5 min loop; start line; ≥ 6 checkpoints; one **fork** (short/risky vs. long/safe); one jump; one rough-terrain section; static obstacles.
 - **AC:** two fork routes differ measurably in time *and* damage taken; AI spline paths authored for both routes.
 - **Deps:** V-01 (needs a drivable car to tune scale).
 
-### PT-01 Handling playtest · All · 2 h · P0 — **GATE**
+### PT-01 Handling playtest · All · 2 h · P0 — **GATE** — *partial 2026-10-11: Gabriel 5/5 and wants to keep driving; Lead Dev + ND pending (`docs/playtests/PT-01_2026-10-11.md`)*
 - Free driving in the sandbox, no objectives.
 - **Pass:** all three want to keep driving. **Fail:** iterate V-01/C-01 before anything else.
 
@@ -120,7 +130,7 @@ Estimates are ideal hours for a Unity beginner; DEV estimates assume senior C# s
 
 ## Week 6–8 — Test, build, decide
 
-### U-01 Minimal per-seat HUD · AI → GV review · ~6 h · P1
+### U-01 Minimal per-seat HUD · AI → GV review · ~6 h · P1 — *first slice done: analogue speedometer + digital km/h + nitro bar (IMGUI prototype, no assets); per-seat layout still to do*
 - Speed, temperature, damage, ammo, position, checkpoint progress; per viewport.
 
 ### W-01 Wreck state (attrition test) · GV · ~4 h · P1
