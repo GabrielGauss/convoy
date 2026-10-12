@@ -1,7 +1,7 @@
 {
  "track": "T01",
  "source": "docs/tracks/T01/T01_map_*.png (900x1600 px)",
- "version": "0.1-draft (ARCH-003)",
+ "version": "0.2 (Gabriel answers 2026-10-12)",
  "scale": {
   "m_per_px": 4.519,
   "basis": "mean START\u2192FINISH length of A and B = 10 km (D-035)",
@@ -772,7 +772,7 @@
   {
    "id": "C2",
    "kind": "crossing",
-   "level": "over-under",
+   "level": "over-under-locked",
    "map_px": [
     260,
     952
@@ -784,7 +784,8 @@
    "arc_m": {
     "A": 1347,
     "B": 1545
-   }
+   },
+   "note": "no line change (D-037 amendment)"
   },
   {
    "id": "C3",
@@ -874,7 +875,7 @@
   {
    "id": "C6",
    "kind": "crossing",
-   "level": "over-under",
+   "level": "over-under-locked",
    "map_px": [
     203,
     510
@@ -886,12 +887,13 @@
    "arc_m": {
     "A": 6394,
     "B": 5617
-   }
+   },
+   "note": "no line change (D-037 amendment)"
   },
   {
    "id": "C7",
    "kind": "crossing",
-   "level": "over-under",
+   "level": "over-under-locked",
    "map_px": [
     168,
     378
@@ -903,7 +905,8 @@
    "arc_m": {
     "A": 7050,
     "B": 7343
-   }
+   },
+   "note": "no line change (D-037 amendment)"
   },
   {
    "id": "M8a",
@@ -938,6 +941,20 @@
     "A": 9915,
     "B": 10086
    }
+  },
+  {
+   "id": "J3",
+   "kind": "line-change-ramp",
+   "level": "jackal ramp",
+   "map_px": [
+    410,
+    660
+   ],
+   "world_m": [
+    564.9,
+    451.9
+   ],
+   "note": "JACKAL ramp at the end of M4 that jumps to the other line"
   }
  ],
  "connector_ends": [
@@ -1164,6 +1181,34 @@
     230.5,
     1500.3
    ]
+  },
+  {
+   "id": "B@3141",
+   "kind": "connector-end",
+   "line": "B",
+   "arc_m": 3141,
+   "map_px": [
+    365,
+    824
+   ],
+   "world_m": [
+    361.5,
+    -289.2
+   ]
+  },
+  {
+   "id": "B@4885",
+   "kind": "connector-end",
+   "line": "B",
+   "arc_m": 4885,
+   "map_px": [
+    339,
+    539
+   ],
+   "world_m": [
+    244.0,
+    998.7
+   ]
   }
  ],
  "edges": [
@@ -1346,7 +1391,7 @@
    "to": "B@6015",
    "length_m": 542,
    "direction": "assumed",
-   "note": "A lobe bottom \u2192 B top-left loop (skips C6)"
+   "note": "A lobe bottom \u2192 B top-left loop (skips C6); S1 and H2 run side by side as one contact corridor (heavy can wreck the sidecar)"
   },
   {
    "id": "H4",
@@ -1382,7 +1427,7 @@
    "to": "B@6141",
    "length_m": 831,
    "direction": "assumed",
-   "note": "A lobe bottom \u2192 B loop (overlaps S1)"
+   "note": "A lobe bottom \u2192 B loop (overlaps S1); S1 and H2 run side by side as one contact corridor (heavy can wreck the sidecar)"
   },
   {
    "id": "J1",
@@ -1390,53 +1435,20 @@
    "frm": "A@7791",
    "to": "B@8193",
    "length_m": 637,
-   "direction": "assumed",
-   "note": "top jump A\u2192B (direction assumed)"
-  }
- ],
- "unresolved": [
-  {
-   "id": "J2",
-   "type": "jackal",
-   "map_px": [
-    [
-     328,
-     540
-    ],
-    [
-     244,
-     693
-    ]
-   ],
-   "note": "from B/M5 end down to A's lobe bottom; direction and landing unclear"
+   "direction": "confirmed A\u2192B",
+   "note": "top jump A\u2192B: loses ~400 m but skips rough A; \u2248 +2\u20133 s under the placeholder model"
   },
   {
-   "id": "J4",
+   "id": "J24",
    "type": "jackal",
-   "map_px": [
-    [
-     352,
-     817
-    ],
-    [
-     252,
-     731
-    ]
-   ],
-   "note": "triple-crossing jump from B; upper-left end lands in open space (~80 m from A)"
-  },
-  {
-   "id": "J3",
-   "type": "jackal?",
-   "map_px": [
-    [
-     410,
-     660
-    ]
-   ],
-   "note": "isolated purple dot on M4 \u2014 ramp or leftover? (HANDMAP point 8)"
+   "frm": "B@3141",
+   "to": "B@4885",
+   "length_m": 1640,
+   "direction": "confirmed",
+   "note": "jump from B over the triple crossing, lands on its own track, rejoins B near M5b; \u2248 104 m shorter, \u2248 +5 s under model"
   }
  ],
+ "unresolved": [],
  "segments": [
   {
    "id": "SEG1",

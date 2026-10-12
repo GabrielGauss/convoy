@@ -243,6 +243,7 @@ See `CLAUDE.md`. Summary: AI drafts on branches; humans review, own, and merge. 
 - **Why:** two full lines + mid-race line changes give more replay value and crew-vs-crew contact at every crossing than isolated per-segment forks. The earlier "FRACTURA" layout proposal (never committed) is not used.
 - **Rules (detail in `docs/tracks/T01/T01_HANDMAP.md`):** every A/B crossing is classified merge or grade-separated (3 signature over/under crossings); class gates are physical, never locks; failed JACKAL jumps feed the O-004 toggle; shortcut gain ≤ 2–3 s; A/B delta ≤ 2 s per ~60 s section; perks balanced across the last third.
 - **Next:** ARCH-003 digitizes the map into a node graph (`T01_topology.md` + `.json`) and derives the TK-01 spec (segment 1 from START) from it.
+- **Amended 2026-10-12 (Gabriel's answers, topology v0.2):** crossings C2, C6, C7 are **locked over/under** (no line change; stops line-hopping); J4+J2 = one JACKAL line (J24) that lands on its own track and rejoins B; J3 = JACKAL line-change ramp at the end of M4; S1 and H2 run side by side as a contact corridor (robbery there is post-MVP, D-032).
 
 ## D-038 — MVP class & track architecture (ADR-007)
 **Date:** 2026-10-12 · **Status:** Proposed (architect, ARCH-003) — Lead Dev + Gabriel to approve
