@@ -16,6 +16,7 @@
 | 2026-10-12 | build | done | 14d1261 |
 | 2026-10-12 | review | APPROVE | AC 1–3 met: rival export tests (length ±1 %, curvature, 10–15 m) + recovery math 0 B GC; runner order -200/atmosphere -150 with EnsureApplied; Level→Core only, Race→Core/Vehicle, only Presentation writes fog (D-007). Orchestrator notes addressed (chasm clamp, shortcuts rejoin/shorter, cave never closable + SanitiseVariation). Documented deviations accepted (no `_layoutSeed`, lift from VehicleConfig, extra files needed for the layout fixes). Non-blocking follow-ups: move `RouteRecoveryPoints._backoffMetres` into an SO config; recovery points include closed shortcuts (reset may land before a rockfall); add warm-up/positive control to `RouteRecoveryMathTests.Queries_DoNotAllocate`. AC 4 still needs Gabriel: storm runs differ, chasm/river reset, ≥ 60 fps at 3 viewpoints. |
 | 2026-10-12 | — | paused-after-merge | D-035: MVP track is a multi-level spline track; no further open-terrain runtime work until ARCH-003 says otherwise |
+| 2026-10-12 | ARCH-003 | paused | no further open-terrain work; TR-01a TerrainSynthesis reused for the T01 backdrop/low ground (ADR-007) |
 
 ## Orchestrator notes before build (from TR-01b review, 2026-10-12)
 - Clamp the chasm cut to the shortcut end (today it slots ~700 m through ridges).
