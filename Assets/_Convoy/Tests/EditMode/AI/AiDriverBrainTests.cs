@@ -2,6 +2,9 @@ using Convoy.Core;
 using Convoy.Vehicle;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.TestTools.Constraints;
+// Unity's Is adds Is.AllocatingGCMemory(); all NUnit constraints still work through it.
+using Is = UnityEngine.TestTools.Constraints.Is;
 
 namespace Convoy.AI.Tests
 {
@@ -190,11 +193,9 @@ namespace Convoy.AI.Tests
         {
             // Positive control for Step_DoesNotAllocate (A-01a review): if this runtime's counter always
             // returned 0, the 0-byte assertion would pass vacuously. Prove it sees a known allocation.
-            long before = System.GC.GetAllocatedBytesForCurrentThread();
-            _sink = new byte[1024];
-            long allocated = System.GC.GetAllocatedBytesForCurrentThread() - before;
-
-            Assert.GreaterOrEqual(allocated, 1024L, "GC.GetAllocatedBytesForCurrentThread does not report allocations here");
+            // Why Unity's constraint: GC.GetAllocatedBytesForCurrentThread always returns 0 on Unity's Mono
+            // (found by this very test, 2026-10-12), so the Profiler-recorder based constraint is used instead.
+            Assert.That(() => { _sink = new byte[1024]; }, Is.AllocatingGCMemory());
         }
 
         // Static sink so the probe allocation can't be optimised away.
@@ -211,11 +212,8 @@ namespace Convoy.AI.Tests
 
             Drive(brain, path, ref s, 500); // warm-up: JIT compilation and first-call static setup allocate once
 
-            long before = System.GC.GetAllocatedBytesForCurrentThread();
-            Drive(brain, path, ref s, 3000);
-            long allocated = System.GC.GetAllocatedBytesForCurrentThread() - before;
-
-            Assert.AreEqual(0L, allocated, "AiDriverBrain.Step must not allocate (runs every physics step for every rival)");
+            Assert.That(() => Drive(brain, path, ref s, 3000), Is.Not.AllocatingGCMemory(),
+                "AiDriverBrain.Step must not allocate (runs every physics step for every rival)");
         }
 
         // Kinematic drive along the path at 20 m/s (no physics): only the brain's own work is measured.
