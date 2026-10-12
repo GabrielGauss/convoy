@@ -251,8 +251,149 @@ namespace Convoy.Level.Tests
             Assert.AreEqual(3, mains);
             Assert.That(Array.Exists(d.routes, r => r.kind == RouteKind.Shortcut && r.shortcutId == "chasm"));
             Assert.That(Array.Exists(d.routes, r => r.kind == RouteKind.Shortcut && r.shortcutId == "rammer"));
-            Assert.That(Array.Exists(d.routes, r => r.shortcutId == "cave" && r.coveredRange.y > r.coveredRange.x));
+            // The cave is a fixed covered stretch of the river MAIN route, never a closable shortcut (TR-01c).
+            Assert.That(Array.Exists(d.routes, r => r.kind == RouteKind.Main && r.id == ParamoLayoutDefaults.River
+                                                    && r.coveredRange.y > r.coveredRange.x && string.IsNullOrEmpty(r.shortcutId)));
             Assert.AreEqual(3, Array.FindAll(d.routes, r => r.kind == RouteKind.Rival).Length);
+        }
+
+        // ---------------------------------------------------------------- TR-01c layout fixes (review 2026-10-12)
+
+        // A shortcut must save at least this fraction of the main-route stretch it bypasses, or nobody risks it.
+        private const float MinShortcutSaving = 0.15f;
+
+        [Test]
+        public void Defaults_Shortcuts_StartAndEndOnTheSameMainRoute()
+        {
+            TerrainLayoutData d = DefaultsLayout;
+            foreach (RouteDef s in d.routes)
+            {
+                if (s.kind != RouteKind.Shortcut) continue;
+                Vector2 from = s.nodes[0], to = s.nodes[s.nodes.Length - 1];
+                bool rejoins = Array.Exists(d.routes, m => m.kind == RouteKind.Main
+                    && DistanceToPolyline(m.nodes, from) <= m.width * 0.5f
+                    && DistanceToPolyline(m.nodes, to) <= m.width * 0.5f);
+                Assert.That(rejoins, s.id + " does not start and end within one main route's width");
+            }
+        }
+
+        [Test]
+        public void Defaults_Shortcuts_AreGenuinelyShorter()
+        {
+            TerrainLayoutData d = DefaultsLayout;
+            foreach (RouteDef s in d.routes)
+            {
+                if (s.kind != RouteKind.Shortcut) continue;
+                Vector2 from = s.nodes[0], to = s.nodes[s.nodes.Length - 1];
+                RouteDef main = Array.Find(d.routes, m => m.kind == RouteKind.Main
+                    && DistanceToPolyline(m.nodes, from) <= m.width * 0.5f && DistanceToPolyline(m.nodes, to) <= m.width * 0.5f);
+                Assert.That(main.nodes, Is.Not.Null, s.id + " has no main route");
+                float bypassed = ArclengthAt(main.nodes, to) - ArclengthAt(main.nodes, from);
+                Assert.That(bypassed, Is.GreaterThan(0f), s.id + " runs against its main route's direction");
+                Assert.That(PolylineLength(s.nodes), Is.LessThanOrEqualTo((1f - MinShortcutSaving) * bypassed),
+                    s.id + " is not genuinely shorter than the " + main.id + " stretch it bypasses");
+            }
+        }
+
+        [Test]
+        public void Defaults_WorldVariation_NeverClosesAMainRoute()
+        {
+            TerrainLayoutData d = DefaultsLayout;
+            var config = ScriptableObject.CreateInstance<WorldVariationConfig>();
+            try
+            {
+                // Every closable id is exactly one Shortcut route, and no main route (e.g. the cave on the only river
+                // route) carries a closable id.
+                foreach (string id in config.shortcutIds)
+                {
+                    Assert.AreEqual(1, Array.FindAll(d.routes, r => r.kind == RouteKind.Shortcut && r.shortcutId == id).Length, id);
+                    Assert.That(!Array.Exists(d.routes, r => r.kind == RouteKind.Main && r.shortcutId == id), id + " is on a main route");
+                }
+            }
+            finally
+            {
+                UnityEngine.Object.DestroyImmediate(config);
+            }
+
+            // Each rockfall sits on its own shortcut and clear of every main road, so closing it never blocks a main route.
+            foreach (ObstaclePlacement p in d.obstacles)
+            {
+                if (p.kind != PlacementKind.ShortcutBlocker) continue;
+                RouteDef s = Array.Find(d.routes, r => r.kind == RouteKind.Shortcut && r.shortcutId == p.shortcutId);
+                Assert.That(s.nodes, Is.Not.Null, "blocker for unknown shortcut " + p.shortcutId);
+                Assert.That(DistanceToPolyline(s.nodes, p.position), Is.LessThanOrEqualTo(s.width * 0.5f), p.shortcutId + " blocker off its shortcut");
+                float halfExtent = 0.5f * new Vector2(p.scale.x, p.scale.z).magnitude;
+                foreach (RouteDef m in d.routes)
+                {
+                    if (m.kind != RouteKind.Main) continue;
+                    Assert.That(DistanceToPolyline(m.nodes, p.position), Is.GreaterThan(m.width * 0.5f + m.shoulder + halfExtent),
+                        p.shortcutId + " blocker reaches the " + m.id + " road");
+                }
+            }
+        }
+
+        [Test]
+        public void Chasm_Cut_StaysWithinItsShortcut() => AssertChasmConfined(() => Synthetic(), "chasm");
+
+        [Test, Category("Slow")]
+        public void Slow_Defaults_ChasmCut_StaysWithinItsShortcut() =>
+            AssertChasmConfined(ParamoLayoutDefaults.Create, ParamoLayoutDefaults.ShortcutChasm);
+
+        /// <summary>
+        /// Cells the chasm changes lie inside its box, never past the shortcut's far end; the far-side cut has met the
+        /// road again before that end (the shortcut rejoins its main route at road level); main routes are untouched.
+        /// </summary>
+        private static void AssertChasmConfined(Func<TerrainLayoutData> create, string shortcutId)
+        {
+            TerrainLayoutData layout = create();
+            TerrainLayoutData flat = create();
+            flat.chasm.depth = 0f;
+            HeightField with = TerrainSynthesis.Build(layout);
+            HeightField without = TerrainSynthesis.Build(flat);
+
+            ChasmDef c = layout.chasm;
+            Vector2 fwd = Dir(c.yawDeg);
+            var right = new Vector2(fwd.y, -fwd.x);
+            RouteDef s = Array.Find(layout.routes, r => r.kind == RouteKind.Shortcut && r.shortcutId == shortcutId);
+            float farEnd = Mathf.Max(Vector2.Dot(s.nodes[0] - c.centre, fwd), Vector2.Dot(s.nodes[s.nodes.Length - 1] - c.centre, fwd));
+            float slack = 2f * with.Spacing;
+            float maxAlong = float.NegativeInfinity;
+            int res = with.Resolution;
+            for (int z = 0; z < res; z++)
+            for (int x = 0; x < res; x++)
+            {
+                int i = z * res + x;
+                if (Mathf.Abs(with.Heights[i] - without.Heights[i]) <= 0.01f) continue;
+                Vector2 rel = new Vector2(with.CellToWorld(x), with.CellToWorld(z)) - c.centre;
+                float along = Vector2.Dot(rel, fwd);
+                Assert.That(Mathf.Abs(Vector2.Dot(rel, right)), Is.LessThanOrEqualTo(c.length * 0.5f + slack), "cut wider than the chasm at " + rel);
+                Assert.That(along, Is.GreaterThanOrEqualTo(-c.gapWidth * 0.5f - slack), "cut before the near lip at " + rel);
+                maxAlong = Mathf.Max(maxAlong, along);
+            }
+            Assert.That(maxAlong, Is.LessThanOrEqualTo(farEnd + slack), "cut runs past the shortcut end");
+
+            // The last stretch of the shortcut (where it rejoins its main route) is at road level again.
+            var pts = new List<Vector3>();
+            var flatPts = new List<Vector3>();
+            int n = TerrainSynthesis.SampleRoute(with, s, 1f, pts);
+            TerrainSynthesis.SampleRoute(without, s, 1f, flatPts);
+            bool forward = Vector2.Dot(s.nodes[s.nodes.Length - 1] - c.centre, fwd) >= Vector2.Dot(s.nodes[0] - c.centre, fwd);
+            for (int k = 0; k < 10; k++)
+            {
+                int i = forward ? n - 1 - k : k;
+                Assert.That(pts[i].y, Is.EqualTo(flatPts[i].y).Within(0.01f), "shortcut end still cut at " + pts[i]);
+            }
+
+            var mainPts = new List<Vector3>();
+            var mainFlat = new List<Vector3>();
+            foreach (RouteDef m in layout.routes)
+            {
+                if (m.kind != RouteKind.Main) continue;
+                int count = TerrainSynthesis.SampleRoute(with, m, 2f, mainPts);
+                TerrainSynthesis.SampleRoute(without, m, 2f, mainFlat);
+                for (int i = 0; i < count; i++)
+                    Assert.That(mainPts[i].y, Is.EqualTo(mainFlat[i].y).Within(0.01f), m.id + " touched by the chasm at " + mainPts[i]);
+            }
         }
 
         // ---------------------------------------------------------------- slow: the real 2 km map
@@ -624,6 +765,33 @@ namespace Convoy.Level.Tests
             Vector2 rel = p - c.centre;
             return Mathf.Abs(Vector2.Dot(rel, fwd)) <= c.gapWidth * 0.5f + margin
                 && Mathf.Abs(Vector2.Dot(rel, right)) <= c.length * 0.5f + margin;
+        }
+
+        /// <summary>Arclength along the node polyline of the point nearest to <paramref name="q"/>.</summary>
+        private static float ArclengthAt(Vector2[] pts, Vector2 q)
+        {
+            float best = float.PositiveInfinity, at = 0f, run = 0f;
+            for (int k = 0; k < pts.Length - 1; k++)
+            {
+                Vector2 a = pts[k], ab = pts[k + 1] - pts[k];
+                float len = ab.magnitude;
+                float t = Mathf.Clamp01(Vector2.Dot(q - a, ab) / ab.sqrMagnitude);
+                float d = (q - (a + ab * t)).magnitude;
+                if (d < best)
+                {
+                    best = d;
+                    at = run + t * len;
+                }
+                run += len;
+            }
+            return at;
+        }
+
+        private static float PolylineLength(Vector2[] pts)
+        {
+            float sum = 0f;
+            for (int k = 0; k < pts.Length - 1; k++) sum += (pts[k + 1] - pts[k]).magnitude;
+            return sum;
         }
 
         private static float DistanceToPolyline(Vector2[] pts, Vector2 q)

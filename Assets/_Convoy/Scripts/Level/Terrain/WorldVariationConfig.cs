@@ -21,8 +21,10 @@ namespace Convoy.Level
         [Min(0f)] public float stormFogDensity = 0.008f;
 
         [Header("Shortcuts")]
-        [Tooltip("Bit i of WorldVariation.OpenShortcutMask = shortcutIds[i] (max 32). Ids match RouteDef.shortcutId.")]
-        public string[] shortcutIds = { "chasm", "rammer", "cave" };
+        [Tooltip("Bit i of WorldVariation.OpenShortcutMask = shortcutIds[i] (max 32). Ids match the shortcutId of a " +
+                 "Shortcut-kind route. Never list a section of a main route (e.g. the cave): closing it would cut the " +
+                 "only way along that route.")]
+        public string[] shortcutIds = { "chasm", "rammer" };
         [Min(1)] public int minOpenShortcuts = 1;
         [Min(1)] public int maxOpenShortcuts = 2;
 

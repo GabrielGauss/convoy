@@ -18,18 +18,30 @@ namespace Convoy.Level
             var centre = Vector2.zero;
             const float mainWidth = 12f, shoulder = 10f, rivalWidth = 10f;
 
-            // Chasm shortcut runs (520,-520) -> (600,-300); the gap sits where it crosses x = 560 (half way).
-            var chasmFrom = new Vector2(520f, -520f);
-            var chasmTo = new Vector2(600f, -300f);
+            // Shortcuts must (TR-01c review) start and end ON their main route (within its width) and be genuinely
+            // shorter than the main stretch they bypass, otherwise nobody takes the risk.
+            // Chasm: branches 42 % along the canyon's (520,-520)->(740,-400) leg and runs straight to the canyon's
+            // (420,40) node. 545 m against 733 m round the canyon loop (-26 %). The gap sits 150 m in, >= 150 m from
+            // the canyon line, which stays the safe detour. Both junctions sit where the canyon bed is nearly level:
+            // a branch leaving a steep stretch at an angle tilts the shared road sideways (drivability test, AC 3).
+            var canyonBend = new Vector2(520f, -520f);
+            var canyonEast = new Vector2(740f, -400f);
+            var canyonJoin = new Vector2(420f, 40f);
+            Vector2 chasmFrom = Vector2.Lerp(canyonBend, canyonEast, 0.42f);
+            Vector2 chasmTo = canyonJoin;
             Vector2 chasmDir = (chasmTo - chasmFrom).normalized;
             float chasmYaw = Mathf.Atan2(chasmDir.x, chasmDir.y) * Mathf.Rad2Deg;
-            Vector2 chasmCentre = (chasmFrom + chasmTo) * 0.5f;
-            const float chasmGap = 24f, rampLength = 10f, rampAngle = 12f;
+            const float chasmGap = 24f, rampLength = 10f, rampAngle = 12f, chasmFromBranch = 150f;
+            Vector2 chasmCentre = chasmFrom + chasmDir * chasmFromBranch;
 
+            // Rammer: desert branch (-300,-750) diagonally to 80 % along the desert's (-660,-690)->(-620,-450) leg,
+            // (-628,-498). 414 m against 560 m via the desert's west bend (-26 %). Gate 180 m after the branch on the
+            // straight: >= 120 m run-up (LV-01).
             var rammerFrom = new Vector2(-300f, -750f);
-            var rammerTo = new Vector2(-480f, -480f);
+            var rammerTo = new Vector2(-628f, -498f);
             Vector2 rammerDir = (rammerTo - rammerFrom).normalized;
             float rammerYaw = Mathf.Atan2(rammerDir.x, rammerDir.y) * Mathf.Rad2Deg;
+            const float rammerGateFromBranch = 180f;
 
             return new TerrainLayoutData
             {
@@ -70,9 +82,9 @@ namespace Convoy.Level
                     centre = chasmCentre,
                     yawDeg = chasmYaw,
                     gapWidth = chasmGap,
-                    // Across the shortcut. Capped at 16 m because at x = 560 the canyon main line (the safe detour) is only
-                    // ~18 m away; a longer cut would sever it.
-                    length = 16f,
+                    // Across the shortcut: the whole corridor (12 m road + 2 x 10 m shoulders) plus margin, so the gap
+                    // cannot be skirted along a shoulder. Safe now that the canyon line is >= 150 m away.
+                    length = 36f,
                     depth = 30f,
                     rampAngleDeg = rampAngle,
                     landingDrop = 2f,
@@ -84,14 +96,17 @@ namespace Convoy.Level
                         id = Canyon, kind = RouteKind.Main, width = mainWidth, shoulder = shoulder, carveDepth = 8f,
                         nodes = new[]
                         {
-                            start, new Vector2(250f, -760f), chasmFrom, new Vector2(640f, -300f),
-                            new Vector2(600f, -120f), new Vector2(420f, 40f), centre,
+                            // Loops east round the chasm shortcut: the long, safe way.
+                            start, new Vector2(250f, -760f), canyonBend, canyonEast,
+                            new Vector2(700f, -160f), canyonJoin, centre,
                         },
                     },
                     new RouteDef
                     {
                         // The cave is this route's covered stretch through the crater rim (~160 m around (-40,-250)).
-                        id = River, kind = RouteKind.Main, shortcutId = ShortcutCave, width = mainWidth, shoulder = shoulder,
+                        // No shortcutId on purpose: the cave is on the ONLY river route, so world variation must never
+                        // close it (TR-01c review). It is a fixed, always-open covered section.
+                        id = River, kind = RouteKind.Main, width = mainWidth, shoulder = shoulder,
                         nodes = new[] { start, new Vector2(-60f, -600f), new Vector2(-60f, -430f), new Vector2(-40f, -250f), centre },
                         coveredRange = new Vector2(538f, 698f),
                     },
@@ -100,8 +115,10 @@ namespace Convoy.Level
                         id = Desert, kind = RouteKind.Main, width = mainWidth, shoulder = shoulder,
                         nodes = new[]
                         {
-                            start, rammerFrom, new Vector2(-620f, -450f), new Vector2(-650f, -100f),
-                            new Vector2(-400f, 80f), centre,
+                            // West bend first (the long way the rammer shortcut cuts), then north through the ford
+                            // and the minefield (the (-620,-450)->(-650,-100) leg passes the field centre).
+                            start, rammerFrom, new Vector2(-660f, -690f), new Vector2(-620f, -450f),
+                            new Vector2(-650f, -100f), new Vector2(-400f, 80f), centre,
                         },
                     },
                     new RouteDef
@@ -136,7 +153,7 @@ namespace Convoy.Level
                     // Gate on the rammer shortcut 180 m after the branch: >= 120 m straight run-up (LV-01).
                     new ObstaclePlacement
                     {
-                        kind = PlacementKind.RammerGate, position = new Vector2(-400f, -600f), yawDeg = rammerYaw,
+                        kind = PlacementKind.RammerGate, position = rammerFrom + rammerDir * rammerGateFromBranch, yawDeg = rammerYaw,
                         scale = Vector3.one, shortcutId = ShortcutRammer,
                     },
                     // Mud at both river fords (LV-02): river route at x ~ -60, desert route at x ~ -628. Long axis along the road.
@@ -149,7 +166,8 @@ namespace Convoy.Level
                         yawDeg = chasmYaw, scale = new Vector3(mainWidth, rampLength * Mathf.Tan(rampAngle * Mathf.Deg2Rad), rampLength),
                         shortcutId = ShortcutChasm,
                     },
-                    // Rockfall blockers (active = shortcut closed this run, TR-01c).
+                    // Rockfall blockers (active = shortcut closed this run, TR-01c). Only real shortcuts get one: the
+                    // cave is on the only river route and is never closed.
                     new ObstaclePlacement
                     {
                         kind = PlacementKind.ShortcutBlocker, position = chasmCentre - chasmDir * 37f, yawDeg = chasmYaw,
@@ -159,11 +177,6 @@ namespace Convoy.Level
                     {
                         kind = PlacementKind.ShortcutBlocker, position = rammerFrom + rammerDir * 80f, yawDeg = rammerYaw,
                         scale = new Vector3(16f, 6f, 10f), shortcutId = ShortcutRammer,
-                    },
-                    new ObstaclePlacement
-                    {
-                        kind = PlacementKind.ShortcutBlocker, position = new Vector2(-48.8f, -329.6f), yawDeg = 6.3f,
-                        scale = new Vector3(16f, 6f, 10f), shortcutId = ShortcutCave,
                     },
                 },
                 spawns = new[]
