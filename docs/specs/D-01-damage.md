@@ -68,7 +68,7 @@ Each change gets a one-line comment "D-01: damage multiplier (1.0 at full health
 
 ## Dependencies
 - Blocked by: — (D-01a); D-01a (D-01b); D-01b (D-01c).
-- Blocks: G-01, M-02, W-01, Q-01b (health/damage columns), U-01 damage bar.
+- Blocks: G-01, M-02, W-01, Q-01b (health/damage columns), U-01 damage bar, LV-02b (also edits `VehicleController.cs`/`VehicleState.cs`, ADR-006 § 9).
 - Conflict note: Q-01b also edits `VehicleController.cs`/`VehicleState.cs` → Q-01b is blocked by D-01b.
 
 ## Allowed files

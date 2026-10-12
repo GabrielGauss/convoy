@@ -93,6 +93,7 @@ namespace Convoy.Presentation
 - **C-01b:** `Assets/_Convoy/Editor/Integration/C01_PilotCameraSetup.cs`, `Assets/_Convoy/Editor/Convoy.Editor.asmdef` (add `Unity.Cinemachine`). Orchestrator commits `Sandbox.unity`, `Sprint_01.unity`, the config asset and metas.
 
 ## C-01b integration script — `Convoy/Integration/C-01 Pilot Camera Setup`
+*(ADR-006, D-030)* Expose `public static void ApplyToScene(string scenePath)`; the menu item calls it for the scenes listed below. LV-03c reuses it for `Sprint_02`.
 For `Sandbox.unity` and `Sprint_01.unity`: create config asset if missing; add `CinemachineBrain` to `Main Camera` if missing; disable `SandboxChaseCamera`; create anchor, `PilotCamera`, `PilotCamera_LookBack` with the components above if missing; add `PilotCameraRig` wired to the scene's Jackal, config, cameras and `SeatInputRouter` (if present). Idempotent, never deletes, logs.
 
 ## Acceptance criteria
