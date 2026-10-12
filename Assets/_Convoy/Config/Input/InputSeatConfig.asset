@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6211741be6f80c849a135a86465dc55d, type: 3}
+  m_Name: InputSeatConfig
+  m_EditorClassIdentifier: Convoy.Input::Convoy.Input.InputSeatConfig
+  autoJoinKeyboard: 1
+  joinOrder: 000000000100000002000000
+  keyboardSteerRampUp: 4
+  keyboardSteerReturn: 6
+  stickDeadzone: 0.12
+  mouseAimDegreesPerPixel: 0.12
+  stickAimDegreesPerSecond: 180
+  minAimPitch: -30
+  maxAimPitch: 60

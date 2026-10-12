@@ -21,7 +21,6 @@ MonoBehaviour:
   shortcutIds:
   - chasm
   - rammer
-  - cave
   minOpenShortcuts: 1
   maxOpenShortcuts: 2
   minefieldCentre: {x: -640, y: -250}
