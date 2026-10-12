@@ -1,6 +1,6 @@
 # UP-01a — Uplink pure hold logic + UplinkConfig
 - **Owner (agent):** ai-engineer            - **Human reviewer/owner:** Gabriel
-- **Status:** building
+- **Status:** qa
 - **Spec:** docs/specs/UP-01.md · ADR-006
 - **Blocked by:** — (ADR-006 approval)
 - **Allowed files:** `Scripts/Race/UplinkConfig.cs`, `UplinkHold.cs` (new); `Tests/EditMode/UplinkHoldTests.cs` (new) (paths under `Assets/_Convoy/` unless stated)
@@ -15,3 +15,4 @@
 | 2026-10-11 | spec | written | architect (ARCH-002); awaiting Gabriel's spec approval |
 | 2026-10-11 | spec | APPROVED | Lead AI (delegated); D-023..D-030 accepted |
 | 2026-10-11 | build | launched | |
+| 2026-10-11 | build | done | build \| done \| 498683c |
