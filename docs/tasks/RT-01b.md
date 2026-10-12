@@ -1,6 +1,6 @@
 # RT-01b — SprintController: save, PB splits, medals, attempts, quick-restart request
 - **Owner (agent):** ui-input-engineer            - **Human reviewer/owner:** Gabriel
-- **Status:** spec
+- **Status:** cancelled (D-031 — open terrain, no medals)
 - **Spec:** docs/specs/RT-01.md · ADR-006
 - **Blocked by:** RT-01a, UP-01b (SprintController.cs owner chain)
 - **Allowed files:** `Scripts/Race/SprintController.cs` (6 listed edits only), `Scripts/Race/AssemblyInfo.cs` (new); `Tests/PlayMode/SprintSaveTests.cs` (new) (paths under `Assets/_Convoy/` unless stated)

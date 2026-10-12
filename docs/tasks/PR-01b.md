@@ -1,6 +1,6 @@
 # PR-01b — SprintController catalog/LoadSprint, SprintSelectOverlay, unlock line
 - **Owner (agent):** ui-input-engineer            - **Human reviewer/owner:** Gabriel
-- **Status:** spec
+- **Status:** cancelled (D-031 — open terrain, no medals)
 - **Spec:** docs/specs/PR-01.md · ADR-006
 - **Blocked by:** PR-01a, RT-01c (SprintHud.cs chain; SprintController.cs chain via RT-01b)
 - **Allowed files:** `Scripts/Race/SprintController.cs`, `Scripts/Presentation/SprintHud.cs` (listed edits only); `Scripts/Presentation/SprintSelectOverlay.cs` (new) (paths under `Assets/_Convoy/` unless stated)

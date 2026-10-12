@@ -1,6 +1,6 @@
 # RT-01d — Integration: RedCanyon SprintDefinition wired into Sprint_01
 - **Owner (agent):** ui-input-engineer (script) → orchestrator (runs)            - **Human reviewer/owner:** Gabriel
-- **Status:** spec
+- **Status:** cancelled (D-031 — open terrain, no medals)
 - **Spec:** docs/specs/RT-01.md · ADR-006
 - **Blocked by:** RT-01c, UP-01c (Sprint_01 owner chain)
 - **Allowed files:** `Editor/Integration/RT01_SprintDefinitionSetup.cs` (new). Orchestrator commits `Sprint_01.unity`, `Config/Sprints/RedCanyon_SprintDefinition.asset`, metas (paths under `Assets/_Convoy/` unless stated)

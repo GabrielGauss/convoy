@@ -1,6 +1,6 @@
 # LV-03b — Integration: Sprint_02 geometry generator (terrain, roads, fork, chasm, mud, gate)
 - **Owner (agent):** level-builder (script) → orchestrator (runs)            - **Human reviewer/owner:** Narrative & Game Designer + Gabriel
-- **Status:** spec
+- **Status:** cancelled (D-031 — open terrain, no medals)
 - **Spec:** docs/specs/LV-03.md · ADR-006
 - **Blocked by:** LV-03a, **ND design brief approved by Gabriel** (`docs/design/LV-03_ToxicWastes_brief.md`), LV-01c (RammerGate.prefab), LV-02c (MudPatch.prefab)
 - **Allowed files:** `Editor/Integration/LV03_BuildSprint02Geometry.cs`, `ToxicWastesLayoutDefaults.cs` (new). Orchestrator commits `Scenes/Sprint_02.unity`, `Scenes/Sprint_02/**`, `Config/Level/ToxicWastes_Layout.asset`, metas (paths under `Assets/_Convoy/` unless stated)

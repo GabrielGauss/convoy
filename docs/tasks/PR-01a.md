@@ -1,6 +1,6 @@
 # PR-01a — SprintCatalog + ProgressionRules (pure)
 - **Owner (agent):** ui-input-engineer            - **Human reviewer/owner:** Gabriel
-- **Status:** spec
+- **Status:** cancelled (D-031 — open terrain, no medals)
 - **Spec:** docs/specs/PR-01.md · ADR-006
 - **Blocked by:** RT-01a
 - **Allowed files:** `Scripts/Race/SprintCatalog.cs`, `ProgressionRules.cs` (new); `Tests/EditMode/ProgressionRulesTests.cs` (new) (paths under `Assets/_Convoy/` unless stated)

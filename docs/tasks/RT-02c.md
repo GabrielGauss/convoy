@@ -1,6 +1,6 @@
 # RT-02c — Integration: ghost material asset (Resources)
 - **Owner (agent):** vehicle-engineer (script) → orchestrator (runs)            - **Human reviewer/owner:** Gabriel
-- **Status:** spec
+- **Status:** cancelled (D-031 — open terrain, no medals)
 - **Spec:** docs/specs/RT-02.md · ADR-006
 - **Blocked by:** RT-02b, F-03c (editor asmdef)
 - **Allowed files:** `Editor/Integration/RT02_GhostMaterialSetup.cs` (new). Orchestrator commits `Resources/Convoy/GhostMaterial.mat`, metas. No scene edits (paths under `Assets/_Convoy/` unless stated)

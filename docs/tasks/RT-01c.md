@@ -1,6 +1,6 @@
 # RT-01c — SprintHud: live split deltas, medal target, result screen, quick restart
 - **Owner (agent):** ui-input-engineer            - **Human reviewer/owner:** Gabriel
-- **Status:** spec
+- **Status:** cancelled (D-031 — open terrain, no medals)
 - **Spec:** docs/specs/RT-01.md · ADR-006
 - **Blocked by:** RT-01b
 - **Allowed files:** `Scripts/Presentation/SprintHud.cs`, `SprintHudText.cs` (new); `Tests/EditMode/SprintHudTextTests.cs` (new) (paths under `Assets/_Convoy/` unless stated)
