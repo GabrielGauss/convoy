@@ -72,7 +72,9 @@ namespace Convoy.Editor
         private const float HeightmapPixelError = 5f;  // spec: LOD error in pixels; 5 keeps 60 fps on a mid PC
         private const float BasemapDistance = 400f;    // spec: beyond this the terrain draws one baked colour map
         private const float CameraFarClip = 1500f;     // spec: hidden by the dust fog anyway
-        private const float BeamDiameter = 1f, BeamHeight = 400f; // Monolith beam: seen from anywhere on the 2 km map
+        private const float BeamDiameter = 6f, BeamHeight = 400f; // Monolith beam: 6 m wide so it still reads ~1 km away through the fog
+        // Why ×4: the Sprint_01 FBX is sized for a 300 m course; on a 2 km map the Monolith must be the landmark you steer by.
+        private const float MonolithLandmarkScale = 4f;
         private const float CaveClearance = 9f;        // spec: free height under the cave roof
         private const float CaveSlabLength = 20f;      // roof built from slabs this long (one box per slab)
         private const float CaveSlabThickness = 2f;
@@ -501,6 +503,7 @@ namespace Convoy.Editor
                         r.gameObject.AddComponent<MeshCollider>().sharedMesh = filter.sharedMesh;
                 }
                 monolith.transform.SetPositionAndRotation(ground, Quaternion.Euler(0f, p.yawDeg, 0f));
+                monolith.transform.localScale *= MonolithLandmarkScale;
             }
             else
             {
@@ -525,12 +528,12 @@ namespace Convoy.Editor
 
             var lightGo = new GameObject("MonolithGlow");
             lightGo.transform.SetParent(parent, false);
-            lightGo.transform.position = ground + MonolithLightOffset;
+            lightGo.transform.position = ground + MonolithLightOffset * MonolithLandmarkScale;
             var light = lightGo.AddComponent<Light>();
             light.type = LightType.Point;
             light.color = MonolithLightColour;
             light.intensity = MonolithLightIntensity;
-            light.range = MonolithLightRange;
+            light.range = MonolithLightRange * MonolithLandmarkScale;
             light.shadows = LightShadows.None;
         }
 
