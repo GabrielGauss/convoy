@@ -1,6 +1,6 @@
 # LV-01b — RammerGate runtime component + PlayMode test
 - **Owner (agent):** combat-engineer            - **Human reviewer/owner:** Gabriel
-- **Status:** spec
+- **Status:** qa
 - **Spec:** docs/specs/LV-01.md · ADR-006
 - **Blocked by:** LV-01a, D-01b (PlayMode asmdef), UP-01b (same asmdef edit, serialise)
 - **Allowed files:** `Scripts/Level/RammerGate.cs` (new); `Tests/PlayMode/RammerGateTests.cs` (new); `Tests/PlayMode/Convoy.Tests.PlayMode.asmdef` (add `Convoy.Level` only) (paths under `Assets/_Convoy/` unless stated)
@@ -12,3 +12,4 @@
 | Date | Gate | Verdict | Notes |
 |---|---|---|---|
 | 2026-10-11 | spec | written | architect (ARCH-002); awaiting Gabriel's spec approval |
+| 2026-10-12 | build | done | 2cd83bd |
