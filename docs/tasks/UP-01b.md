@@ -14,3 +14,4 @@
 | Date | Gate | Verdict | Notes |
 |---|---|---|---|
 | 2026-10-11 | spec | written | architect (ARCH-002); awaiting Gabriel's spec approval |
+| 2026-10-12 | build | done | 6bc085c |
