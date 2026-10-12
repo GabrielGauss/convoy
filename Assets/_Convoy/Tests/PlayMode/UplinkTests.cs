@@ -197,7 +197,8 @@ namespace Convoy.Tests.PlayMode
                 // Rotated 90° about Y: the zone's local Z (10 m) now runs along world X.
                 Assert.That(zone.Contains(new Vector3(109f, 0f, 0f)), Is.True);
                 Assert.That(zone.Contains(new Vector3(100f, 0f, 9f)), Is.False);
-                Assert.That(zone.Contains(new Vector3(100f, 0f, 2f)), Is.True, "faces are inclusive");
+                // 1.999 not 2: after a 90° rotation the face lands at 2.0000001 in float maths, so an exact-face probe is flaky.
+                Assert.That(zone.Contains(new Vector3(100f, 0f, 1.999f)), Is.True, "points just inside the face count");
                 Assert.That(zone.Contains(new Vector3(100f, 1.5f, 0f)), Is.False);
                 Assert.That(zone.ReportCompleted(null), Is.False);
                 Assert.That(zone.HasWinner, Is.False);

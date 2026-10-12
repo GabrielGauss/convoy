@@ -11,6 +11,8 @@ using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.TestTools;
+using UnityEngine.TestTools.Constraints;
+using Is = UnityEngine.TestTools.Constraints.Is;
 using Debug = UnityEngine.Debug;
 
 namespace Convoy.Tests.PlayMode
@@ -175,16 +177,15 @@ namespace Convoy.Tests.PlayMode
             int warmup = Mathf.RoundToInt(PerfWarmupSeconds / dt);
             for (int i = 0; i < warmup; i++) yield return new WaitForFixedUpdate();
 
-            // Positive control: prove this runtime's counter reports allocations, so the 0 below means something.
-            long probeStart = System.GC.GetAllocatedBytesForCurrentThread();
-            _sink = new byte[1024];
-            Assert.That(System.GC.GetAllocatedBytesForCurrentThread() - probeStart, Is.GreaterThanOrEqualTo(1024L),
-                "GC.GetAllocatedBytesForCurrentThread does not report allocations in this runtime");
+            // Why Unity's constraint and not GC.GetAllocatedBytesForCurrentThread: the latter always returns 0 on
+            // Unity's Mono (found 2026-10-12), so a 0-byte check with it passes vacuously. Positive control first.
+            Assert.That(() => { _sink = new byte[1024]; }, Is.AllocatingGCMemory(), "allocation constraint must see a known allocation");
+            // One cached delegate (created outside the measured call) so the measurement itself allocates nothing.
+            TestDelegate tickAll = () => { for (int i = 0; i < Rivals; i++) pilots[i].Tick(); };
 
             // Measure exactly the AiPilot work: after each physics step, run one extra Tick per rival with the
             // counters around it (the extra command is simply overwritten by next step's own Tick).
             int measure = Mathf.RoundToInt(PerfMeasureSeconds / dt);
-            long allocated = 0;
             double totalMs = 0;
             double worstMs = 0;
             var watch = new Stopwatch();
@@ -192,11 +193,10 @@ namespace Convoy.Tests.PlayMode
             {
                 yield return new WaitForFixedUpdate();
 
-                long before = System.GC.GetAllocatedBytesForCurrentThread();
                 watch.Restart();
-                for (int i = 0; i < Rivals; i++) pilots[i].Tick();
+                tickAll();
                 watch.Stop();
-                allocated += System.GC.GetAllocatedBytesForCurrentThread() - before;
+                if (s % 50 == 0) Assert.That(tickAll, Is.Not.AllocatingGCMemory(), "AiPilot.Tick must not allocate");
 
                 double ms = watch.Elapsed.TotalMilliseconds;
                 totalMs += ms;
@@ -204,10 +204,9 @@ namespace Convoy.Tests.PlayMode
             }
 
             double meanMs = totalMs / measure;
-            Debug.Log($"[AiSyntheticTrack] {Rivals} rivals: mean {meanMs:0.0000} ms/step, worst {worstMs:0.0000} ms, GC {allocated} B " +
-                      "(Editor timing; confirm in the Profiler row Convoy.AiPilot.FixedUpdate)");
+            Debug.Log($"[AiSyntheticTrack] {Rivals} rivals: mean {meanMs:0.0000} ms/step, worst {worstMs:0.0000} ms" +
+                      " (Editor timing; confirm in the Profiler row Convoy.AiPilot.FixedUpdate)");
 
-            Assert.That(allocated, Is.EqualTo(0L), "AiPilot.Tick must not allocate");
             Assert.That(meanMs, Is.LessThan(RivalBudgetMs), $"{Rivals} rivals over budget");
         }
 
