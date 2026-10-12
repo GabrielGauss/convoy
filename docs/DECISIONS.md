@@ -126,6 +126,30 @@ See `CLAUDE.md`. Summary: AI drafts on branches; humans review, own, and merge. 
 - **Impact to review:** D-006 "Race Royale" and T-01 assume a loop/route race. Open question for the GDD owner: is the Monolith sprint the core format, a mode, or a vertical-slice level? T-01's fork (short/risky vs long/safe) fits a sprint well.
 - Sprint logic is a minimal slice of R-01 (clock, checkpoints, finish, result screen); R-01 still owns countdown, AI rivals, positions and the results loop.
 
+## D-015..D-020 — Architecture batch (ARCH-001)
+**Date:** 2026-10-11 · **Status:** Accepted (Gabriel delegated approval to Lead AI; D-020 direction to be confirmed by Lead Dev before the M2 spike)
+- **D-015** Add Cinemachine 3 for C-01 (spec `docs/specs/C-01-camera.md`).
+- **D-016** Module map & integration-script rule (`docs/adr/ADR-001-modules.md`): new `Convoy.Crew`, `Convoy.Combat`, `Convoy.AI`, `Convoy.Telemetry`, editor-only `Convoy.Editor`; `Convoy.Net` reserved for M2; scene/prefab changes only via re-runnable editor scripts run by the orchestrator.
+- **D-017** Seat commands, device mapping, station contract (`ADR-002`).
+- **D-018** Damage M1: one hull pool + handling multipliers, identical handling at full health (`ADR-003`).
+- **D-019** AI driving: waypoint polylines + pure-pursuit through `IPilotCommandReceiver`, no NavMesh, no rubber-banding (`ADR-004`).
+- **D-020** M2 netcode spike direction: NGO 2.x, host-authoritative, pilot-owned vehicle physics (`ADR-005`).
+
+## D-021 — North star: PÁRAMO-NEXUS
+**Date:** 2026-10-11 · **Status:** Accepted as long-term vision (Gabriel, creative director) — Narrative & Game Designer to fold it into `GDD.md`
+- Source: `docs/design/PARAMO-NEXUS_vision_es.md`. Four asymmetric biome approaches (Mountains N, Toxic Wastes S, Red Canyon E, Dune Valley W) converging on the **Monolith** at the centre; class-gated terrain (Rammer gates, Chasm + bridge terminal, spider cave); Payload uplink finale; X-crossings between convoys.
+- **Not adopted for M1/M2 (scale and cost):** 4 km × 4 km terrain, 4 teams × 10 vehicles + 100k-HP payload, 15–20 min PvP matches, fog of war, fauna AI. These need netcode at scale and a far larger team. Revisit after M2 networking spike and PT data.
+- **Paid assets named in the doc (RayFire, MicroSplat) are NOT approved** (CLAUDE.md cost rule). Use free Unity Terrain, simple fractured meshes, URP fog.
+
+## D-022 — M1 = "Páramo Run": short biome sprints to the Monolith, built for retry and retention
+**Date:** 2026-10-11 · **Status:** Accepted (Lead AI, delegated by Gabriel) — supersedes the open part of D-014
+- Core loop: 1.5–3 min sprint per biome → reach the Monolith → **uplink**: hold inside the Monolith zone for a few seconds to finish (scaled-down Payload uplink). Instant restart.
+- **Retry drivers (M1):** medal times (bronze/silver/gold + "Monolith" author time), live split times vs personal best at every checkpoint (green/red), ghost of your best run, discoverable shortcuts.
+- **Class-gate mechanics adapted to one vehicle:** *Rammer gate* = breakable rock wall that only breaks above a speed threshold (≈80 km/h, reachable with nitro) and opens a shortcut; *Chasm* = jump ramp over a gap with a slower safe detour; *toxic mud* = surface zones cutting traction/speed 40%.
+- **Retention drivers (M1→M2):** medals unlock the next biome and later vehicle classes (Rammer, Scout) — progression without economy/MTX.
+- Biome order: **Red Canyon** (`Sprint_01`, exists) → **Toxic Wastes** (mud, shortest line) → Mountains / Dune Valley later.
+- AI rivals (A-01) and crew stations (K-01/G-01/M-01) stay in M1 scope but serve this loop; T-01 becomes "second biome sprint with a fork" instead of a loop.
+
 ---
 
 ## Open questions
