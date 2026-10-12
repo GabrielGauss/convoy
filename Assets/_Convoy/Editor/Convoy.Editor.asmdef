@@ -4,6 +4,8 @@
     "references": [
         "Convoy.Core",
         "Convoy.Level",
+        "Convoy.AI",
+        "Convoy.Race",
         "Convoy.Vehicle",
         "Convoy.Presentation",
         "Unity.RenderPipelines.Core.Runtime",
