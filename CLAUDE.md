@@ -8,6 +8,7 @@ Read `docs/DECISIONS.md`, `docs/TECH_DESIGN.md`, and the relevant task in `docs/
 - **Deferred to post-MVP:** cargo, robbery, bosses (D-032); the open-arena world shape of D-031.
 - **Art:** ink-and-print caricature, junkyard 1930–1970 (D-033); still greybox until ART-01.
 - **Open:** falling between layers (O-004) — build it as a config toggle, never hard-code one behaviour.
+- **Track T01 layout:** Gabriel's hand-drawn map, two braided main lines + class connectors (D-037): `docs/tracks/T01/T01_HANDMAP.md`.
 - Re-planning of open tasks for this direction: `docs/tasks/ARCH-003.md`.
 
 ## Hard limits (never, without explicit human approval in chat)

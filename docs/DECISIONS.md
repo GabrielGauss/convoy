@@ -21,6 +21,7 @@ Status: **Accepted** (team agreed) · **Proposed** (Lead AI recommendation, awai
 | D-034 | CONVOY is the code name; final title decided before release | Accepted |
 | D-035 | MVP: one 10 km multi-level sprint track + 3 vehicle classes with their own lines | Accepted |
 | D-036 | Track tech: spline-mesh roads + ProBuilder; Unity Terrain only as backdrop | Proposed (Lead Dev) |
+| D-037 | T01 topology = Gabriel's hand-drawn map: two braided main lines + class connectors | Accepted |
 | O-001 | Crew-size balance (2 vs 3 players) | Answered by D-035 (vehicle class scales with crew) |
 | O-002 | Crews per match / elimination & respawn rules | Open |
 | O-003 | Online infrastructure & hosting cost | Open (post-M1) |
@@ -234,6 +235,13 @@ See `CLAUDE.md`. Summary: AI drafts on branches; humans review, own, and merge. 
 - Unity Terrain is a heightmap: no tunnels, overhangs or stacked roads. The layered track needs meshes.
 - Roads, bridges, ramps and ledges = road meshes extruded along **Unity Splines** (free, first-party package; this entry is its package decision) + ProBuilder pieces, built by a re-runnable editor script (D-016, D-030). Terrain = backdrop and lowest ground.
 - AI racing lines come from the same splines (fits D-019 polylines). Jump ramps reuse `ChasmJump.MinClearSpeed` for speed gates.
+
+## D-037 — T01 topology: two braided main lines + class connectors (hand-drawn map)
+**Date:** 2026-10-12 · **Status:** Accepted (Gabriel)
+- **Decision:** T01 (the D-035 10 km track) uses Gabriel's hand-drawn topology in `docs/tracks/T01/`: **Main A** (secondary: narrow, rough, technical) and **Main B** (primary: wide, smooth, fast) run braided from start to the Monolith; **class perks are connectors** between/within them — sidecar = narrow passages/tunnels, heavy = breakable blockades, JACKAL = full-speed jumps.
+- **Why:** two full lines + mid-race line changes give more replay value and crew-vs-crew contact at every crossing than isolated per-segment forks. The earlier "FRACTURA" layout proposal (never committed) is not used.
+- **Rules (detail in `docs/tracks/T01/T01_HANDMAP.md`):** every A/B crossing is classified merge or grade-separated (3 signature over/under crossings); class gates are physical, never locks; failed JACKAL jumps feed the O-004 toggle; shortcut gain ≤ 2–3 s; A/B delta ≤ 2 s per ~60 s section; perks balanced across the last third.
+- **Next:** ARCH-003 digitizes the map into a node graph (`T01_topology.md` + `.json`) and derives the TK-01 spec (segment 1 from START) from it.
 
 ---
 
