@@ -85,6 +85,16 @@ namespace Convoy.Race
             if (vehicle == null) return null;
             UplinkHold existing = GetTrackedHold(vehicle);
             if (existing != null) return existing;
+            // Guard (UP-01b review): a SprintController already ticks its own vehicle's hold; tracking it here
+            // too would advance that hold twice per step. Find is fine: Track runs at setup, never per frame.
+            foreach (SprintController sprint in FindObjectsByType<SprintController>(FindObjectsSortMode.None))
+            {
+                if (sprint.Vehicle == vehicle)
+                {
+                    Debug.LogWarning($"{name}: {vehicle.name} is owned by SprintController {sprint.name}; not tracked.", this);
+                    return null;
+                }
+            }
             if (_trackedConfig == null)
             {
                 Debug.LogError($"{name}: UplinkZone has no Tracked Config; cannot track {vehicle.name}.", this);
