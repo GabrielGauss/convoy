@@ -9,6 +9,10 @@ namespace Convoy.Input
     /// Bindings are defined in code so the sandbox works with zero editor setup.
     /// F-03 replaces this with a per-seat Input Actions asset and device assignment.
     ///
+    /// Superseded by <see cref="SeatInputRouter"/> (F-03b). The F-03c integration script disables this component
+    /// on Jackal.prefab (it is not deleted until Gabriel approves). Not marked [Obsolete] on purpose: that would
+    /// spam compiler warnings while the prefab still references it.
+    ///
     /// Keyboard: W/S or ↑/↓ throttle/brake · A/D or ←/→ steer · Space handbrake · Shift nitro · R reset
     /// Gamepad:  RT throttle · LT brake/reverse · left stick steer · A/Cross handbrake · RB nitro · Y/Triangle reset
     /// </summary>
