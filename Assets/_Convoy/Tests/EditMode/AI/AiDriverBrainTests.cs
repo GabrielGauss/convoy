@@ -2,6 +2,9 @@ using Convoy.Core;
 using Convoy.Vehicle;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.TestTools.Constraints;
+// Unity's Is adds Is.AllocatingGCMemory(); all NUnit constraints still work through it.
+using Is = UnityEngine.TestTools.Constraints.Is;
 
 namespace Convoy.AI.Tests
 {
@@ -166,7 +169,37 @@ namespace Convoy.AI.Tests
             Assert.AreEqual(2, brain.ResetRequests);
         }
 
+        [Test]
+        public void ResetRequest_WaitsForTheVehicleRecoveryCooldown_ThenIsSentOnce()
+        {
+            // The vehicle's auto-right started its cooldown (the brain never sent anything): a reset sent now
+            // would be dropped by VehicleRecovery, so the brain must hold it until the vehicle reports 0.
+            AiDriverBrain brain = Brain(TestPaths.Straight(300f));
+            AiSensorFrame lost = Frame(new Vector3(40f, 0f, 50f), Vector3.forward, 0f); // 40 m > offPathResetDistance
+            lost.RecoveryCooldown = 1.5f;
+
+            Assert.AreEqual(0, CountResets(brain, lost, 2f), "no request while the vehicle is cooling down");
+            Assert.AreEqual(AiDriveMode.RequestReset, brain.Mode, "the request is pending, not forgotten");
+
+            lost.RecoveryCooldown = 0f;
+            Assert.IsTrue(brain.Step(lost).Reset, "sent on the first step the vehicle can accept it");
+            Assert.AreEqual(1, brain.ResetRequests);
+        }
+
         // --- Performance -----------------------------------------------------
+
+        [Test]
+        public void AllocationCounter_DetectsAnAllocation()
+        {
+            // Positive control for Step_DoesNotAllocate (A-01a review): if this runtime's counter always
+            // returned 0, the 0-byte assertion would pass vacuously. Prove it sees a known allocation.
+            // Why Unity's constraint: GC.GetAllocatedBytesForCurrentThread always returns 0 on Unity's Mono
+            // (found by this very test, 2026-10-12), so the Profiler-recorder based constraint is used instead.
+            Assert.That(() => { _sink = new byte[1024]; }, Is.AllocatingGCMemory());
+        }
+
+        // Static sink so the probe allocation can't be optimised away.
+        private static byte[] _sink;
 
         [Test]
         public void Step_DoesNotAllocate()
@@ -179,11 +212,8 @@ namespace Convoy.AI.Tests
 
             Drive(brain, path, ref s, 500); // warm-up: JIT compilation and first-call static setup allocate once
 
-            long before = System.GC.GetAllocatedBytesForCurrentThread();
-            Drive(brain, path, ref s, 3000);
-            long allocated = System.GC.GetAllocatedBytesForCurrentThread() - before;
-
-            Assert.AreEqual(0L, allocated, "AiDriverBrain.Step must not allocate (runs every physics step for every rival)");
+            Assert.That(() => Drive(brain, path, ref s, 3000), Is.Not.AllocatingGCMemory(),
+                "AiDriverBrain.Step must not allocate (runs every physics step for every rival)");
         }
 
         // Kinematic drive along the path at 20 m/s (no physics): only the brain's own work is measured.

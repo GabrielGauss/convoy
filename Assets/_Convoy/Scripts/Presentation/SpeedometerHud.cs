@@ -1,3 +1,4 @@
+using Convoy.AI;
 using Convoy.Vehicle;
 using UnityEngine;
 
@@ -64,7 +65,18 @@ namespace Convoy.Presentation
             _searchTimer -= Time.unscaledDeltaTime;
             if (_searchTimer > 0f) return;
             _searchTimer = VehicleSearchInterval;
-            _target = FindAnyObjectByType<VehicleController>();
+            _target = FindPlayerVehicle();
+        }
+
+        // A-01b: the HUD must show the human's car, never a rival. Rivals carry an AiPilot, so take the first
+        // VehicleController without one. Only runs (at most once a second) while there is no target, so the
+        // array FindObjectsByType allocates is not a per-frame cost.
+        private static VehicleController FindPlayerVehicle()
+        {
+            VehicleController[] vehicles = FindObjectsByType<VehicleController>(FindObjectsSortMode.None);
+            foreach (VehicleController vehicle in vehicles)
+                if (!vehicle.TryGetComponent<AiPilot>(out _)) return vehicle;
+            return null;
         }
 
         private void OnDestroy()

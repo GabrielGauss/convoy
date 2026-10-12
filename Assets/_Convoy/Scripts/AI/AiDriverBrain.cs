@@ -21,6 +21,13 @@ namespace Convoy.AI
 
         /// <summary>Metres to the first obstacle in each lane; <see cref="float.PositiveInfinity"/> = clear.</summary>
         public float ObstacleLeft, ObstacleCentre, ObstacleRight;
+
+        /// <summary>
+        /// Seconds until the vehicle accepts another reset (<c>VehicleState.RecoveryCooldown</c>). The vehicle's
+        /// auto-right also starts this cooldown, which the brain cannot predict, so it reads it from the vehicle
+        /// instead of guessing: a reset sent during the cooldown would be silently dropped (A-01a review).
+        /// </summary>
+        public float RecoveryCooldown;
     }
 
     /// <summary>
@@ -111,10 +118,12 @@ namespace Convoy.AI
                     return new PilotCommand { Throttle = -1f, Steer = -steer };
 
                 case AiDriveMode.RequestReset:
-                    // Send the reset exactly once, then wait out the vehicle's own reset cooldown before
-                    // another request can go out (VehicleRecovery ignores requests during cooldown, so a
-                    // request sent then would be lost). Until then we sit still.
-                    if (_resetCooldown > 0f) return PilotCommand.Neutral;
+                    // Send the reset exactly once, and only when the vehicle will accept it: VehicleRecovery
+                    // ignores requests during its cooldown, so a request sent then would be lost. Two gates:
+                    // the vehicle's real cooldown (also started by auto-right, which we can't predict) and our
+                    // own copy, which covers the step before the vehicle's state reflects our last reset.
+                    // Until both are clear we sit still.
+                    if (_resetCooldown > 0f || frame.RecoveryCooldown > 0f) return PilotCommand.Neutral;
                     _resetCooldown = _vehicle.resetCooldown;
                     ResetRequests++;
                     _stuck.NotifyResetIssued();

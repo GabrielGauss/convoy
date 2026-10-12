@@ -3,6 +3,7 @@
     "rootNamespace": "Convoy.Input",
     "references": [
         "Convoy.Core",
+        "Convoy.Crew",
         "Unity.InputSystem"
     ],
     "includePlatforms": [],
